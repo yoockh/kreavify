@@ -21,6 +21,7 @@ export default function CreateInvoice() {
         notes: '',
         tax_percentage: 0,
         due_date: '',
+        currency: 'IDR',
         items: [
             { description: '', qty: 1, unit_price: 0 }
         ]
@@ -169,6 +170,22 @@ export default function CreateInvoice() {
                                     onChange={e => setFormData({ ...formData, due_date: e.target.value })}
                                     className={styles.input}
                                 />
+                            </div>
+                        </div>
+                        <div className={styles.grid}>
+                            <div className={styles.formGroup}>
+                                <label>Mata Uang</label>
+                                <select
+                                    value={formData.currency}
+                                    onChange={e => setFormData({ ...formData, currency: e.target.value })}
+                                    className={styles.input}
+                                >
+                                    <option value="IDR">Rupiah (IDR)</option>
+                                    <option value="USD">US Dollar (USD)</option>
+                                    <option value="SGD">Singapore Dollar (SGD)</option>
+                                    <option value="EUR">Euro (EUR)</option>
+                                    <option value="MYR">Malaysian Ringgit (MYR)</option>
+                                </select>
                             </div>
                         </div>
                     </div>

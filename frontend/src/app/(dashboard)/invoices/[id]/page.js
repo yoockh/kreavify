@@ -2,8 +2,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { getInvoice, sendInvoice, cancelInvoice } from '@/lib/api';
-import { Send, Copy, XCircle, ArrowLeft, Download, ExternalLink } from 'lucide-react';
+import { getInvoice, sendInvoice, cancelInvoice, sendReminder, generateContract } from '@/lib/api';
+import { Send, Copy, XCircle, ArrowLeft, Download, ExternalLink, Bell, ScrollText } from 'lucide-react';
 import ConfirmDialog from '@/components/ConfirmDialog';
 import styles from './page.module.css';
 
@@ -12,6 +12,8 @@ export default function InvoiceDetail() {
     const router = useRouter();
     const [invoice, setInvoice] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [reminderData, setReminderData] = useState(null);
+    const [generatingContract, setGeneratingContract] = useState(false);
     const [confirmDialog, setConfirmDialog] = useState({ open: false, title: '', message: '', variant: 'danger', onConfirm: null });
 
     const fetchDetail = async () => {
@@ -83,10 +85,43 @@ export default function InvoiceDetail() {
         navigator.clipboard.writeText(url);
     };
 
+    const handleReminder = async () => {
+        try {
+            const res = await sendReminder(id);
+            if (res.ok) {
+                const data = await res.json();
+                setReminderData(data);
+                if (data.whatsapp_url) {
+                    window.open(data.whatsapp_url, '_blank');
+                }
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
+    const handleGenerateContract = async () => {
+        setGeneratingContract(true);
+        try {
+            const res = await generateContract(id);
+            if (res.ok) {
+                const contract = await res.json();
+                router.push('/contracts');
+            } else {
+                const err = await res.json();
+                alert(err.error || 'Gagal generate kontrak');
+            }
+        } catch (e) {
+            console.error(e);
+        }
+        setGeneratingContract(false);
+    };
+
     if (loading) return <div style={{ padding: '2rem', color: 'var(--text-muted)' }}>Memuat detail invoice...</div>;
     if (!invoice) return null;
 
-    const formatRp = (val) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(val);
+    const cur = invoice.currency || 'IDR';
+    const formatCurrency = (val) => new Intl.NumberFormat(cur === 'IDR' ? 'id-ID' : 'en-US', { style: 'currency', currency: cur, minimumFractionDigits: 0 }).format(val);
     const creator = invoice.creator || {};
 
     return (
@@ -114,6 +149,9 @@ export default function InvoiceDetail() {
 
                     {invoice.status === 'sent' && (
                         <>
+                            <button onClick={handleReminder} className={styles.btnOutline}>
+                                <Bell size={16} /> Kirim Reminder
+                            </button>
                             <a href={`/pay/${invoice.slug}`} target="_blank" rel="noopener noreferrer" className={styles.btnOutline}>
                                 <ExternalLink size={16} /> Buka Halaman Bayar
                             </a>
@@ -126,6 +164,9 @@ export default function InvoiceDetail() {
                         </>
                     )}
 
+                    <button onClick={handleGenerateContract} className={styles.btnOutline} disabled={generatingContract}>
+                        <ScrollText size={16} /> {generatingContract ? 'Generating...' : 'Buat Kontrak'}
+                    </button>
                     <button onClick={() => window.print()} className={styles.btnOutline}>
                         <Download size={16} /> Download PDF
                     </button>
@@ -176,8 +217,8 @@ export default function InvoiceDetail() {
                                 <tr key={idx}>
                                     <td>{item.description}</td>
                                     <td style={{ textAlign: 'center' }}>{item.qty}</td>
-                                    <td style={{ textAlign: 'right' }}>{formatRp(item.unit_price)}</td>
-                                    <td style={{ textAlign: 'right' }}>{formatRp(item.qty * item.unit_price)}</td>
+                                    <td style={{ textAlign: 'right' }}>{formatCurrency(item.unit_price)}</td>
+                                    <td style={{ textAlign: 'right' }}>{formatCurrency(item.qty * item.unit_price)}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -186,17 +227,17 @@ export default function InvoiceDetail() {
                     <div className={styles.docTotals}>
                         <div className={styles.docTotalRow}>
                             <span>Subtotal</span>
-                            <span>{formatRp(invoice.subtotal)}</span>
+                            <span>{formatCurrency(invoice.subtotal)}</span>
                         </div>
                         {invoice.tax_amount > 0 && (
                             <div className={styles.docTotalRow}>
                                 <span>Pajak</span>
-                                <span>{formatRp(invoice.tax_amount)}</span>
+                                <span>{formatCurrency(invoice.tax_amount)}</span>
                             </div>
                         )}
                         <div className={styles.docTotalRowBold}>
                             <span>Total Tagihan</span>
-                            <span style={{ color: 'var(--primary)' }}>{formatRp(invoice.total)}</span>
+                            <span style={{ color: 'var(--primary)' }}>{formatCurrency(invoice.total)}</span>
                         </div>
                     </div>
 

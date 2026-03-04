@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, FileText, Briefcase, Image as ImageIcon, User, ExternalLink, LogOut, PanelLeftClose, PanelLeftOpen, Sun, Moon } from 'lucide-react';
+import { LayoutDashboard, FileText, Briefcase, Image as ImageIcon, User, ExternalLink, LogOut, PanelLeftClose, PanelLeftOpen, Sun, Moon, ScrollText, Calculator } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import ConfirmDialog from '@/components/ConfirmDialog';
@@ -59,6 +59,8 @@ export default function Sidebar() {
         { label: 'Invoice', href: '/invoices', icon: FileText },
         { label: 'Jasa Saya', href: '/services', icon: Briefcase },
         { label: 'Portfolio', href: '/portfolio', icon: ImageIcon },
+        { label: 'Kontrak', href: '/contracts', icon: ScrollText },
+        { label: 'Laporan Pajak', href: '/tax-report', icon: Calculator },
         { label: 'Profil', href: '/profile', icon: User },
     ];
 

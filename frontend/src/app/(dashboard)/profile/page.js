@@ -16,7 +16,9 @@ export default function ProfilePage() {
         slug: '',
         bank_name: '',
         bank_account_number: '',
-        bank_account_name: ''
+        bank_account_name: '',
+        invoice_logo_url: '',
+        invoice_accent_color: '',
     });
 
     const [loading, setLoading] = useState(true);
@@ -24,8 +26,10 @@ export default function ProfilePage() {
     const [msg, setMsg] = useState({ type: '', text: '' });
     const [uploadingAvatar, setUploadingAvatar] = useState(false);
     const [uploadingBanner, setUploadingBanner] = useState(false);
+    const [uploadingLogo, setUploadingLogo] = useState(false);
     const avatarInputRef = useRef(null);
     const bannerInputRef = useRef(null);
+    const logoInputRef = useRef(null);
 
     useEffect(() => {
         getProfile()
@@ -41,7 +45,9 @@ export default function ProfilePage() {
                     slug: data.slug || '',
                     bank_name: data.bank_name || '',
                     bank_account_number: data.bank_account_number || '',
-                    bank_account_name: data.bank_account_name || ''
+                    bank_account_name: data.bank_account_name || '',
+                    invoice_logo_url: data.invoice_logo_url || '',
+                    invoice_accent_color: data.invoice_accent_color || '',
                 });
                 setLoading(false);
             })
@@ -239,6 +245,59 @@ export default function ProfilePage() {
                     <div className={styles.formGroup}>
                         <label>Nama Pemilik Rekening</label>
                         <input type="text" name="bank_account_name" value={profile.bank_account_name} onChange={handleChange} className={styles.input} />
+                    </div>
+                </div>
+
+                {/* Branded Invoice Section */}
+                <div className={styles.section}>
+                    <h2 className={styles.sectionTitle}>Branded Invoice</h2>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '1rem' }}>Kustomisasi tampilan invoice kamu agar terlihat lebih profesional</p>
+                    <div className={styles.grid}>
+                        <div className={styles.formGroup}>
+                            <label>Logo Invoice</label>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                {profile.invoice_logo_url && (
+                                    <img src={profile.invoice_logo_url} alt="Logo" style={{ width: 64, height: 64, objectFit: 'contain', borderRadius: '0.5rem', border: '1px solid var(--border-color)' }} />
+                                )}
+                                <input type="file" ref={logoInputRef} accept="image/*" style={{ display: 'none' }} onChange={async (e) => {
+                                    const file = e.target.files[0];
+                                    if (!file) return;
+                                    setUploadingLogo(true);
+                                    try {
+                                        const res = await uploadImage(file, 'logos');
+                                        if (res.ok) {
+                                            const data = await res.json();
+                                            setProfile(prev => ({ ...prev, invoice_logo_url: data.url }));
+                                        }
+                                    } catch (err) { console.error(err); }
+                                    setUploadingLogo(false);
+                                }} />
+                                <button type="button" onClick={() => logoInputRef.current?.click()} className={styles.uploadBtn} disabled={uploadingLogo}>
+                                    <Upload size={16} /> {uploadingLogo ? 'Uploading...' : 'Upload Logo'}
+                                </button>
+                            </div>
+                        </div>
+                        <div className={styles.formGroup}>
+                            <label>Warna Aksen Invoice</label>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                <input
+                                    type="color"
+                                    name="invoice_accent_color"
+                                    value={profile.invoice_accent_color || '#2563eb'}
+                                    onChange={handleChange}
+                                    style={{ width: 48, height: 40, border: '1px solid var(--border-color)', borderRadius: '0.375rem', cursor: 'pointer', padding: 2 }}
+                                />
+                                <input
+                                    type="text"
+                                    name="invoice_accent_color"
+                                    value={profile.invoice_accent_color}
+                                    onChange={handleChange}
+                                    className={styles.input}
+                                    placeholder="#2563eb"
+                                    style={{ maxWidth: 120 }}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
 

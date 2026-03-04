@@ -1,5 +1,6 @@
 import { Mail, CheckCircle } from 'lucide-react';
 import styles from './page.module.css';
+import AnalyticsTracker from '@/components/AnalyticsTracker';
 
 // Use internal backend URL for SSR (server-to-server), fallback to localhost
 const BACKEND_URL = process.env.BACKEND_INTERNAL_URL || 'http://127.0.0.1:8000/api';
@@ -133,6 +134,9 @@ export default async function PublicProfilePage({ params }) {
                     <strong>Kreavify</strong>
                 </a>
             </footer>
+
+            {/* Analytics Tracking */}
+            <AnalyticsTracker slug={slug} />
         </div>
     );
 }
