@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'apps.payments',
     'apps.ai_pricing',
     'apps.dashboard',
+    'apps.analytics',
+    'apps.contracts',
 ]
 
 MIDDLEWARE = [

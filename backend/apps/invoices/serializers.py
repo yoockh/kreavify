@@ -11,11 +11,11 @@ class InvoiceSerializer(serializers.ModelSerializer):
             'id', 'invoice_number', 'client_name', 'client_email', 'client_phone',
             'items', 'subtotal', 'tax_percentage', 'tax_amount', 'total',
             'notes', 'status', 'due_date', 'paid_at', 'payment_method',
-            'slug', 'created_at', 'updated_at', 'creator'
+            'slug', 'created_at', 'updated_at', 'creator', 'currency', 'last_reminded_at'
         ]
         read_only_fields = [
             'id', 'invoice_number', 'subtotal', 'tax_amount', 'total',
-            'status', 'paid_at', 'payment_method', 'slug', 'created_at', 'updated_at', 'creator'
+            'status', 'paid_at', 'payment_method', 'slug', 'created_at', 'updated_at', 'creator', 'last_reminded_at'
         ]
 
 class PublicInvoiceSerializer(serializers.ModelSerializer):

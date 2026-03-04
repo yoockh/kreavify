@@ -32,6 +32,14 @@ class Invoice(models.Model):
     notes = models.TextField(blank=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
     due_date = models.DateField(null=True, blank=True)
+    currency = models.CharField(max_length=3, choices=[
+        ('IDR', 'Rupiah (IDR)'),
+        ('USD', 'US Dollar (USD)'),
+        ('SGD', 'Singapore Dollar (SGD)'),
+        ('EUR', 'Euro (EUR)'),
+        ('MYR', 'Malaysian Ringgit (MYR)'),
+    ], default='IDR')
+    last_reminded_at = models.DateTimeField(null=True, blank=True)
     
     # Payment info
     paid_at = models.DateTimeField(null=True, blank=True)

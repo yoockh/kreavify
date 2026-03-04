@@ -35,6 +35,10 @@ class User(AbstractUser):
     bank_name = models.CharField(max_length=50, blank=True)
     bank_account_number = models.CharField(max_length=30, blank=True)
     bank_account_name = models.CharField(max_length=100, blank=True)
+
+    # Branded Invoice
+    invoice_logo_url = models.URLField(blank=True)
+    invoice_accent_color = models.CharField(max_length=7, blank=True, default='')  # hex e.g. #2563eb
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

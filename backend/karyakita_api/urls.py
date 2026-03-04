@@ -18,4 +18,6 @@ urlpatterns = [
     path('api/portfolio/', include('apps.services.portfolio_urls')),
     path('api/p/', include('apps.users.public_urls')),
     path('api/upload/', ImageUploadView.as_view()),
+    path('api/analytics/', include('apps.analytics.urls')),
+    path('api/contracts/', include('apps.contracts.urls')),
 ]
