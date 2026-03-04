@@ -1,32 +1,157 @@
+import PublicNavbar from '@/components/PublicNavbar';
+import styles from './page.module.css';
+
+export const metadata = {
+    title: 'Pusat Bantuan — Kreavify',
+    description: 'Panduan lengkap menggunakan Kreavify untuk freelancer Indonesia'
+};
+
+const faqs = [
+    {
+        category: 'Memulai',
+        icon: '🚀',
+        items: [
+            {
+                q: 'Apa itu Kreavify?',
+                a: 'Kreavify adalah platform manajemen bisnis freelance all-in-one yang dirancang untuk kreator Indonesia. Kelola invoice, kontrak, portfolio, dan analitik bisnis kamu dalam satu dasbor yang elegan.'
+            },
+            {
+                q: 'Bagaimana cara membuat akun?',
+                a: 'Klik tombol "Daftar Gratis" di pojok kanan atas, isi nama, email, dan password, lalu verifikasi email kamu. Proses pendaftaran selesai dalam kurang dari 2 menit.'
+            },
+            {
+                q: 'Apakah Kreavify gratis?',
+                a: 'Ya! Paket Basic Kreavify sepenuhnya gratis tanpa batas waktu. Kamu bisa membuat hingga 5 invoice dan 10 portfolio items. Upgrade ke Premium atau Pro untuk limit tak terbatas dan fitur-fitur lanjutan.'
+            }
+        ]
+    },
+    {
+        category: 'Invoice & Pembayaran',
+        icon: '📄',
+        items: [
+            {
+                q: 'Bagaimana cara membuat invoice baru?',
+                a: 'Masuk ke menu "Invoice" → klik tombol "+ Buat Invoice" → isi data klien dan item layanan yang kamu berikan → klik "Simpan" atau langsung "Kirim ke Klien". Kamu bisa mendownload PDF atau membagikan link pembayaran langsung.'
+            },
+            {
+                q: 'Apakah klien perlu akun Kreavify untuk membayar?',
+                a: 'Tidak perlu! Klien bisa mengakses link invoice yang kamu kirimkan langsung, tanpa perlu mendaftar. Link berisi detail invoice dan instruksi pembayaran.'
+            },
+            {
+                q: 'Bagaimana mengirim reminder pembayaran otomatis?',
+                a: 'Buka invoice yang statusnya "Menunggu Pembayaran", klik tombol "Kirim Reminder via WhatsApp". Sistem akan mengirimkan pesan WhatsApp otomatis ke nomor klien.'
+            },
+            {
+                q: 'Apa itu nomor invoice dan bagaimana formatnya?',
+                a: 'Nomor invoice dibuat otomatis dalam format KK-[TAHUN]-[NOMOR]. Contoh: KK-2025-0001. Kamu tidak perlu khawatir tentang duplikasi nomor; sistem sudah menanganinya secara otomatis.'
+            }
+        ]
+    },
+    {
+        category: 'Profil & Portfolio',
+        icon: '🎨',
+        items: [
+            {
+                q: 'Bagaimana cara membagikan profil publik saya?',
+                a: 'Profil publikmu otomatis tersedia di link /p/[username-kamu]. Kamu bisa menemukan dan membagikan link ini dari menu "Profil Publik" di sidebar atau dari halaman Pengaturan Profil.'
+            },
+            {
+                q: 'Bagaimana menambah karya portfolio?',
+                a: 'Buka menu "Portfolio" → klik "+ Tambah Karya" → isi judul, kategori, pilih gambar dari perangkatmu (atau paste link URL gambar) → klik Simpan. Karya akan langsung tampil di profil publikmu.'
+            },
+            {
+                q: 'Kenapa foto banner saya tidak tersimpan?',
+                a: 'Pastikan ukuran file tidak melebihi 5MB dan format gambarnya JPG/PNG/WebP. Setelah memilih file, tunggu hingga proses upload selesai (akan ada indikator "Mengupload..."), lalu klik "Simpan Perubahan".'
+            }
+        ]
+    },
+    {
+        category: 'Kontrak Digital',
+        icon: '📝',
+        items: [
+            {
+                q: 'Bagaimana cara membuat kontrak otomatis?',
+                a: 'Dari menu "Kontrak" atau dari halaman detail Invoice, klik "Generate Kontrak". AI kami akan membuat draft kontrak profesional berdasarkan data invoice seperti nama klien, deskripsi pekerjaan, dan total nilai proyek.'
+            },
+            {
+                q: 'Apakah kontrak digital saya memiliki kekuatan hukum?',
+                a: 'Kontrak yang dibuat Kreavify berisi klausul standar yang merujuk pada hukum perjanjian Indonesia. Untuk proyek besar, kami sarankan konsultasi dengan notaris atau ahli hukum untuk kekuatan hukum yang lebih kuat.'
+            }
+        ]
+    },
+    {
+        category: 'AI Pricing Assistant',
+        icon: '🤖',
+        items: [
+            {
+                q: 'Bagaimana AI Pricing Assistant bekerja?',
+                a: 'AI kami menganalisis deskripsi jasa, segmen target pasar (UMKM/Startup/Korporat), dan tingkat kompleksitas pekerjaan untuk memberikan estimasi harga yang wajar dan kompetitif di pasar Indonesia dan sekitarnya.'
+            },
+            {
+                q: 'Berapa batas penggunaan AI Pricing per bulan?',
+                a: 'Paket Basic mendapat 3x penggunaan AI Pricing per bulan. Paket Premium mendapat 20x, dan Paket Pro mendapat penggunaan tak terbatas. Upgrade kapan saja dari halaman Upgrade Plan.'
+            }
+        ]
+    },
+    {
+        category: 'Laporan Pajak',
+        icon: '📊',
+        items: [
+            {
+                q: 'Bagaimana Kreavify menghitung perkiraan pajak saya?',
+                a: 'Kreavify menghitung estimasi Pajak Penghasilan berdasarkan total pendapatan bruto tahun tersebut mengikuti PP 55/2022 untuk UMKM (tarif PPh Final 0.5%). Ini adalah estimasi; konsultasikan dengan konsultan pajak untuk perhitungan resmi.'
+            },
+            {
+                q: 'Apakah laporan pajak saya akurat?',
+                a: 'Laporan pajak di Kreavify dihitung berdasarkan invoice yang statusnya "Dibayar" saja. Pastikan semua pembayaran yang diterima sudah diubah statusnya menjadi "Dibayar" untuk laporan yang akurat.'
+            }
+        ]
+    }
+];
+
 export default function HelpPage() {
     return (
-        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '4rem 2rem', fontFamily: 'Inter, sans-serif' }}>
-            <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '1.5rem' }}>Pusat Bantuan</h1>
-            <p style={{ fontSize: '1.125rem', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '3rem' }}>
-                Temukan jawaban untuk pertanyaan yang paling sering diajukan oleh pengguna Kreavify.
-            </p>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                <div style={{ border: '1px solid var(--border-color)', borderRadius: '0.75rem', padding: '1.5rem', background: 'var(--white)' }}>
-                    <h3 style={{ fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.75rem' }}>Bagaimana cara membuat invoice baru?</h3>
-                    <p style={{ color: 'var(--text-muted)', lineHeight: 1.5 }}>Masuk ke menu Invoice di dashboard, klik tombol "Buat Invoice Baru", isi data klien dan layanan, lalu klik "Simpan" atau "Kirim". Kamu bisa mendownload PDF atau membagikan link langsung ke klien.</p>
+        <>
+            <PublicNavbar />
+            <div className={styles.pageWrapper}>
+                {/* Hero */}
+                <div className={styles.hero}>
+                    <div className={styles.heroContent}>
+                        <h1 className={styles.heroTitle}>Pusat Bantuan</h1>
+                        <p className={styles.heroSubtitle}>Temukan jawaban untuk semua pertanyaan seputar penggunaan Kreavify</p>
+                    </div>
                 </div>
 
-                <div style={{ border: '1px solid var(--border-color)', borderRadius: '0.75rem', padding: '1.5rem', background: 'var(--white)' }}>
-                    <h3 style={{ fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.75rem' }}>Bagaimana cara membagikan profil ke publik?</h3>
-                    <p style={{ color: 'var(--text-muted)', lineHeight: 1.5 }}>Di menu Pengaturan, kamu dapat mengatur URL (slug) unik kamu. Bagikan link tersebut (misal: p/johndoe) ke klien agar mereka bisa melihat portfolio dan jasa kamu secara profesional.</p>
+                {/* FAQ */}
+                <div className={styles.content}>
+                    {faqs.map((section) => (
+                        <section key={section.category} className={styles.section}>
+                            <h2 className={styles.sectionTitle}>
+                                <span className={styles.sectionIcon}>{section.icon}</span>
+                                {section.category}
+                            </h2>
+                            <div className={styles.faqList}>
+                                {section.items.map((item, i) => (
+                                    <div key={i} className={styles.faqItem}>
+                                        <h3 className={styles.question}>{item.q}</h3>
+                                        <p className={styles.answer}>{item.a}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    ))}
                 </div>
 
-                <div style={{ border: '1px solid var(--border-color)', borderRadius: '0.75rem', padding: '1.5rem', background: 'var(--white)' }}>
-                    <h3 style={{ fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.75rem' }}>Bagaimana sistem pembayaran AI Pricing bekerja?</h3>
-                    <p style={{ color: 'var(--text-muted)', lineHeight: 1.5 }}>AI Pricing kami menganalisis ratusan data pasar lokal (Indonesia) untuk memperkirakan harga wajar jasa yang kamu definisikan, berdasarkan segmen pasar (UMKM/Startup) dan tingkat kompleksitas.</p>
+                {/* Contact CTA */}
+                <div className={styles.contactCta}>
+                    <div className={styles.ctaCard}>
+                        <div className={styles.ctaIcon}>💬</div>
+                        <h2>Masih ada pertanyaan lain?</h2>
+                        <p>Tim kami siap membantu kamu melalui email. Kami biasanya merespons dalam 1×24 jam.</p>
+                        <a href="/contact" className={styles.ctaBtn}>Hubungi Tim Kreavify</a>
+                    </div>
                 </div>
             </div>
-
-            <div style={{ marginTop: '4rem', textAlign: 'center' }}>
-                <p style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>Masih butuh bantuan spesifik?</p>
-                <a href="/contact" style={{ color: 'var(--primary)', fontWeight: 600, textDecoration: 'none' }}>Hubungi Tim Support Kami &rarr;</a>
-            </div>
-        </div>
+        </>
     );
 }

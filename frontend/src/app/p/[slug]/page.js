@@ -1,3 +1,4 @@
+'use client';
 import { Mail, CheckCircle, Briefcase, ImageIcon } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import styles from './page.module.css';

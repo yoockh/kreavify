@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
-import { Bell, User, Settings, LogOut } from 'lucide-react';
+import { User, Settings, LogOut, Zap } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
@@ -10,10 +10,8 @@ import ConfirmDialog from './ConfirmDialog';
 export default function Header() {
     const [profile, setProfile] = useState(null);
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    const [notificationsOpen, setNotificationsOpen] = useState(false);
     const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
     const dropdownRef = useRef(null);
-    const notifRef = useRef(null);
     const router = useRouter();
 
     useEffect(() => {
@@ -26,9 +24,6 @@ export default function Header() {
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 setDropdownOpen(false);
-            }
-            if (notifRef.current && !notifRef.current.contains(event.target)) {
-                setNotificationsOpen(false);
             }
         };
 
@@ -47,49 +42,16 @@ export default function Header() {
             <div className={styles.spacer}></div>
 
             <div className={styles.actions}>
-                <div className={styles.notifWrapper} ref={notifRef}>
-                    <button
-                        className={styles.iconBtn}
-                        onClick={() => {
-                            setNotificationsOpen(!notificationsOpen);
-                            setDropdownOpen(false);
-                        }}
-                    >
-                        <Bell size={20} />
-                        <span className={styles.badge}>2</span>
-                    </button>
-
-                    {notificationsOpen && (
-                        <div className={styles.notifDropdown}>
-                            <h3 className={styles.dropdownTitle}>Notifikasi</h3>
-                            <div className={styles.notifList}>
-                                <div className={styles.notifItem}>
-                                    <div className={styles.notifDot}></div>
-                                    <div className={styles.notifContent}>
-                                        <p><strong>PT Karya Bangsa</strong> telah membayar invoice KK-2024-0001</p>
-                                        <span>2 jam yang lalu</span>
-                                    </div>
-                                </div>
-                                <div className={styles.notifItem}>
-                                    <div className={styles.notifDot}></div>
-                                    <div className={styles.notifContent}>
-                                        <p>Kontrak desain logo telah disetujui</p>
-                                        <span>1 hari yang lalu</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <Link href="/dashboard" className={styles.viewAllBtn}>Lihat Semua</Link>
-                        </div>
-                    )}
-                </div>
+                {/* Upgrade CTA */}
+                <Link href="/upgrade" className={styles.upgradeBtn}>
+                    <Zap size={15} />
+                    Upgrade Plan
+                </Link>
 
                 <div className={styles.profileWrapper} ref={dropdownRef}>
                     <button
                         className={styles.profileBtn}
-                        onClick={() => {
-                            setDropdownOpen(!dropdownOpen);
-                            setNotificationsOpen(false);
-                        }}
+                        onClick={() => setDropdownOpen(!dropdownOpen)}
                     >
                         {profile?.avatar_url ? (
                             <img src={profile.avatar_url} alt="Profile" className={styles.avatar} />
@@ -98,13 +60,27 @@ export default function Header() {
                                 {profile?.display_name?.charAt(0) || <User size={16} />}
                             </div>
                         )}
+                        {profile && (
+                            <span className={styles.profileName}>{profile.display_name}</span>
+                        )}
                     </button>
 
                     {dropdownOpen && (
                         <div className={styles.profileDropdown}>
                             <div className={styles.dropdownHeader}>
-                                <p className={styles.dropdownName}>{profile?.display_name || 'User'}</p>
-                                <p className={styles.dropdownEmail}>{profile?.email || 'user@email.com'}</p>
+                                <div className={styles.dropdownAvatar}>
+                                    {profile?.avatar_url ? (
+                                        <img src={profile.avatar_url} alt="" className={styles.dropdownAvatarImg} />
+                                    ) : (
+                                        <div className={styles.dropdownAvatarFallback}>
+                                            {profile?.display_name?.charAt(0) || '?'}
+                                        </div>
+                                    )}
+                                </div>
+                                <div>
+                                    <p className={styles.dropdownName}>{profile?.display_name || 'User'}</p>
+                                    <p className={styles.dropdownSub}>{profile?.profession?.replace('_', ' ') || 'Kreator'}</p>
+                                </div>
                             </div>
                             <div className={styles.dropdownMenu}>
                                 <Link href="/profile" className={styles.menuItem} onClick={() => setDropdownOpen(false)}>
@@ -114,7 +90,7 @@ export default function Header() {
                                     <Settings size={16} /> Pengaturan
                                 </Link>
                                 <div className={styles.divider}></div>
-                                <button onClick={() => { setDropdownOpen(false); setShowLogoutConfirm(true); }} className={`${styles.menuItem} ${styles.logoutBtn}`}>
+                                <button onClick={() => { setDropdownOpen(false); setShowLogoutConfirm(true); }} className={`${styles.menuItem} ${styles.logoutItem}`}>
                                     <LogOut size={16} /> Logout
                                 </button>
                             </div>

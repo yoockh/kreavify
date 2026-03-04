@@ -1,20 +1,16 @@
 'use client';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, FileText, Briefcase, Image as ImageIcon, User, ExternalLink, LogOut, PanelLeftClose, PanelLeftOpen, Sun, Moon, ScrollText, Calculator } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import { LayoutDashboard, FileText, Briefcase, Image as ImageIcon, ExternalLink, PanelLeftClose, PanelLeftOpen, Sun, Moon, ScrollText, Calculator, Settings } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import Cookies from 'js-cookie';
-import ConfirmDialog from '@/components/ConfirmDialog';
 import styles from './sidebar.module.css';
 
 export default function Sidebar() {
     const pathname = usePathname();
-    const router = useRouter();
     const [collapsed, setCollapsed] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [darkMode, setDarkMode] = useState(false);
     const [profile, setProfile] = useState(null);
-    const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
     useEffect(() => {
         const saved = localStorage.getItem('sidebar_collapsed');
@@ -49,11 +45,7 @@ export default function Sidebar() {
         document.documentElement.setAttribute('data-theme', next ? 'dark' : 'light');
     };
 
-    const handleLogout = () => {
-        Cookies.remove('access_token');
-        Cookies.remove('refresh_token');
-        router.push('/login');
-    };
+    const handleLogout = () => { }; // unused — logout is in Header dropdown
 
     const menuItems = [
         { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
@@ -62,7 +54,7 @@ export default function Sidebar() {
         { label: 'Portfolio', href: '/portfolio', icon: ImageIcon },
         { label: 'Kontrak', href: '/contracts', icon: ScrollText },
         { label: 'Laporan Pajak', href: '/tax-report', icon: Calculator },
-        { label: 'Pengaturan', href: '/settings', icon: User },
+        { label: 'Pengaturan', href: '/settings', icon: Settings },
     ];
 
     return (
@@ -110,23 +102,6 @@ export default function Sidebar() {
                 </nav>
 
                 <div className={styles.footer}>
-                    {/* Prominent Profile Card */}
-                    {profile && (
-                        <Link href="/profile" className={styles.profileCard} title={collapsed ? profile.display_name : ''}>
-                            {profile.avatar_url ? (
-                                <img src={profile.avatar_url} alt="Profile" className={styles.profileAvatar} />
-                            ) : (
-                                <div className={styles.profileAvatarFallback}>{profile.display_name?.charAt(0) || '?'}</div>
-                            )}
-                            {!collapsed && (
-                                <div className={styles.profileInfo}>
-                                    <span className={styles.profileName}>{profile.display_name || 'User'}</span>
-                                    <span className={styles.profileRole}>{profile.profession || 'Kreator Kreavify'}</span>
-                                </div>
-                            )}
-                        </Link>
-                    )}
-
                     <div className={styles.footerDivider} />
 
                     <button className={styles.themeToggle} onClick={toggleDarkMode} title={darkMode ? 'Light Mode' : 'Dark Mode'}>
@@ -146,22 +121,8 @@ export default function Sidebar() {
                             {!collapsed && <span>Profil Publik</span>}
                         </a>
                     )}
-
-                    <button onClick={() => setShowLogoutConfirm(true)} className={styles.logoutBtn} title={collapsed ? 'Logout' : ''}>
-                        <LogOut size={18} className={styles.icon} />
-                        {!collapsed && <span>Logout</span>}
-                    </button>
                 </div>
             </div>
-
-            <ConfirmDialog
-                isOpen={showLogoutConfirm}
-                onClose={() => setShowLogoutConfirm(false)}
-                onConfirm={handleLogout}
-                title="Logout"
-                message="Apakah kamu yakin ingin keluar dari akun Kreavify?"
-                variant="warning"
-            />
         </>
     );
 }

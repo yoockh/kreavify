@@ -1,75 +1,104 @@
+/* ============================================================
+   KREAVIFY SIDEBAR — Blue-Purple Glassmorphism
+   ============================================================ */
+
 .sidebar {
-    width: 250px;
+    width: 260px;
     height: 100vh;
     position: fixed;
     top: 0;
     left: 0;
-    /* Glassmorphism deep purplish blue */
-    background: rgba(15, 23, 42, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    /* TRUE Blue-Purple Glassmorphism */
+    background: linear-gradient(160deg,
+            rgba(79, 70, 229, 0.92) 0%,
+            rgba(109, 40, 217, 0.90) 50%,
+            rgba(67, 56, 202, 0.95) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-right: 1px solid rgba(255, 255, 255, 0.18);
     display: flex;
     flex-direction: column;
     z-index: 40;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
+    box-shadow: 4px 0 24px -4px rgba(79, 70, 229, 0.5);
+}
+
+/* subtle noise texture overlay */
+.sidebar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 20% 50%, rgba(129, 140, 248, 0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(167, 139, 250, 0.12) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.sidebar>* {
+    position: relative;
+    z-index: 1;
 }
 
 .collapsed {
     width: 72px;
 }
 
-/* LOGO ROW */
+/* ---- LOGO ROW ---- */
 .logoRow {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.25rem 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.25rem 1.125rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     min-height: 64px;
 }
 
 .logoText {
-    font-size: 1.35rem;
+    font-size: 1.4rem;
     font-weight: 800;
     color: #fff;
     white-space: nowrap;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.8px;
+    background: linear-gradient(90deg, #fff 0%, #c7d2fe 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .collapseBtn {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.85);
     cursor: pointer;
     padding: 0.375rem;
-    border-radius: 0.375rem;
+    border-radius: 0.4rem;
     transition: all 0.2s;
     flex-shrink: 0;
 }
 
 .collapseBtn:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
 }
 
-/* NAV */
+/* ---- NAV ---- */
 .nav {
-    padding: 1rem 0.625rem;
+    padding: 0.875rem 0.75rem;
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.175rem;
     overflow-y: auto;
 }
 
-/* custom scrollbar for nav */
 .nav::-webkit-scrollbar {
-    width: 4px;
+    width: 3px;
 }
 
 .nav::-webkit-scrollbar-thumb {
@@ -80,112 +109,59 @@
 .navItem {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem 0.875rem;
-    border-radius: 0.625rem;
-    color: rgba(255, 255, 255, 0.7);
+    gap: 0.825rem;
+    padding: 0.7rem 0.875rem;
+    border-radius: 0.6rem;
+    color: rgba(255, 255, 255, 0.72);
     font-weight: 500;
-    font-size: 0.925rem;
-    transition: all 0.2s;
+    font-size: 0.9rem;
+    transition: all 0.18s ease;
     white-space: nowrap;
     text-decoration: none;
+    letter-spacing: 0.01em;
 }
 
 .navItem:hover {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.12);
     color: #fff;
+    transform: translateX(2px);
 }
 
 .active {
-    background: rgba(99, 102, 241, 0.3);
+    background: rgba(255, 255, 255, 0.18);
     color: #fff;
-    box-shadow: inset 2px 0 0 0 #818cf8;
+    font-weight: 600;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.active .icon {
+    filter: drop-shadow(0 0 6px rgba(199, 210, 254, 0.8));
 }
 
 .active:hover {
-    background: rgba(99, 102, 241, 0.4);
+    background: rgba(255, 255, 255, 0.22);
+    transform: translateX(2px);
 }
 
 .icon {
     flex-shrink: 0;
 }
 
-/* FOOTER */
+/* ---- FOOTER ---- */
 .footer {
-    padding: 1rem 0.625rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.875rem 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
-}
-
-/* Profile Card Profile Details */
-.profileCard {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem;
-    border-radius: 0.75rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #fff;
-    text-decoration: none;
-    transition: all 0.2s;
-    margin-bottom: 0.5rem;
-}
-
-.profileCard:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
-}
-
-.profileAvatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    object-fit: cover;
-    flex-shrink: 0;
-}
-
-.profileAvatarFallback {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    color: #fff;
-    flex-shrink: 0;
-}
-
-.profileInfo {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-.profileName {
-    font-size: 0.875rem;
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.profileRole {
-    font-size: 0.7rem;
-    color: rgba(255, 255, 255, 0.5);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    gap: 0.175rem;
 }
 
 .footerDivider {
     height: 1px;
-    background: rgba(255, 255, 255, 0.1);
-    margin: 0.25rem 0;
+    background: rgba(255, 255, 255, 0.12);
+    margin: 0.375rem 0;
 }
 
 .themeToggle,
@@ -193,17 +169,17 @@
 .logoutBtn {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.825rem;
     width: 100%;
-    padding: 0.625rem 0.875rem;
-    border-radius: 0.625rem;
+    padding: 0.65rem 0.875rem;
+    border-radius: 0.6rem;
     color: rgba(255, 255, 255, 0.7);
     font-weight: 500;
     font-size: 0.875rem;
     background: none;
     border: none;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.18s;
     text-decoration: none;
     text-align: left;
     white-space: nowrap;
@@ -211,16 +187,16 @@
 
 .themeToggle:hover,
 .footerLink:hover {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.1);
     color: #fff;
 }
 
 .logoutBtn:hover {
-    color: #fda4af;
-    background: rgba(225, 29, 72, 0.2);
+    color: #fca5a5;
+    background: rgba(239, 68, 68, 0.2);
 }
 
-/* COLLAPSED overrides */
+/* ---- COLLAPSED ---- */
 .collapsed .logoRow {
     justify-content: center;
     padding: 1.25rem 0;
@@ -229,29 +205,34 @@
 .collapsed .navItem,
 .collapsed .themeToggle,
 .collapsed .footerLink,
-.collapsed .logoutBtn,
-.collapsed .profileCard {
+.collapsed .logoutBtn {
     justify-content: center;
     padding: 0.75rem;
 }
 
-/* MOBILE TOGGLE BUTTON */
+/* ---- MOBILE HAMBURGER ---- */
 .mobileToggle {
     display: none;
     position: fixed;
-    top: 1rem;
-    left: 1rem;
+    top: 0.875rem;
+    left: 0.875rem;
     z-index: 50;
     width: 44px;
     height: 44px;
-    border-radius: 0.5rem;
-    background: var(--white);
-    border: 1px solid var(--border-color);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-radius: 0.625rem;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    border: none;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.5);
     cursor: pointer;
     align-items: center;
     justify-content: center;
     padding: 0;
+    transition: all 0.2s;
+}
+
+.mobileToggle:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(79, 70, 229, 0.6);
 }
 
 .hamburger {
@@ -267,9 +248,9 @@
     display: block;
     height: 2px;
     width: 100%;
-    background: var(--text-main);
+    background: #fff;
     border-radius: 2px;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
 }
 
 .mobileToggleOpen .hamburger span:nth-child(1) {
@@ -278,6 +259,7 @@
 
 .mobileToggleOpen .hamburger span:nth-child(2) {
     opacity: 0;
+    transform: scaleX(0);
 }
 
 .mobileToggleOpen .hamburger span:nth-child(3) {
@@ -288,25 +270,25 @@
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
     z-index: 35;
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(4px);
 }
 
-/* MOBILE */
+/* ---- MOBILE RESPONSIVE ---- */
 @media (max-width: 768px) {
     .sidebar {
         transform: translateX(-100%);
-        width: 250px;
+        width: 260px !important;
     }
 
     .collapsed {
         transform: translateX(-100%);
-        width: 250px;
+        width: 260px !important;
     }
 
     .mobileOpen {
-        transform: translateX(0);
+        transform: translateX(0) !important;
     }
 
     .mobileToggle {
