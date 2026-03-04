@@ -35,10 +35,14 @@ export default function AIPricingModal({ isOpen, onClose, initialDescription, on
                 setResult(data);
             } else {
                 const err = await res.json();
-                setError(err.detail || 'Gagal menghitung harga');
+                if (res.status === 429) {
+                    setError('Limit_Reached');
+                } else {
+                    setError(err.detail || 'Gagal menghitung harga');
+                }
             }
         } catch (e) {
-            setError('Terjadi kesalahan sambungan limit AI.');
+            setError('Terjadi kesalahan sambungan jaringan.');
         } finally {
             setLoading(false);
         }
@@ -99,7 +103,14 @@ export default function AIPricingModal({ isOpen, onClose, initialDescription, on
                         {loading ? 'Menghitung Harga...' : 'Cek Harga Wajar'}
                     </button>
 
-                    {error && <div className={styles.error}>{error}</div>}
+                    {error === 'Limit_Reached' ? (
+                        <div className={styles.errorBox}>
+                            <p>Limit AI bulanan kamu sudah habis.</p>
+                            <a href="/upgrade" className={styles.upgradeLink}>Tingkatkan Paket</a>
+                        </div>
+                    ) : error ? (
+                        <div className={styles.error}>{error}</div>
+                    ) : null}
 
                     {result && (
                         <div className={styles.resultContainer}>

@@ -137,29 +137,66 @@
 .contentSections {
     display: flex;
     flex-direction: column;
-    gap: 4rem;
     padding-bottom: 4rem;
 }
 
-.sectionTitle {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #0f172a;
-    margin-bottom: 1.5rem;
-    position: relative;
-    display: inline-block;
+.tabsContainer {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    background: white;
+    padding: 0.5rem 0.5rem 0;
+    border-radius: 1rem 1rem 0 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
-.sectionTitle::after {
+.tabBtn {
+    background: transparent;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.tabBtn:hover {
+    color: #0f172a;
+}
+
+.activeTab {
+    color: var(--primary);
+}
+
+.activeTab::after {
     content: '';
     position: absolute;
-    bottom: -4px;
+    bottom: -1px;
     left: 0;
-    width: 50%;
+    width: 100%;
     height: 3px;
     background: var(--primary);
-    border-radius: 2px;
+    border-radius: 3px 3px 0 0;
 }
+
+.emptyTab {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: white;
+    border-radius: 0 0 1rem 1rem;
+    color: #64748b;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+
 
 /* Portfolio Grid */
 .portfolioGrid {

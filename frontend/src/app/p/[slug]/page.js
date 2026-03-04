@@ -1,21 +1,39 @@
-import { Mail, CheckCircle } from 'lucide-react';
+import { Mail, CheckCircle, Briefcase, ImageIcon } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import styles from './page.module.css';
 import AnalyticsTracker from '@/components/AnalyticsTracker';
 
 // Use internal backend URL for SSR (server-to-server), fallback to localhost
-const BACKEND_URL = process.env.BACKEND_INTERNAL_URL || 'http://127.0.0.1:8000/api';
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api';
 
-export default async function PublicProfilePage({ params }) {
-    const { slug } = await params;
+export default function PublicProfilePage({ params }) {
+    const [slug, setSlug] = useState(null);
+    const [profile, setProfile] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [activeTab, setActiveTab] = useState('services');
 
-    let profile = null;
-    try {
-        const res = await fetch(`${BACKEND_URL}/p/${slug}/`, { cache: 'no-store' });
-        if (res.ok) {
-            profile = await res.json();
+    useEffect(() => {
+        params.then(p => {
+            setSlug(p.slug);
+            fetchProfile(p.slug);
+        });
+    }, [params]);
+
+    const fetchProfile = async (profileSlug) => {
+        try {
+            const res = await fetch(`${BACKEND_URL}/p/${profileSlug}/`);
+            if (res.ok) {
+                const data = await res.json();
+                setProfile(data);
+            }
+        } catch (e) {
+            console.error('Exception fetching public profile:', e);
         }
-    } catch (e) {
-        console.error('Exception fetching public profile:', e);
+        setLoading(false);
+    };
+
+    if (loading) {
+        return <div className={styles.container} style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyItems: 'center', justifyContent: 'center' }}>Memuat profil...</div>
     }
 
     if (!profile) {
@@ -66,64 +84,84 @@ export default async function PublicProfilePage({ params }) {
                     </div>
                 </div>
 
+                {/* TABS */}
+                <div className={styles.tabsContainer}>
+                    <button
+                        className={`${styles.tabBtn} ${activeTab === 'services' ? styles.activeTab : ''}`}
+                        onClick={() => setActiveTab('services')}
+                    >
+                        <Briefcase size={18} /> Jasa & Layanan
+                    </button>
+                    <button
+                        className={`${styles.tabBtn} ${activeTab === 'portfolio' ? styles.activeTab : ''}`}
+                        onClick={() => setActiveTab('portfolio')}
+                    >
+                        <ImageIcon size={18} /> Portfolio Karya
+                    </button>
+                </div>
+
                 {/* Content Tabs */}
                 <div className={styles.contentSections}>
+                    {/* Services Section */}
+                    {activeTab === 'services' && (
+                        profile.services?.length > 0 ? (
+                            <section className={styles.section}>
+                                <div className={styles.servicesGrid}>
+                                    {profile.services.map(service => (
+                                        <div key={service.id} className={styles.serviceCard}>
+                                            {service.image_url ? (
+                                                <div className={styles.serviceImageContainer}>
+                                                    <img src={service.image_url} alt={service.title} className={styles.serviceImage} />
+                                                </div>
+                                            ) : (
+                                                <div className={styles.serviceImagePlaceholder}>
+                                                    <span className={styles.servicePlaceholderText}>{service.title.charAt(0).toUpperCase()}</span>
+                                                </div>
+                                            )}
+                                            <div className={styles.serviceHeader}>
+                                                <span className={styles.serviceCat}>{service.category.replace('_', ' ')}</span>
+                                                <div className={styles.priceRow}>
+                                                    <span className={styles.priceStart}>Mulai dari</span>
+                                                    <span className={styles.priceValue}>{formatRp(service.base_price)}</span>
+                                                </div>
+                                            </div>
+                                            <h3 className={styles.serviceTitle}>{service.title}</h3>
+                                            <p className={styles.serviceDesc}>{service.description}</p>
+                                            <a href={`mailto:${profile.email}?subject=Tanya Jasa: ${service.title}`} className={styles.contactBtn}>
+                                                Tanya Jasa Ini
+                                            </a>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        ) : (
+                            <div className={styles.emptyTab}>Kreator belum menambahkan jasa.</div>
+                        )
+                    )}
 
                     {/* Portfolio Section */}
-                    {profile.portfolio?.length > 0 && (
-                        <section className={styles.section}>
-                            <h2 className={styles.sectionTitle}>Portfolio Karya</h2>
-                            <div className={styles.portfolioGrid}>
-                                {profile.portfolio.map(item => (
-                                    <div key={item.id} className={styles.portfolioCard}>
-                                        <div className={styles.imageContainer}>
-                                            <img src={item.image_url} alt={item.title} className={styles.portImage} />
+                    {activeTab === 'portfolio' && (
+                        profile.portfolio?.length > 0 ? (
+                            <section className={styles.section}>
+                                <div className={styles.portfolioGrid}>
+                                    {profile.portfolio.map(item => (
+                                        <div key={item.id} className={styles.portfolioCard}>
+                                            <div className={styles.imageContainer}>
+                                                <img src={item.image_url} alt={item.title} className={styles.portImage} />
+                                            </div>
+                                            <div className={styles.portInfo}>
+                                                <span className={styles.portCat}>{item.category.replace('_', ' ')}</span>
+                                                <h3 className={styles.portTitle}>{item.title}</h3>
+                                                {item.description && <p className={styles.portDesc}>{item.description}</p>}
+                                            </div>
                                         </div>
-                                        <div className={styles.portInfo}>
-                                            <span className={styles.portCat}>{item.category.replace('_', ' ')}</span>
-                                            <h3 className={styles.portTitle}>{item.title}</h3>
-                                            {item.description && <p className={styles.portDesc}>{item.description}</p>}
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </section>
+                                    ))}
+                                </div>
+                            </section>
+                        ) : (
+                            <div className={styles.emptyTab}>Kreator belum mengunggah karya.</div>
+                        )
                     )}
-
-                    {/* Services Section */}
-                    {profile.services?.length > 0 && (
-                        <section className={styles.section}>
-                            <h2 className={styles.sectionTitle}>Jasa yang Ditawarkan</h2>
-                            <div className={styles.servicesGrid}>
-                                {profile.services.map(service => (
-                                    <div key={service.id} className={styles.serviceCard}>
-                                        {service.image_url ? (
-                                            <div className={styles.serviceImageContainer}>
-                                                <img src={service.image_url} alt={service.title} className={styles.serviceImage} />
-                                            </div>
-                                        ) : (
-                                            <div className={styles.serviceImagePlaceholder}>
-                                                <span className={styles.servicePlaceholderText}>K</span>
-                                            </div>
-                                        )}
-                                        <div className={styles.serviceHeader}>
-                                            <span className={styles.serviceCat}>{service.category.replace('_', ' ')}</span>
-                                            <div className={styles.priceRow}>
-                                                <span className={styles.priceStart}>Mulai dari</span>
-                                                <span className={styles.priceValue}>{formatRp(service.base_price)}</span>
-                                            </div>
-                                        </div>
-                                        <h3 className={styles.serviceTitle}>{service.title}</h3>
-                                        <p className={styles.serviceDesc}>{service.description}</p>
-                                        <a href={`mailto:${profile.email}?subject=Tanya Jasa: ${service.title}`} className={styles.contactBtn}>
-                                            Tanya Jasa Ini
-                                        </a>
-                                    </div>
-                                ))}
-                            </div>
-                        </section>
-                    )}
-
                 </div>
             </main>
 

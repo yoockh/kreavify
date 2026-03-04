@@ -144,6 +144,33 @@
     font-size: 0.875rem;
 }
 
+.errorBox {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    text-align: center;
+    color: var(--danger);
+    font-weight: 500;
+}
+
+.upgradeLink {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, var(--primary), #8b5cf6);
+    color: white;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.upgradeLink:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+}
+
 .resultContainer {
     background: var(--bg-color);
     border-radius: 0.75rem;
