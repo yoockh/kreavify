@@ -11,7 +11,6 @@ export default function CreateInvoice() {
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    // AI Modal state
     const [isAIModalOpen, setIsAIModalOpen] = useState(false);
     const [activeItemIndex, setActiveItemIndex] = useState(null);
 
@@ -81,7 +80,6 @@ export default function CreateInvoice() {
         e.preventDefault();
         setLoading(true);
 
-        // Filter empty items
         const validItems = formData.items.filter(i => i.description && i.unit_price > 0);
         if (validItems.length === 0) {
             alert('Minimal ada 1 item jasa yang diisi');
@@ -94,9 +92,7 @@ export default function CreateInvoice() {
                 ...formData,
                 items: validItems
             };
-            if (!payload.due_date) {
-                delete payload.due_date;
-            }
+            if (!payload.due_date) delete payload.due_date;
             if (!payload.client_email) delete payload.client_email;
             if (!payload.client_phone) delete payload.client_phone;
 
@@ -212,7 +208,7 @@ export default function CreateInvoice() {
                                         </div>
 
                                         <div className={styles.formGroup} style={{ flex: 1 }}>
-                                            <label className="flex justify-between items-center w-full">
+                                            <label style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                                                 <span>Harga Satuan (Rp)</span>
                                                 {item.description && (
                                                     <button
@@ -220,7 +216,7 @@ export default function CreateInvoice() {
                                                         onClick={() => openAIModal(index)}
                                                         className={styles.aiBtnText}
                                                     >
-                                                        <Brain size={12} className="mr-1" /> AI Suggest
+                                                        <Brain size={12} style={{ marginRight: '4px' }} /> AI Suggest
                                                     </button>
                                                 )}
                                             </label>
@@ -282,18 +278,18 @@ export default function CreateInvoice() {
 
                         <div className={styles.calcRight}>
                             <div className={styles.calcRow}>
-                                <span className="text-gray-500">Subtotal:</span>
-                                <span className="font-medium">{formatRp(calculateSubtotal())}</span>
+                                <span className={styles.calcLabel}>Subtotal:</span>
+                                <span className={styles.calcValue}>{formatRp(calculateSubtotal())}</span>
                             </div>
                             {formData.tax_percentage > 0 && (
                                 <div className={styles.calcRow}>
-                                    <span className="text-gray-500">Pajak ({formData.tax_percentage}%):</span>
-                                    <span className="font-medium">{formatRp(calculateSubtotal() * (formData.tax_percentage / 100))}</span>
+                                    <span className={styles.calcLabel}>Pajak ({formData.tax_percentage}%):</span>
+                                    <span className={styles.calcValue}>{formatRp(calculateSubtotal() * (formData.tax_percentage / 100))}</span>
                                 </div>
                             )}
                             <div className={`${styles.calcRow} ${styles.totalRow}`}>
-                                <span className="text-gray-700 font-bold">Total Pembayaran:</span>
-                                <span className="text-blue-600 font-bold text-xl">{formatRp(calculateTotal())}</span>
+                                <span className={styles.totalLabel}>Total Pembayaran:</span>
+                                <span className={styles.totalValue}>{formatRp(calculateTotal())}</span>
                             </div>
                         </div>
                     </div>
@@ -307,7 +303,7 @@ export default function CreateInvoice() {
                 </form>
             </div>
 
-            {/* Preview Kanan (Desktop only) */}
+            {/* Preview Kanan */}
             <div className={styles.previewSection}>
                 <div className={styles.previewSticky}>
                     <h3 className={styles.previewTitle}>Live Preview</h3>
@@ -316,8 +312,8 @@ export default function CreateInvoice() {
                         <div className={styles.docHeader}>
                             <div className={styles.docLogo}>INVOICE</div>
                             <div className={styles.docMeta}>
-                                <div className="text-sm"><b>Tanggal:</b> {new Date().toLocaleDateString('id-ID')}</div>
-                                <div className="text-sm"><b>Jatuh Tempo:</b> {formData.due_date ? new Date(formData.due_date).toLocaleDateString('id-ID') : '-'}</div>
+                                <div><b>Tanggal:</b> {new Date().toLocaleDateString('id-ID')}</div>
+                                <div><b>Jatuh Tempo:</b> {formData.due_date ? new Date(formData.due_date).toLocaleDateString('id-ID') : '-'}</div>
                             </div>
                         </div>
 
@@ -339,35 +335,35 @@ export default function CreateInvoice() {
                             <thead>
                                 <tr>
                                     <th>Deskripsi</th>
-                                    <th className="text-center">Qty</th>
-                                    <th className="text-right">Harga</th>
-                                    <th className="text-right">Total</th>
+                                    <th style={{ textAlign: 'center' }}>Qty</th>
+                                    <th style={{ textAlign: 'right' }}>Harga</th>
+                                    <th style={{ textAlign: 'right' }}>Total</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {formData.items.map((item, idx) => (
                                     <tr key={idx}>
                                         <td>{item.description || '-'}</td>
-                                        <td className="text-center">{item.qty}</td>
-                                        <td className="text-right">{formatRp(item.unit_price)}</td>
-                                        <td className="text-right">{formatRp(item.qty * item.unit_price)}</td>
+                                        <td style={{ textAlign: 'center' }}>{item.qty}</td>
+                                        <td style={{ textAlign: 'right' }}>{formatRp(item.unit_price)}</td>
+                                        <td style={{ textAlign: 'right' }}>{formatRp(item.qty * item.unit_price)}</td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
 
                         <div className={styles.docTotals}>
-                            <div className="flex justify-between py-1">
+                            <div className={styles.docTotalRow}>
                                 <span>Subtotal</span>
                                 <span>{formatRp(calculateSubtotal())}</span>
                             </div>
-                            <div className="flex justify-between py-1">
+                            <div className={styles.docTotalRow}>
                                 <span>Pajak ({formData.tax_percentage}%)</span>
                                 <span>{formatRp(calculateSubtotal() * (formData.tax_percentage / 100))}</span>
                             </div>
-                            <div className="flex justify-between py-2 border-t font-bold text-lg mt-1">
+                            <div className={styles.docTotalRowBold}>
                                 <span>Total</span>
-                                <span className="text-blue-600">{formatRp(calculateTotal())}</span>
+                                <span className={styles.totalValue}>{formatRp(calculateTotal())}</span>
                             </div>
                         </div>
 
@@ -378,7 +374,7 @@ export default function CreateInvoice() {
                             </div>
                         )}
 
-                        <div className="mt-8 pt-4 border-t-2 border-dashed border-gray-300 text-center text-sm text-gray-400">
+                        <div className={styles.docFooterLine}>
                             Dibuat dengan <b>Kreavify</b>
                         </div>
                     </div>

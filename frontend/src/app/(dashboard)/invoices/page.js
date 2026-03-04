@@ -3,14 +3,18 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { getInvoices, deleteInvoice, sendInvoice, cancelInvoice } from '@/lib/api';
 import { FileText, Plus, Search, MoreVertical, Copy, Trash2, Send, XCircle } from 'lucide-react';
+import ConfirmDialog from '@/components/ConfirmDialog';
 import styles from './page.module.css';
 
 export default function InvoicesList() {
     const [invoices, setInvoices] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [filter, setFilter] = useState(''); // '', 'draft', 'sent', 'paid', 'cancelled'
+    const [filter, setFilter] = useState('');
     const [search, setSearch] = useState('');
     const [activeMenu, setActiveMenu] = useState(null);
+
+    // Confirm dialog state
+    const [confirmDialog, setConfirmDialog] = useState({ open: false, title: '', message: '', variant: 'danger', onConfirm: null });
 
     const fetchInvoices = async () => {
         try {
@@ -40,33 +44,45 @@ export default function InvoicesList() {
         else setActiveMenu(id);
     };
 
+    const showConfirm = (title, message, variant, onConfirm) => {
+        setConfirmDialog({ open: true, title, message, variant, onConfirm });
+    };
+
     const handleAction = async (action, id) => {
         setActiveMenu(null);
         try {
             if (action === 'delete') {
-                if (confirm('Hapus draft ini?')) await deleteInvoice(id);
+                showConfirm('Hapus Draft Invoice', 'Apakah kamu yakin ingin menghapus draft invoice ini? Aksi ini tidak dapat dibatalkan.', 'danger', async () => {
+                    await deleteInvoice(id);
+                    setConfirmDialog({ ...confirmDialog, open: false });
+                    fetchInvoices();
+                });
             } else if (action === 'send') {
-                if (confirm('Kirim invoice ke klien?')) {
+                showConfirm('Kirim Invoice', 'Invoice akan dikirim ke klien dan link pembayaran akan dibuat. Lanjutkan?', 'warning', async () => {
                     const res = await sendInvoice(id);
+                    setConfirmDialog({ ...confirmDialog, open: false });
                     if (res.ok) {
                         const data = await res.json();
-                        alert(`Link pembayaran: ${data.payment_url}`);
+                        navigator.clipboard.writeText(data.payment_url);
+                        fetchInvoices();
                     }
-                }
+                    fetchInvoices();
+                });
             } else if (action === 'cancel') {
-                if (confirm('Batalkan invoice ini?')) await cancelInvoice(id);
+                showConfirm('Batalkan Invoice', 'Apakah kamu yakin ingin membatalkan invoice ini? Klien tidak akan bisa membayar lagi.', 'danger', async () => {
+                    await cancelInvoice(id);
+                    setConfirmDialog({ ...confirmDialog, open: false });
+                    fetchInvoices();
+                });
             } else if (action === 'copyUrl') {
-                // Find slug
                 const inv = invoices.find(i => i.id === id);
                 if (inv) {
                     const url = `${window.location.origin}/pay/${inv.slug}`;
                     navigator.clipboard.writeText(url);
-                    alert('Link pembayaran disalin!');
                 }
             }
-            fetchInvoices();
         } catch (e) {
-            alert('Terjadi kesalahan');
+            console.error(e);
         }
     };
 
@@ -120,7 +136,7 @@ export default function InvoicesList() {
                         </thead>
                         <tbody>
                             {loading ? (
-                                <tr><td colSpan="6" className="text-center py-4">Memuat...</td></tr>
+                                <tr><td colSpan="6" style={{ textAlign: 'center', padding: '1rem' }}>Memuat...</td></tr>
                             ) : invoices.length === 0 ? (
                                 <tr>
                                     <td colSpan="6" className={styles.emptyState}>
@@ -131,9 +147,9 @@ export default function InvoicesList() {
                             ) : (
                                 invoices.map(inv => (
                                     <tr key={inv.id}>
-                                        <td className="font-medium text-blue-600">{inv.invoice_number || 'Draft'}</td>
+                                        <td style={{ fontWeight: 500, color: 'var(--primary)' }}>{inv.invoice_number || 'Draft'}</td>
                                         <td>{inv.client_name}</td>
-                                        <td className="font-semibold">{formatRp(inv.total)}</td>
+                                        <td style={{ fontWeight: 600 }}>{formatRp(inv.total)}</td>
                                         <td>
                                             <span className={`${styles.badge} ${styles['badge-' + inv.status]}`}>
                                                 {inv.status === 'draft' ? 'Draft' :
@@ -141,7 +157,7 @@ export default function InvoicesList() {
                                                         inv.status === 'paid' ? 'Dibayar' : 'Dibatalkan'}
                                             </span>
                                         </td>
-                                        <td className="text-muted text-sm">{new Date(inv.created_at).toLocaleDateString('id-ID')}</td>
+                                        <td style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>{new Date(inv.created_at).toLocaleDateString('id-ID')}</td>
                                         <td className={styles.actionCell}>
                                             <div className={styles.menuContainer}>
                                                 <button onClick={() => toggleMenu(inv.id)} className={styles.menuBtn}>
@@ -159,7 +175,7 @@ export default function InvoicesList() {
                                                                 <button onClick={() => handleAction('send', inv.id)} className={styles.dropdownItem}>
                                                                     <Send size={16} /> Kirim ke Klien
                                                                 </button>
-                                                                <button onClick={() => handleAction('delete', inv.id)} className={`${styles.dropdownItem} text-red-600`}>
+                                                                <button onClick={() => handleAction('delete', inv.id)} className={`${styles.dropdownItem} ${styles.dropdownDanger}`}>
                                                                     <Trash2 size={16} /> Hapus
                                                                 </button>
                                                             </>
@@ -170,7 +186,7 @@ export default function InvoicesList() {
                                                                 <button onClick={() => handleAction('copyUrl', inv.id)} className={styles.dropdownItem}>
                                                                     <Copy size={16} /> Salin Link Bayar
                                                                 </button>
-                                                                <button onClick={() => handleAction('cancel', inv.id)} className={`${styles.dropdownItem} text-red-600`}>
+                                                                <button onClick={() => handleAction('cancel', inv.id)} className={`${styles.dropdownItem} ${styles.dropdownDanger}`}>
                                                                     <XCircle size={16} /> Batalkan
                                                                 </button>
                                                             </>
@@ -186,6 +202,15 @@ export default function InvoicesList() {
                     </table>
                 </div>
             </div>
+
+            <ConfirmDialog
+                isOpen={confirmDialog.open}
+                onClose={() => setConfirmDialog({ ...confirmDialog, open: false })}
+                onConfirm={confirmDialog.onConfirm}
+                title={confirmDialog.title}
+                message={confirmDialog.message}
+                variant={confirmDialog.variant}
+            />
         </div>
     );
 }

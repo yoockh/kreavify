@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 import { getServices, createService, updateService, deleteService } from '@/lib/api';
 import ServiceCard from '@/components/ServiceCard';
 import AIPricingModal from '@/components/AIPricingModal';
-import { Plus, X } from 'lucide-react';
+import { Plus, X, Briefcase } from 'lucide-react';
+import ConfirmDialog from '@/components/ConfirmDialog';
 import styles from './page.module.css';
 
 export default function ServicesPage() {
@@ -12,6 +13,7 @@ export default function ServicesPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isAIModalOpen, setIsAIModalOpen] = useState(false);
     const [editingId, setEditingId] = useState(null);
+    const [confirmDialog, setConfirmDialog] = useState({ open: false, title: '', message: '', variant: 'danger', onConfirm: null });
 
     const [formData, setFormData] = useState({
         title: '',
@@ -83,13 +85,21 @@ export default function ServicesPage() {
     };
 
     const handleDelete = async (id) => {
-        if (!confirm('Yakin ingin menghapus jasa ini?')) return;
-        try {
-            await deleteService(id);
-            fetchServices();
-        } catch (e) {
-            alert('Gagal menghapus jasa');
-        }
+        setConfirmDialog({
+            open: true,
+            title: 'Hapus Jasa',
+            message: 'Apakah kamu yakin ingin menghapus jasa ini? Aksi ini tidak dapat dibatalkan.',
+            variant: 'danger',
+            onConfirm: async () => {
+                try {
+                    await deleteService(id);
+                    fetchServices();
+                } catch (e) {
+                    console.error(e);
+                }
+                setConfirmDialog(prev => ({ ...prev, open: false }));
+            }
+        });
     };
 
     const handleApplyAIPrice = (price) => {
@@ -221,6 +231,15 @@ export default function ServicesPage() {
                 onClose={() => setIsAIModalOpen(false)}
                 initialDescription={formData.description}
                 onApplyPrice={handleApplyAIPrice}
+            />
+
+            <ConfirmDialog
+                isOpen={confirmDialog.open}
+                onClose={() => setConfirmDialog(prev => ({ ...prev, open: false }))}
+                onConfirm={confirmDialog.onConfirm}
+                title={confirmDialog.title}
+                message={confirmDialog.message}
+                variant={confirmDialog.variant}
             />
         </div>
     );

@@ -4,6 +4,7 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { getInvoice, sendInvoice, cancelInvoice } from '@/lib/api';
 import { Send, Copy, XCircle, ArrowLeft, Download, ExternalLink } from 'lucide-react';
+import ConfirmDialog from '@/components/ConfirmDialog';
 import styles from './page.module.css';
 
 export default function InvoiceDetail() {
@@ -11,6 +12,7 @@ export default function InvoiceDetail() {
     const router = useRouter();
     const [invoice, setInvoice] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [confirmDialog, setConfirmDialog] = useState({ open: false, title: '', message: '', variant: 'danger', onConfirm: null });
 
     const fetchDetail = async () => {
         try {
@@ -19,7 +21,6 @@ export default function InvoiceDetail() {
                 const data = await res.json();
                 setInvoice(data);
             } else {
-                alert('Invoice tidak ditemukan');
                 router.push('/invoices');
             }
         } catch (e) {
@@ -33,46 +34,60 @@ export default function InvoiceDetail() {
         fetchDetail();
     }, [id]);
 
-    const handleSend = async () => {
-        if (confirm('Kirim invoice ke klien? Status akan berubah menjadi Terkirim dan tidak dapat diubah lagi.')) {
-            setLoading(true);
-            try {
-                const res = await sendInvoice(id);
-                if (res.ok) {
-                    const data = await res.json();
-                    alert(`Link pembayaran berhasil dibuat!\n\n${data.payment_url}`);
-                    fetchDetail();
+    const handleSend = () => {
+        setConfirmDialog({
+            open: true,
+            title: 'Kirim Invoice',
+            message: 'Invoice akan dikirim ke klien dan link pembayaran akan dibuat. Status akan berubah menjadi Terkirim. Lanjutkan?',
+            variant: 'warning',
+            onConfirm: async () => {
+                setConfirmDialog(prev => ({ ...prev, open: false }));
+                setLoading(true);
+                try {
+                    const res = await sendInvoice(id);
+                    if (res.ok) {
+                        const data = await res.json();
+                        navigator.clipboard.writeText(data.payment_url);
+                        fetchDetail();
+                    }
+                } catch (e) {
+                    console.error(e);
                 }
-            } catch (e) {
-                alert('Gagal mengirim');
+                setLoading(false);
             }
-            setLoading(false);
-        }
+        });
     };
 
-    const handleCancel = async () => {
-        if (confirm('Batalkan invoice ini? Invoice yang dibatalkan tidak bisa dibayar klien.')) {
-            setLoading(true);
-            try {
-                await cancelInvoice(id);
-                fetchDetail();
-            } catch (e) {
-                alert('Gagal membatalkan');
+    const handleCancel = () => {
+        setConfirmDialog({
+            open: true,
+            title: 'Batalkan Invoice',
+            message: 'Invoice yang dibatalkan tidak bisa dibayar klien. Yakin ingin membatalkan?',
+            variant: 'danger',
+            onConfirm: async () => {
+                setConfirmDialog(prev => ({ ...prev, open: false }));
+                setLoading(true);
+                try {
+                    await cancelInvoice(id);
+                    fetchDetail();
+                } catch (e) {
+                    console.error(e);
+                }
+                setLoading(false);
             }
-            setLoading(false);
-        }
+        });
     };
 
     const copyUrl = () => {
         const url = `${window.location.origin}/pay/${invoice.slug}`;
         navigator.clipboard.writeText(url);
-        alert('Link pembayaran berhasil disalin ke clipboard!');
     };
 
-    if (loading) return <div className="p-8">Memuat detail invoice...</div>;
+    if (loading) return <div style={{ padding: '2rem', color: 'var(--text-muted)' }}>Memuat detail invoice...</div>;
     if (!invoice) return null;
 
     const formatRp = (val) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(val);
+    const creator = invoice.creator || {};
 
     return (
         <div className={styles.container}>
@@ -83,7 +98,7 @@ export default function InvoiceDetail() {
             <div className={styles.header}>
                 <div>
                     <h1 className={styles.title}>Invoice #{invoice.invoice_number || 'Draft'}</h1>
-                    <div className="mt-2">
+                    <div style={{ marginTop: '0.5rem' }}>
                         <span className={`${styles.badge} ${styles['badge-' + invoice.status]}`}>
                             {invoice.status.toUpperCase()}
                         </span>
@@ -93,7 +108,7 @@ export default function InvoiceDetail() {
                 <div className={styles.actions}>
                     {invoice.status === 'draft' && (
                         <button onClick={handleSend} className={styles.btnPrimary}>
-                            <Send size={16} /> Kirim ke Klien & Buat Link Bayar
+                            <Send size={16} /> Kirim ke Klien
                         </button>
                     )}
 
@@ -123,21 +138,21 @@ export default function InvoiceDetail() {
                     <div className={styles.docHeader}>
                         <div>
                             <div className={styles.docLogo}>INVOICE</div>
-                            <div className="mt-2 text-gray-500">#{invoice.invoice_number || 'DRAFT'}</div>
+                            <div style={{ marginTop: '0.5rem', color: 'var(--text-muted)' }}>#{invoice.invoice_number || 'DRAFT'}</div>
                         </div>
                         <div className={styles.docMeta}>
                             <div><b>Tanggal Dibuat:</b> {new Date(invoice.created_at).toLocaleDateString('id-ID')}</div>
                             {invoice.due_date && <div><b>Jatuh Tempo:</b> {new Date(invoice.due_date).toLocaleDateString('id-ID')}</div>}
-                            {invoice.paid_at && <div className="text-green-600"><b>Lunas Pada:</b> {new Date(invoice.paid_at).toLocaleDateString('id-ID')}</div>}
+                            {invoice.paid_at && <div style={{ color: '#059669' }}><b>Lunas Pada:</b> {new Date(invoice.paid_at).toLocaleDateString('id-ID')}</div>}
                         </div>
                     </div>
 
                     <div className={styles.docInfo}>
                         <div className={styles.infoBox}>
                             <span className={styles.infoLabel}>Dari:</span>
-                            <strong>{invoice.creator.display_name}</strong>
-                            <p>{invoice.creator.profession}</p>
-                            <p>{invoice.creator.email}</p>
+                            <strong>{creator.display_name || '-'}</strong>
+                            <p>{creator.profession || ''}</p>
+                            <p>{creator.email || ''}</p>
                         </div>
                         <div className={styles.infoBox}>
                             <span className={styles.infoLabel}>Kepada:</span>
@@ -151,37 +166,37 @@ export default function InvoiceDetail() {
                         <thead>
                             <tr>
                                 <th>Deskripsi</th>
-                                <th className="text-center">Qty</th>
-                                <th className="text-right">Harga</th>
-                                <th className="text-right">Total</th>
+                                <th style={{ textAlign: 'center' }}>Qty</th>
+                                <th style={{ textAlign: 'right' }}>Harga</th>
+                                <th style={{ textAlign: 'right' }}>Total</th>
                             </tr>
                         </thead>
                         <tbody>
                             {invoice.items.map((item, idx) => (
                                 <tr key={idx}>
                                     <td>{item.description}</td>
-                                    <td className="text-center">{item.qty}</td>
-                                    <td className="text-right">{formatRp(item.unit_price)}</td>
-                                    <td className="text-right">{formatRp(item.qty * item.unit_price)}</td>
+                                    <td style={{ textAlign: 'center' }}>{item.qty}</td>
+                                    <td style={{ textAlign: 'right' }}>{formatRp(item.unit_price)}</td>
+                                    <td style={{ textAlign: 'right' }}>{formatRp(item.qty * item.unit_price)}</td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
 
                     <div className={styles.docTotals}>
-                        <div className="flex justify-between py-2 text-gray-600">
+                        <div className={styles.docTotalRow}>
                             <span>Subtotal</span>
                             <span>{formatRp(invoice.subtotal)}</span>
                         </div>
                         {invoice.tax_amount > 0 && (
-                            <div className="flex justify-between py-2 text-gray-600">
+                            <div className={styles.docTotalRow}>
                                 <span>Pajak</span>
                                 <span>{formatRp(invoice.tax_amount)}</span>
                             </div>
                         )}
-                        <div className="flex justify-between py-3 border-t-2 border-gray-800 font-bold text-lg mt-2">
+                        <div className={styles.docTotalRowBold}>
                             <span>Total Tagihan</span>
-                            <span className="text-blue-600">{formatRp(invoice.total)}</span>
+                            <span style={{ color: 'var(--primary)' }}>{formatRp(invoice.total)}</span>
                         </div>
                     </div>
 
@@ -194,8 +209,8 @@ export default function InvoiceDetail() {
                         )}
 
                         <div className={styles.docPaymentInfo}>
-                            <strong>Metode Pencairan (Info Internal Klien):</strong>
-                            <p>Transfer ke: {invoice.creator.bank_name} - {invoice.creator.bank_account_number} a.n {invoice.creator.bank_account_name}</p>
+                            <strong>Metode Pencairan (Info Internal):</strong>
+                            <p>Transfer ke: {creator.bank_name || '-'} - {creator.bank_account_number || '-'} a.n {creator.bank_account_name || '-'}</p>
                         </div>
                     </div>
 
@@ -204,6 +219,15 @@ export default function InvoiceDetail() {
                     </div>
                 </div>
             </div>
+
+            <ConfirmDialog
+                isOpen={confirmDialog.open}
+                onClose={() => setConfirmDialog(prev => ({ ...prev, open: false }))}
+                onConfirm={confirmDialog.onConfirm}
+                title={confirmDialog.title}
+                message={confirmDialog.message}
+                variant={confirmDialog.variant}
+            />
         </div>
     );
 }

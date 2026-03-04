@@ -4,6 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { LayoutDashboard, FileText, Briefcase, Image as ImageIcon, User, ExternalLink, LogOut, PanelLeftClose, PanelLeftOpen, Sun, Moon } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
+import ConfirmDialog from '@/components/ConfirmDialog';
 import styles from './sidebar.module.css';
 
 export default function Sidebar() {
@@ -12,6 +13,7 @@ export default function Sidebar() {
     const [collapsed, setCollapsed] = useState(false);
     const [darkMode, setDarkMode] = useState(false);
     const [slug, setSlug] = useState('');
+    const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
     useEffect(() => {
         const saved = localStorage.getItem('sidebar_collapsed');
@@ -61,57 +63,68 @@ export default function Sidebar() {
     ];
 
     return (
-        <div className={`${styles.sidebar} ${collapsed ? styles.collapsed : ''}`}>
-            <div className={styles.logoRow}>
-                {!collapsed && <span className={styles.logoText}>Kreavify</span>}
-                <button className={styles.collapseBtn} onClick={() => setCollapsed(!collapsed)} title={collapsed ? 'Expand' : 'Collapse'}>
-                    {collapsed ? <PanelLeftOpen size={20} /> : <PanelLeftClose size={20} />}
-                </button>
-            </div>
+        <>
+            <div className={`${styles.sidebar} ${collapsed ? styles.collapsed : ''}`}>
+                <div className={styles.logoRow}>
+                    {!collapsed && <span className={styles.logoText}>Kreavify</span>}
+                    <button className={styles.collapseBtn} onClick={() => setCollapsed(!collapsed)} title={collapsed ? 'Expand' : 'Collapse'}>
+                        {collapsed ? <PanelLeftOpen size={20} /> : <PanelLeftClose size={20} />}
+                    </button>
+                </div>
 
-            <nav className={styles.nav}>
-                {menuItems.map((item) => {
-                    const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href));
-                    const Icon = item.icon;
+                <nav className={styles.nav}>
+                    {menuItems.map((item) => {
+                        const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href));
+                        const Icon = item.icon;
 
-                    return (
-                        <Link
-                            key={item.href}
-                            href={item.href}
-                            className={`${styles.navItem} ${isActive ? styles.active : ''}`}
-                            title={collapsed ? item.label : ''}
+                        return (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                className={`${styles.navItem} ${isActive ? styles.active : ''}`}
+                                title={collapsed ? item.label : ''}
+                            >
+                                <Icon size={20} className={styles.icon} />
+                                {!collapsed && <span>{item.label}</span>}
+                            </Link>
+                        );
+                    })}
+                </nav>
+
+                <div className={styles.footer}>
+                    <button className={styles.themeToggle} onClick={toggleDarkMode} title={darkMode ? 'Light Mode' : 'Dark Mode'}>
+                        {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+                        {!collapsed && <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>}
+                    </button>
+
+                    {slug && (
+                        <a
+                            href={`/p/${slug}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.footerLink}
+                            title={collapsed ? 'Profil Publik' : ''}
                         >
-                            <Icon size={20} className={styles.icon} />
-                            {!collapsed && <span>{item.label}</span>}
-                        </Link>
-                    );
-                })}
-            </nav>
+                            <ExternalLink size={18} className={styles.icon} />
+                            {!collapsed && <span>Profil Publik</span>}
+                        </a>
+                    )}
 
-            <div className={styles.footer}>
-                <button className={styles.themeToggle} onClick={toggleDarkMode} title={darkMode ? 'Light Mode' : 'Dark Mode'}>
-                    {darkMode ? <Sun size={18} /> : <Moon size={18} />}
-                    {!collapsed && <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>}
-                </button>
-
-                {slug && (
-                    <a
-                        href={`/p/${slug}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={styles.footerLink}
-                        title={collapsed ? 'Profil Publik' : ''}
-                    >
-                        <ExternalLink size={18} className={styles.icon} />
-                        {!collapsed && <span>Profil Publik</span>}
-                    </a>
-                )}
-
-                <button onClick={handleLogout} className={styles.logoutBtn} title={collapsed ? 'Logout' : ''}>
-                    <LogOut size={18} className={styles.icon} />
-                    {!collapsed && <span>Logout</span>}
-                </button>
+                    <button onClick={() => setShowLogoutConfirm(true)} className={styles.logoutBtn} title={collapsed ? 'Logout' : ''}>
+                        <LogOut size={18} className={styles.icon} />
+                        {!collapsed && <span>Logout</span>}
+                    </button>
+                </div>
             </div>
-        </div>
+
+            <ConfirmDialog
+                isOpen={showLogoutConfirm}
+                onClose={() => setShowLogoutConfirm(false)}
+                onConfirm={handleLogout}
+                title="Logout"
+                message="Apakah kamu yakin ingin keluar dari akun Kreavify?"
+                variant="warning"
+            />
+        </>
     );
 }

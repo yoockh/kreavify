@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.http import JsonResponse
+from apps.users.upload_views import ImageUploadView
 
 def healthcheck(request):
     return JsonResponse({"status": "ok"})
@@ -16,4 +17,5 @@ urlpatterns = [
     path('api/dashboard/', include('apps.dashboard.urls')),
     path('api/portfolio/', include('apps.services.portfolio_urls')),
     path('api/p/', include('apps.users.public_urls')),
+    path('api/upload/', ImageUploadView.as_view()),
 ]

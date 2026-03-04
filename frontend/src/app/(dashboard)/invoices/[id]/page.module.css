@@ -128,7 +128,8 @@
 }
 
 .document {
-    background: white;
+    background: var(--white);
+    color: var(--text-main);
     width: 100%;
     max-width: 800px;
     min-height: 1000px;
@@ -137,7 +138,6 @@
     border-radius: 0.25rem;
     position: relative;
     font-size: 0.9375rem;
-    color: #1f2937;
 }
 
 @media print {
@@ -159,7 +159,7 @@
     align-items: flex-start;
     margin-bottom: 3rem;
     padding-bottom: 1.5rem;
-    border-bottom: 2px solid #e5e7eb;
+    border-bottom: 2px solid var(--border-color);
 }
 
 .docLogo {
@@ -172,7 +172,7 @@
 .docMeta {
     text-align: right;
     font-size: 0.875rem;
-    color: #4b5563;
+    color: var(--text-muted);
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
@@ -193,7 +193,7 @@
 .infoLabel {
     text-transform: uppercase;
     font-size: 0.75rem;
-    color: #6b7280;
+    color: var(--text-muted);
     font-weight: 700;
     margin-bottom: 0.25rem;
 }
@@ -206,19 +206,19 @@
 
 .docTable th {
     padding: 0.75rem;
-    background: #f9fafb;
-    color: #374151;
+    background: var(--bg-color);
+    color: var(--text-main);
     font-weight: 600;
     text-transform: uppercase;
     font-size: 0.75rem;
-    border-bottom: 2px solid #e5e7eb;
-    border-top: 1px solid #e5e7eb;
+    border-bottom: 2px solid var(--border-color);
+    border-top: 1px solid var(--border-color);
     text-align: left;
 }
 
 .docTable td {
     padding: 1rem 0.75rem;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .docTotals {
@@ -226,6 +226,24 @@
     max-width: 300px;
     margin-left: auto;
     margin-bottom: 3rem;
+}
+
+.docTotalRow {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    color: var(--text-muted);
+}
+
+.docTotalRowBold {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-top: 2px solid var(--text-main);
+    font-weight: 700;
+    font-size: 1.125rem;
+    margin-top: 0.5rem;
+    color: var(--text-main);
 }
 
 .docFooterBox {
@@ -238,18 +256,18 @@
 .docNotes,
 .docPaymentInfo {
     padding: 1rem;
-    background: #f9fafb;
+    background: var(--bg-color);
     border-radius: 0.5rem;
     border-left: 4px solid var(--primary);
     font-size: 0.875rem;
-    color: #4b5563;
+    color: var(--text-muted);
 }
 
 .docNotes strong,
 .docPaymentInfo strong {
     display: block;
     margin-bottom: 0.25rem;
-    color: #1f2937;
+    color: var(--text-main);
 }
 
 .watermark {
@@ -258,7 +276,7 @@
     left: 0;
     width: 100%;
     text-align: center;
-    color: #e5e7eb;
+    color: var(--border-color);
     font-size: 0.875rem;
     font-weight: 600;
 }

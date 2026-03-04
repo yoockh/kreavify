@@ -30,6 +30,14 @@ a {
   text-decoration: none;
 }
 
+input,
+textarea,
+select {
+  background-color: var(--white);
+  color: var(--text-main);
+  font-family: inherit;
+}
+
 button {
   font-family: inherit;
   cursor: pointer;

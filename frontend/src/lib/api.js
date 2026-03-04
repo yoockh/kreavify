@@ -3,15 +3,15 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
 export async function fetchAPI(endpoint, options = {}) {
   const url = `${API_URL}${endpoint}`;
   const headers = { 'Content-Type': 'application/json', ...options.headers };
-  
+
   if (typeof window !== 'undefined') {
     const Cookies = (await import('js-cookie')).default;
     const token = Cookies.get('access_token');
     if (token) headers['Authorization'] = `Bearer ${token}`;
   }
-  
+
   let res = await fetch(url, { ...options, headers });
-  
+
   if (res.status === 401 && typeof window !== 'undefined') {
     const Cookies = (await import('js-cookie')).default;
     const refresh = Cookies.get('refresh_token');
@@ -33,7 +33,7 @@ export async function fetchAPI(endpoint, options = {}) {
       }
     }
   }
-  
+
   return res;
 }
 
@@ -173,4 +173,27 @@ export async function createCheckout(slug) {
   return fetchAPI(`/pay/${slug}/checkout/`, {
     method: 'POST'
   });
+}
+
+// Image Upload (Cloudinary)
+export async function uploadImage(file, folder = 'general') {
+  const formData = new FormData();
+  formData.append('image', file);
+  formData.append('folder', folder);
+
+  const url = `${API_URL}/upload/`;
+  const headers = {};
+
+  if (typeof window !== 'undefined') {
+    const Cookies = (await import('js-cookie')).default;
+    const token = Cookies.get('access_token');
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+  }
+
+  const res = await fetch(url, {
+    method: 'POST',
+    headers,
+    body: formData,
+  });
+  return res;
 }

@@ -3,17 +3,19 @@ from .models import Invoice
 from apps.users.serializers import UserSerializer
 
 class InvoiceSerializer(serializers.ModelSerializer):
+    creator = UserSerializer(source='user', read_only=True)
+
     class Meta:
         model = Invoice
         fields = [
             'id', 'invoice_number', 'client_name', 'client_email', 'client_phone',
             'items', 'subtotal', 'tax_percentage', 'tax_amount', 'total',
             'notes', 'status', 'due_date', 'paid_at', 'payment_method',
-            'slug', 'created_at', 'updated_at'
+            'slug', 'created_at', 'updated_at', 'creator'
         ]
         read_only_fields = [
             'id', 'invoice_number', 'subtotal', 'tax_amount', 'total',
-            'status', 'paid_at', 'payment_method', 'slug', 'created_at', 'updated_at'
+            'status', 'paid_at', 'payment_method', 'slug', 'created_at', 'updated_at', 'creator'
         ]
 
 class PublicInvoiceSerializer(serializers.ModelSerializer):

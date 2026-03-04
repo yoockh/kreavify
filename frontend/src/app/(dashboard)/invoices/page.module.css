@@ -110,11 +110,12 @@
     border-radius: 0.75rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     border: 1px solid var(--border-color);
-    overflow: hidden;
+    overflow: visible;
 }
 
 .tableResponsive {
     overflow-x: auto;
+    overflow-y: visible;
 }
 
 .table {
@@ -244,6 +245,14 @@
 
 .dropdownItem:hover {
     background: var(--bg-color);
+}
+
+.dropdownDanger {
+    color: #ef4444 !important;
+}
+
+.dropdownDanger:hover {
+    background: rgba(239, 68, 68, 0.08) !important;
 }
 
 @media (max-width: 640px) {

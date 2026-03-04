@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { getProfile, updateProfile } from '@/lib/api';
+import { useState, useEffect, useRef } from 'react';
+import { getProfile, updateProfile, uploadImage } from '@/lib/api';
+import { Camera, Upload } from 'lucide-react';
 import styles from './page.module.css';
 
 export default function ProfilePage() {
@@ -11,6 +12,7 @@ export default function ProfilePage() {
         profession: 'designer',
         phone: '',
         avatar_url: '',
+        banner_url: '',
         slug: '',
         bank_name: '',
         bank_account_number: '',
@@ -20,6 +22,10 @@ export default function ProfilePage() {
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [msg, setMsg] = useState({ type: '', text: '' });
+    const [uploadingAvatar, setUploadingAvatar] = useState(false);
+    const [uploadingBanner, setUploadingBanner] = useState(false);
+    const avatarInputRef = useRef(null);
+    const bannerInputRef = useRef(null);
 
     useEffect(() => {
         getProfile()
@@ -31,6 +37,7 @@ export default function ProfilePage() {
                     profession: data.profession || 'designer',
                     phone: data.phone || '',
                     avatar_url: data.avatar_url || '',
+                    banner_url: data.banner_url || '',
                     slug: data.slug || '',
                     bank_name: data.bank_name || '',
                     bank_account_number: data.bank_account_number || '',
@@ -42,6 +49,46 @@ export default function ProfilePage() {
     }, []);
 
     const handleChange = (e) => setProfile({ ...profile, [e.target.name]: e.target.value });
+
+    const handleAvatarUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        setUploadingAvatar(true);
+        try {
+            const res = await uploadImage(file, 'avatars');
+            if (res.ok) {
+                const data = await res.json();
+                setProfile(prev => ({ ...prev, avatar_url: data.url }));
+                setMsg({ type: 'success', text: 'Foto profil berhasil diupload' });
+            } else {
+                const err = await res.json();
+                setMsg({ type: 'error', text: err.error || 'Gagal upload foto' });
+            }
+        } catch (e) {
+            setMsg({ type: 'error', text: 'Gagal upload foto' });
+        }
+        setUploadingAvatar(false);
+    };
+
+    const handleBannerUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        setUploadingBanner(true);
+        try {
+            const res = await uploadImage(file, 'banners');
+            if (res.ok) {
+                const data = await res.json();
+                setProfile(prev => ({ ...prev, banner_url: data.url }));
+                setMsg({ type: 'success', text: 'Banner berhasil diupload' });
+            } else {
+                const err = await res.json();
+                setMsg({ type: 'error', text: err.error || 'Gagal upload banner' });
+            }
+        } catch (e) {
+            setMsg({ type: 'error', text: 'Gagal upload banner' });
+        }
+        setUploadingBanner(false);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -61,13 +108,65 @@ export default function ProfilePage() {
         setSaving(false);
     };
 
-    if (loading) return <div className="p-8">Memuat profil...</div>;
+    if (loading) return <div style={{ padding: '2rem', color: 'var(--text-muted)' }}>Memuat profil...</div>;
 
     return (
         <div className={styles.container}>
             <div className={styles.header}>
                 <h1 className={styles.title}>Pengaturan Profil</h1>
                 <p className={styles.subtitle}>Atur informasi publik dan metode pencairan dana</p>
+            </div>
+
+            {/* Banner Upload */}
+            <div className={styles.bannerSection}>
+                <div
+                    className={styles.bannerPreview}
+                    style={profile.banner_url ? { backgroundImage: `url(${profile.banner_url})` } : {}}
+                >
+                    <button
+                        type="button"
+                        className={styles.bannerUploadBtn}
+                        onClick={() => bannerInputRef.current?.click()}
+                        disabled={uploadingBanner}
+                    >
+                        <Upload size={16} /> {uploadingBanner ? 'Mengupload...' : 'Ganti Banner'}
+                    </button>
+                    <input
+                        ref={bannerInputRef}
+                        type="file"
+                        accept="image/*"
+                        onChange={handleBannerUpload}
+                        style={{ display: 'none' }}
+                    />
+                </div>
+
+                {/* Avatar Upload (overlapping banner) */}
+                <div className={styles.avatarSection}>
+                    <div className={styles.avatarWrapper}>
+                        {profile.avatar_url ? (
+                            <img src={profile.avatar_url} alt="Avatar" className={styles.avatarImg} />
+                        ) : (
+                            <div className={styles.avatarPlaceholder}>
+                                {profile.display_name?.charAt(0)?.toUpperCase() || '?'}
+                            </div>
+                        )}
+                        <button
+                            type="button"
+                            className={styles.avatarUploadBtn}
+                            onClick={() => avatarInputRef.current?.click()}
+                            disabled={uploadingAvatar}
+                        >
+                            <Camera size={14} />
+                        </button>
+                        <input
+                            ref={avatarInputRef}
+                            type="file"
+                            accept="image/*"
+                            onChange={handleAvatarUpload}
+                            style={{ display: 'none' }}
+                        />
+                    </div>
+                </div>
             </div>
 
             <form onSubmit={handleSubmit} className={styles.formContainer}>
@@ -105,14 +204,10 @@ export default function ProfilePage() {
                             <input type="text" name="phone" value={profile.phone} onChange={handleChange} className={styles.input} />
                         </div>
                         <div className={styles.formGroup}>
-                            <label>Avatar URL (Opsional)</label>
-                            <input type="url" name="avatar_url" value={profile.avatar_url} onChange={handleChange} className={styles.input} />
+                            <label>Slug URL (/p/{profile.slug})</label>
+                            <input type="text" name="slug" value={profile.slug} disabled className={styles.input} style={{ opacity: 0.6 }} />
+                            <small className={styles.helpText}>URL Profil Publik kamu: <a href={`/p/${profile.slug}`} target="_blank" style={{ color: 'var(--primary)' }}>/p/{profile.slug}</a></small>
                         </div>
-                    </div>
-                    <div className={styles.formGroup}>
-                        <label>Slug URL (/p/{profile.slug})</label>
-                        <input type="text" name="slug" value={profile.slug} disabled className={styles.input} style={{ background: '#f3f4f6' }} />
-                        <small className={styles.helpText}>URL Profil Publik kamu: <a href={`/p/${profile.slug}`} target="_blank" className="text-blue-500 hover:underline">/p/{profile.slug}</a></small>
                     </div>
                 </div>
 

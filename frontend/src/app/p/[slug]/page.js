@@ -1,31 +1,28 @@
-import { getPublicProfile } from '@/lib/api';
-import { Mail, Instagram, Globe, CheckCircle, ExternalLink } from 'lucide-react';
+import { Mail, CheckCircle } from 'lucide-react';
 import styles from './page.module.css';
 
+// Use internal backend URL for SSR (server-to-server), fallback to localhost
+const BACKEND_URL = process.env.BACKEND_INTERNAL_URL || 'http://127.0.0.1:8000/api';
+
 export default async function PublicProfilePage({ params }) {
-    const { slug } = params;
+    const { slug } = await params;
 
     let profile = null;
     try {
-        console.log(`Fetching profile for slug: ${slug}`);
-        const res = await getPublicProfile(slug);
-        console.log(`Response status: ${res.status}`);
+        const res = await fetch(`${BACKEND_URL}/p/${slug}/`, { cache: 'no-store' });
         if (res.ok) {
             profile = await res.json();
-            console.log("Profile data fetched successfully.");
-        } else {
-            console.error(`Failed to fetch: ${await res.text()}`);
         }
     } catch (e) {
-        console.error("Exception fetching profile:", e);
+        console.error('Exception fetching public profile:', e);
     }
 
     if (!profile) {
         return (
-            <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
-                <h1 className="text-4xl font-bold mb-4">404</h1>
-                <p className="text-gray-500 mb-6">Kreator tidak ditemukan.</p>
-                <a href="/" className="px-6 py-2 bg-blue-600 text-white rounded-lg">Ke Beranda Kreavify</a>
+            <div className={styles.container} style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                <h1 style={{ fontSize: '3rem', fontWeight: 800, marginBottom: '1rem', color: '#0f172a' }}>404</h1>
+                <p style={{ color: '#64748b', marginBottom: '1.5rem' }}>Kreator tidak ditemukan.</p>
+                <a href="/" style={{ padding: '0.625rem 1.5rem', background: 'var(--primary)', color: 'white', borderRadius: '0.5rem', textDecoration: 'none', fontWeight: 600 }}>Ke Beranda Kreavify</a>
             </div>
         );
     }
@@ -35,7 +32,10 @@ export default async function PublicProfilePage({ params }) {
     return (
         <div className={styles.container}>
             {/* Cover / Header Layer */}
-            <div className={styles.coverPhoto}></div>
+            <div
+                className={styles.coverPhoto}
+                style={profile.banner_url ? { backgroundImage: `url(${profile.banner_url})` } : {}}
+            ></div>
 
             <main className={styles.mainContent}>
                 {/* Profile Card Overlay */}
@@ -96,6 +96,15 @@ export default async function PublicProfilePage({ params }) {
                             <div className={styles.servicesGrid}>
                                 {profile.services.map(service => (
                                     <div key={service.id} className={styles.serviceCard}>
+                                        {service.image_url ? (
+                                            <div className={styles.serviceImageContainer}>
+                                                <img src={service.image_url} alt={service.title} className={styles.serviceImage} />
+                                            </div>
+                                        ) : (
+                                            <div className={styles.serviceImagePlaceholder}>
+                                                <span className={styles.servicePlaceholderText}>K</span>
+                                            </div>
+                                        )}
                                         <div className={styles.serviceHeader}>
                                             <span className={styles.serviceCat}>{service.category.replace('_', ' ')}</span>
                                             <div className={styles.priceRow}>

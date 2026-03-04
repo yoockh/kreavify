@@ -28,6 +28,7 @@ class User(AbstractUser):
     ], default='designer')
     phone = models.CharField(max_length=20, blank=True)
     avatar_url = models.URLField(blank=True)
+    banner_url = models.URLField(blank=True)
     slug = models.SlugField(unique=True, max_length=50, blank=True)
     
     # Bank info

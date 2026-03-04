@@ -4,7 +4,7 @@ from .models import Service, PortfolioItem
 class ServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Service
-        fields = ['id', 'title', 'description', 'base_price', 'category', 'is_active', 'created_at']
+        fields = ['id', 'title', 'description', 'base_price', 'category', 'is_active', 'image_url', 'created_at']
 
 class PortfolioItemSerializer(serializers.ModelSerializer):
     class Meta:
