@@ -94,8 +94,12 @@
     background-color: rgba(239, 68, 68, 0.1);
 }
 
+.closed {
+    transform: translateX(-100%);
+}
+
 .mobileMenuBtn {
-    display: none;
+    display: block;
     position: fixed;
     top: 1rem;
     left: 1rem;
@@ -118,10 +122,6 @@
 
     .open {
         transform: translateX(0);
-    }
-
-    .mobileMenuBtn {
-        display: block;
     }
 
     .overlay {

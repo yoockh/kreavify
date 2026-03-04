@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { register, login } from '@/lib/api';
 import styles from '../login/page.module.css'; // Reuse login styles
 
@@ -16,6 +17,8 @@ export default function RegisterPage() {
         password: '',
         profession: 'designer'
     });
+    const [agreedToTerms, setAgreedToTerms] = useState(false);
+    const [recaptchaToken, setRecaptchaToken] = useState(null);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -23,6 +26,18 @@ export default function RegisterPage() {
         e.preventDefault();
         setLoading(true);
         setError('');
+
+        if (!agreedToTerms) {
+            setError('Anda harus menyetujui Syarat & Ketentuan dan Kebijakan Privasi.');
+            setLoading(false);
+            return;
+        }
+
+        if (!recaptchaToken) {
+            setError('Selesaikan verifikasi reCAPTCHA terlebih dahulu.');
+            setLoading(false);
+            return;
+        }
 
         try {
             const res = await register(formData);
@@ -118,6 +133,28 @@ export default function RegisterPage() {
                             className={styles.input}
                             value={formData.password}
                             onChange={e => setFormData({ ...formData, password: e.target.value })}
+                        />
+                    </div>
+
+                    <div className={styles.formGroup}>
+                        <label className={styles.checkboxLabel}>
+                            <input
+                                type="checkbox"
+                                required
+                                checked={agreedToTerms}
+                                onChange={e => setAgreedToTerms(e.target.checked)}
+                                className={styles.checkbox}
+                            />
+                            <span>
+                                Saya setuju dengan <Link href="/terms" target="_blank" className={styles.link}>Syarat & Ketentuan</Link> dan <Link href="/privacy" target="_blank" className={styles.link}>Kebijakan Privasi</Link>
+                            </span>
+                        </label>
+                    </div>
+
+                    <div className={styles.formGroup} style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
+                        <ReCAPTCHA
+                            sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                            onChange={(token) => setRecaptchaToken(token)}
                         />
                     </div>
 

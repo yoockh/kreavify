@@ -9,8 +9,21 @@ import styles from './sidebar.module.css';
 export default function Sidebar() {
     const pathname = usePathname();
     const router = useRouter();
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
     const [slug, setSlug] = useState('');
+
+    useEffect(() => {
+        if (window.innerWidth <= 768) {
+            setIsOpen(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        const main = document.querySelector('main');
+        if (main && window.innerWidth > 768) {
+            main.style.marginLeft = isOpen ? '250px' : '0';
+        }
+    }, [isOpen]);
 
     useEffect(() => {
         // Get slug info for public profile link
@@ -41,7 +54,7 @@ export default function Sidebar() {
                 {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
 
-            <div className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
+            <div className={`${styles.sidebar} ${isOpen ? styles.open : styles.closed}`}>
                 <div className={styles.logo}>
                     Kreavify
                 </div>

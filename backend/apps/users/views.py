@@ -61,7 +61,7 @@ class PublicProfileView(generics.RetrieveAPIView):
             from apps.services.serializers import ServiceSerializer, PortfolioItemSerializer
             data['services'] = ServiceSerializer(instance.services.filter(is_active=True), many=True).data
             data['portfolio'] = PortfolioItemSerializer(instance.portfolio.all(), many=True).data
-        except ImportError:
-            pass
+        except Exception as e:
+            print("ERROR PUBLIC PROFILE:", e)
 
         return Response(data)

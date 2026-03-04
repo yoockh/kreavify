@@ -1,0 +1,69 @@
+.container {
+    min-height: 100vh;
+    background-color: #f8fafc;
+    padding: 4rem 1rem;
+}
+
+.content {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 3rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+}
+
+.backLink {
+    display: inline-block;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 2rem;
+}
+
+.backLink:hover {
+    text-decoration: underline;
+}
+
+.title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+}
+
+.lastUpdated {
+    color: #64748b;
+    font-size: 0.875rem;
+    margin-bottom: 3rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.section {
+    margin-bottom: 2.5rem;
+}
+
+.section h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+.section p {
+    color: #475569;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.section ul {
+    padding-left: 1.5rem;
+    color: #475569;
+    line-height: 1.7;
+}
+
+.section li {
+    margin-bottom: 0.5rem;
+}
