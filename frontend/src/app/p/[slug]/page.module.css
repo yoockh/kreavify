@@ -1,0 +1,359 @@
+.container {
+    min-height: 100vh;
+    background-color: #f8fafc;
+    font-family: 'Inter', sans-serif;
+}
+
+.coverPhoto {
+    height: 250px;
+    background: linear-gradient(135deg, #1e293b, #334155);
+    width: 100%;
+    position: relative;
+    background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+}
+
+.coverPhoto::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.mainContent {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 5%;
+    position: relative;
+    z-index: 10;
+    margin-top: -100px;
+}
+
+.profileCard {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-bottom: 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.avatarWrapper {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: -6rem auto 1.5rem;
+    border-radius: 50%;
+    border: 6px solid white;
+    background: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.avatarPlaceholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), #8b5cf6);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    font-weight: 800;
+}
+
+.verifiedBadge {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+}
+
+.name {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 0.25rem;
+}
+
+.profession {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+}
+
+.bio {
+    color: #475569;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+}
+
+.socialLinks {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.socialBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #f1f5f9;
+    color: #475569;
+    padding: 0.625rem 1.25rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.socialBtn:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
+.contentSections {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    padding-bottom: 4rem;
+}
+
+.sectionTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: inline-block;
+}
+
+.sectionTitle::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 50%;
+    height: 3px;
+    background: var(--primary);
+    border-radius: 2px;
+}
+
+/* Portfolio Grid */
+.portfolioGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.portfolioCard {
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+    border: 1px solid #f1f5f9;
+}
+
+.portfolioCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.imageContainer {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: #f1f5f9;
+}
+
+.portImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.portInfo {
+    padding: 1.25rem;
+}
+
+.portCat {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.portTitle {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+}
+
+.portDesc {
+    color: #64748b;
+    font-size: 0.875rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Services Grid */
+.servicesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.serviceCard {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f1f5f9;
+    display: flex;
+    flex-direction: column;
+}
+
+.serviceHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.serviceCat {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--primary);
+    background: rgba(37, 99, 235, 0.1);
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    text-transform: uppercase;
+}
+
+.priceRow {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+}
+
+.priceStart {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}
+
+.priceValue {
+    font-size: 1.125rem;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.serviceTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.75rem;
+}
+
+.serviceDesc {
+    color: #475569;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    flex: 1;
+}
+
+.contactBtn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: white;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.contactBtn:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.footer {
+    text-align: center;
+    padding: 2rem;
+    background: white;
+    border-top: 1px solid #f1f5f9;
+}
+
+.poweredBy {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #64748b;
+    transition: color 0.2s;
+}
+
+.poweredBy:hover {
+    color: var(--primary);
+}
+
+.poweredBy span {
+    font-size: 0.75rem;
+}
+
+.poweredBy strong {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+}
+
+@media (max-width: 640px) {
+    .coverPhoto {
+        height: 180px;
+    }
+
+    .profileCard {
+        padding: 1.5rem;
+    }
+
+    .name {
+        font-size: 1.5rem;
+    }
+
+    .avatarWrapper {
+        width: 120px;
+        height: 120px;
+        margin-top: -4.5rem;
+    }
+}
