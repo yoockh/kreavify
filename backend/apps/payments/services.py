@@ -22,7 +22,7 @@ def create_snap_transaction(invoice):
     # Generate midtrans order id
     short_uuid = str(invoice.id)[:8]
     timestamp = int(time.time())
-    order_id = f"KK-{short_uuid}-{timestamp}"
+    order_id = f"KV-{short_uuid}-{timestamp}"
     
     frontend_url = os.environ.get('FRONTEND_URL', 'http://localhost:3000')
 
