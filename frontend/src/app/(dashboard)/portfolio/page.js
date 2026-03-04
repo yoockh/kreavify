@@ -18,7 +18,7 @@ export default function PortfolioPage() {
         try {
             const res = await getPortfolio();
             const data = await res.json();
-            setItems(data);
+            setItems(data.results || data);
         } catch (e) {
             console.error(e);
         } finally {

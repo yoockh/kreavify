@@ -28,7 +28,7 @@ export default function ServicesPage() {
         try {
             const res = await getServices();
             const data = await res.json();
-            setServices(data);
+            setServices(data.results || data);
         } catch (e) {
             console.error(e);
         } finally {
