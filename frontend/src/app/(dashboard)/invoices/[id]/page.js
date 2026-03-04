@@ -200,7 +200,7 @@ export default function InvoiceDetail() {
                     </div>
 
                     <div className={styles.watermark}>
-                        KaryaKita
+                        Kreavify
                     </div>
                 </div>
             </div>

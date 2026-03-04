@@ -192,7 +192,7 @@ export default function ServicesPage() {
                                 <label className={styles.priceLabelRow}>
                                     <span>Harga Dasar (Rp)</span>
                                     <button type="button" onClick={() => setIsAIModalOpen(true)} className={styles.aiBtn}>
-                                        Cek Harga AI ✨
+                                        <Briefcase size={16} style={{ marginRight: '8px' }} /> Cek Harga AI
                                     </button>
                                 </label>
                                 <input
@@ -226,5 +226,4 @@ export default function ServicesPage() {
     );
 }
 
-// Just adding a quick placeholder icon since Briefcase wasn't imported from lucide-react in time.
-import { Briefcase } from 'lucide-react';
+

@@ -378,8 +378,8 @@ export default function CreateInvoice() {
                             </div>
                         )}
 
-                        <div className={styles.docFooter}>
-                            Dibuat dengan <b>KaryaKita</b>
+                        <div className="mt-8 pt-4 border-t-2 border-dashed border-gray-300 text-center text-sm text-gray-400">
+                            Dibuat dengan <b>Kreavify</b>
                         </div>
                     </div>
                 </div>
