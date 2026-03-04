@@ -11,8 +11,9 @@ export default function Sidebar() {
     const pathname = usePathname();
     const router = useRouter();
     const [collapsed, setCollapsed] = useState(false);
+    const [mobileOpen, setMobileOpen] = useState(false);
     const [darkMode, setDarkMode] = useState(false);
-    const [slug, setSlug] = useState('');
+    const [profile, setProfile] = useState(null);
     const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
     useEffect(() => {
@@ -28,7 +29,7 @@ export default function Sidebar() {
     useEffect(() => {
         import('@/lib/api').then(({ getProfile }) => {
             getProfile().then(res => res.json()).then(data => {
-                if (data.slug) setSlug(data.slug);
+                setProfile(data);
             }).catch(err => console.error(err));
         });
     }, []);
@@ -61,12 +62,27 @@ export default function Sidebar() {
         { label: 'Portfolio', href: '/portfolio', icon: ImageIcon },
         { label: 'Kontrak', href: '/contracts', icon: ScrollText },
         { label: 'Laporan Pajak', href: '/tax-report', icon: Calculator },
-        { label: 'Profil', href: '/profile', icon: User },
+        { label: 'Pengaturan', href: '/settings', icon: User },
     ];
 
     return (
         <>
-            <div className={`${styles.sidebar} ${collapsed ? styles.collapsed : ''}`}>
+            {/* Mobile Hamburger Button */}
+            <button
+                className={`${styles.mobileToggle} ${mobileOpen ? styles.mobileToggleOpen : ''}`}
+                onClick={() => setMobileOpen(!mobileOpen)}
+            >
+                <div className={styles.hamburger}>
+                    <span></span><span></span><span></span>
+                </div>
+            </button>
+
+            {/* Backdrop for mobile */}
+            {mobileOpen && (
+                <div className={styles.mobileBackdrop} onClick={() => setMobileOpen(false)} />
+            )}
+
+            <div className={`${styles.sidebar} ${collapsed ? styles.collapsed : ''} ${mobileOpen ? styles.mobileOpen : ''}`}>
                 <div className={styles.logoRow}>
                     {!collapsed && <span className={styles.logoText}>Kreavify</span>}
                     <button className={styles.collapseBtn} onClick={() => setCollapsed(!collapsed)} title={collapsed ? 'Expand' : 'Collapse'}>
@@ -94,14 +110,33 @@ export default function Sidebar() {
                 </nav>
 
                 <div className={styles.footer}>
+                    {/* Prominent Profile Card */}
+                    {profile && (
+                        <Link href="/profile" className={styles.profileCard} title={collapsed ? profile.display_name : ''}>
+                            {profile.avatar_url ? (
+                                <img src={profile.avatar_url} alt="Profile" className={styles.profileAvatar} />
+                            ) : (
+                                <div className={styles.profileAvatarFallback}>{profile.display_name?.charAt(0) || '?'}</div>
+                            )}
+                            {!collapsed && (
+                                <div className={styles.profileInfo}>
+                                    <span className={styles.profileName}>{profile.display_name || 'User'}</span>
+                                    <span className={styles.profileRole}>{profile.profession || 'Kreator Kreavify'}</span>
+                                </div>
+                            )}
+                        </Link>
+                    )}
+
+                    <div className={styles.footerDivider} />
+
                     <button className={styles.themeToggle} onClick={toggleDarkMode} title={darkMode ? 'Light Mode' : 'Dark Mode'}>
                         {darkMode ? <Sun size={18} /> : <Moon size={18} />}
                         {!collapsed && <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>}
                     </button>
 
-                    {slug && (
+                    {profile?.slug && (
                         <a
-                            href={`/p/${slug}`}
+                            href={`/p/${profile.slug}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className={styles.footerLink}
