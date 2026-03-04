@@ -7,6 +7,7 @@ import styles from './page.module.css';
 export default function PortfolioPage() {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [uploading, setUploading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [formData, setFormData] = useState({ title: '', description: '', image_url: '', category: 'logo' });
 
@@ -26,11 +27,32 @@ export default function PortfolioPage() {
         }
     };
 
+    const handleImageUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        setUploading(true);
+        try {
+            const { uploadImage } = await import('@/lib/api');
+            const res = await uploadImage(file, 'portfolio');
+            if (res.ok) {
+                const data = await res.json();
+                setFormData(prev => ({ ...prev, image_url: data.url }));
+            } else {
+                alert('Gagal upload gambar');
+            }
+        } catch (err) {
+            console.error(err);
+            alert('Terjadi kesalahan saat upload gambar');
+        }
+        setUploading(false);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             await addPortfolioItem(formData);
             setIsModalOpen(false);
+            setFormData({ title: '', description: '', image_url: '', category: 'logo' });
             fetchPortfolio();
         } catch (e) {
             alert('Gagal menambah portfolio');
@@ -114,9 +136,28 @@ export default function PortfolioPage() {
                                 </select>
                             </div>
                             <div className={styles.formGroup}>
-                                <label>URL Gambar (Direct Link)</label>
-                                <input type="url" required value={formData.image_url} onChange={e => setFormData({ ...formData, image_url: e.target.value })} className={styles.input} placeholder="https://..." />
-                                <small className={styles.helpText}>Contoh: link dari Cloudinary, Imgur, GDrive link, dll.</small>
+                                <label>Gambar Portfolio</label>
+                                {formData.image_url ? (
+                                    <div style={{ position: 'relative', marginBottom: '0.5rem' }}>
+                                        <img src={formData.image_url} alt="Preview" style={{ width: '100%', height: '150px', objectFit: 'cover', borderRadius: '0.5rem' }} />
+                                        <button
+                                            type="button"
+                                            onClick={() => setFormData({ ...formData, image_url: '' })}
+                                            style={{ position: 'absolute', top: '0.25rem', right: '0.25rem', background: 'rgba(0,0,0,0.5)', color: 'white', border: 'none', borderRadius: '50%', padding: '0.25rem', cursor: 'pointer' }}
+                                        >
+                                            <X size={16} />
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <label htmlFor="portfolio-img-upload" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1rem', background: 'var(--bg-color)', border: '1px solid var(--border-color)', borderRadius: '0.5rem', cursor: uploading ? 'not-allowed' : 'pointer', width: '100%', justifyContent: 'center', color: 'var(--text-main)', opacity: uploading ? 0.7 : 1 }}>
+                                            <ImageIcon size={18} /> {uploading ? 'Mengupload...' : 'Pilih Gambar dari Perangkat'}
+                                        </label>
+                                        <input id="portfolio-img-upload" type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} disabled={uploading} />
+                                        <div style={{ textAlign: 'center', margin: '0.5rem 0', color: 'var(--text-muted)', fontSize: '0.875rem' }}>atau</div>
+                                        <input type="url" value={formData.image_url} onChange={e => setFormData({ ...formData, image_url: e.target.value })} className={styles.input} placeholder="https://link-gambar.com/img.jpg" />
+                                    </div>
+                                )}
                             </div>
                             <div className={styles.formGroup}>
                                 <label>Cerita Singkat / Deskripsi (Opsional)</label>

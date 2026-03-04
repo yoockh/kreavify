@@ -45,7 +45,7 @@ export default function TaxReportPage() {
                         onChange={(e) => setYear(Number(e.target.value))}
                         className={styles.yearSelect}
                     >
-                        {[2024, 2025, 2026].map(y => (
+                        {Array.from({ length: 3 }, (_, i) => new Date().getFullYear() - i).map(y => (
                             <option key={y} value={y}>{y}</option>
                         ))}
                     </select>
