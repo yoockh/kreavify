@@ -197,3 +197,58 @@ export async function uploadImage(file, folder = 'general') {
   });
   return res;
 }
+
+// Analytics
+export async function recordProfileView(slug) {
+  return fetch(`${API_URL}/analytics/profile-view/`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ slug }),
+  });
+}
+
+export async function recordServiceClick(serviceId) {
+  return fetch(`${API_URL}/analytics/service-click/`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ service_id: serviceId }),
+  });
+}
+
+export async function getAnalyticsStats() {
+  return fetchAPI('/analytics/stats/');
+}
+
+// Tax Report
+export async function getTaxReport(year) {
+  return fetchAPI(`/dashboard/tax-report/?year=${year}`);
+}
+
+// Contracts
+export async function getContracts() {
+  return fetchAPI('/contracts/');
+}
+
+export async function getContract(id) {
+  return fetchAPI(`/contracts/${id}/`);
+}
+
+export async function generateContract(invoiceId) {
+  return fetchAPI('/contracts/generate/', {
+    method: 'POST',
+    body: JSON.stringify({ invoice_id: invoiceId }),
+  });
+}
+
+export async function deleteContract(id) {
+  return fetchAPI(`/contracts/${id}/`, {
+    method: 'DELETE',
+  });
+}
+
+// Invoice Reminder
+export async function sendReminder(invoiceId) {
+  return fetchAPI(`/invoices/${invoiceId}/remind/`, {
+    method: 'POST',
+  });
+}
