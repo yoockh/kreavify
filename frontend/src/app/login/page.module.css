@@ -1,36 +1,104 @@
-.container {
-    min-height: 100vh;
+/* ===== FULL-PAGE SPLIT AUTH LAYOUT ===== */
+.page {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--bg-color);
-    padding: 1rem;
+    min-height: 100vh;
+    width: 100%;
 }
 
-.card {
-    background: var(--white);
-    padding: 2.5rem;
-    border-radius: 1rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+/* LEFT GRADIENT PANEL */
+.leftPanel {
+    flex: 1;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 40%, #a855f7 70%, #c084fc 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 3rem;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.leftPanel::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.05) 0%, transparent 40%);
+    pointer-events: none;
+}
+
+.leftLogo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    z-index: 2;
+}
+
+.leftBody {
+    z-index: 2;
+    margin-bottom: 4rem;
+}
+
+.leftEyebrow {
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    opacity: 0.85;
+    margin-bottom: 1.25rem;
+}
+
+.leftTitle {
+    font-size: 3.25rem;
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -1.5px;
+    margin-bottom: 1.5rem;
+}
+
+.leftSubtitle {
+    font-size: 1.1rem;
+    opacity: 0.85;
+    line-height: 1.7;
+    max-width: 85%;
+}
+
+/* RIGHT FORM PANEL */
+.rightPanel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 3rem 4rem;
+    background: #ffffff;
+    overflow-y: auto;
+}
+
+.formWrapper {
     width: 100%;
-    max-width: 400px;
+    max-width: 480px;
+    margin: 0 auto;
 }
 
 .title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    text-align: center;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.5px;
     margin-bottom: 0.5rem;
-    color: var(--text-main);
 }
 
 .subtitle {
-    text-align: center;
-    color: var(--text-muted);
-    margin-bottom: 2rem;
-    font-size: 0.875rem;
+    color: #64748b;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
 }
 
+/* FORM ELEMENTS */
 .formGroup {
     margin-bottom: 1.25rem;
 }
@@ -38,69 +106,193 @@
 .label {
     display: block;
     font-size: 0.875rem;
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 0.5rem;
-    color: var(--text-main);
+    color: #334155;
 }
 
 .input {
     width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: 0.5rem;
-    font-size: 1rem;
+    padding: 0.8rem 1rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 0.625rem;
+    font-size: 0.95rem;
     transition: all 0.2s;
+    background-color: #f8fafc;
+    color: #0f172a;
+}
+
+.input::placeholder {
+    color: #94a3b8;
 }
 
 .input:focus {
     outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    border-color: #6366f1;
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.08);
 }
 
+/* PASSWORD WRAPPER */
+.passwordWrapper {
+    position: relative;
+}
+
+.passwordWrapper .input {
+    padding-right: 3rem;
+}
+
+.eyeToggle {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+}
+
+.eyeToggle:hover {
+    color: #4f46e5;
+}
+
+/* PASSWORD RULES */
+.passwordRules {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    margin-top: 0.625rem;
+}
+
+.ruleItem {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    transition: all 0.25s;
+}
+
+.ruleDefault {
+    color: #94a3b8;
+    background-color: #f1f5f9;
+}
+
+.rulePassed {
+    color: #15803d;
+    background-color: #dcfce7;
+}
+
+.ruleFailed {
+    color: #dc2626;
+    background-color: #fef2f2;
+}
+
+/* BUTTONS */
 .submitBtn {
     width: 100%;
     padding: 0.875rem;
-    background-color: var(--primary);
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
     color: white;
     border: none;
-    border-radius: 0.5rem;
-    font-weight: 600;
+    border-radius: 0.625rem;
+    font-weight: 700;
     font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.2s;
-    margin-top: 1rem;
+    transition: all 0.25s;
+    margin-top: 0.75rem;
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.35);
 }
 
 .submitBtn:hover {
-    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.45);
 }
 
 .submitBtn:disabled {
-    opacity: 0.7;
+    opacity: 0.6;
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 
+/* ERROR */
 .error {
-    color: var(--danger);
-    font-size: 0.875rem;
-    margin-top: 0.5rem;
+    color: #dc2626;
+    font-size: 0.85rem;
+    margin-top: 0.75rem;
+    padding: 0.625rem 0.875rem;
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 0.5rem;
     text-align: center;
 }
 
+/* LINKS */
 .link {
-    color: var(--primary);
+    color: #4f46e5;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .link:hover {
     text-decoration: underline;
 }
 
+/* FOOTER */
 .footer {
     text-align: center;
-    margin-top: 1.5rem;
-    font-size: 0.875rem;
-    color: var(--text-muted);
+    margin-top: 2rem;
+    font-size: 0.95rem;
+    color: #64748b;
+    padding-top: 1.25rem;
+    border-top: 1px solid #f1f5f9;
+}
+
+/* CHECKBOX */
+.checkboxLabel {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    color: #475569;
+    cursor: pointer;
+    line-height: 1.5;
+}
+
+.checkbox {
+    margin-top: 0.2rem;
+    width: 1.125rem;
+    height: 1.125rem;
+    cursor: pointer;
+    accent-color: #4f46e5;
+    flex-shrink: 0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .page {
+        flex-direction: column;
+    }
+
+    .leftPanel {
+        padding: 2.5rem 2rem;
+        min-height: 40vh;
+    }
+
+    .leftTitle {
+        font-size: 2.25rem;
+    }
+
+    .rightPanel {
+        padding: 2.5rem 1.5rem;
+    }
 }
