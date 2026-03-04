@@ -7,12 +7,17 @@ export default async function PublicProfilePage({ params }) {
 
     let profile = null;
     try {
+        console.log(`Fetching profile for slug: ${slug}`);
         const res = await getPublicProfile(slug);
+        console.log(`Response status: ${res.status}`);
         if (res.ok) {
             profile = await res.json();
+            console.log("Profile data fetched successfully.");
+        } else {
+            console.error(`Failed to fetch: ${await res.text()}`);
         }
     } catch (e) {
-        console.error(e);
+        console.error("Exception fetching profile:", e);
     }
 
     if (!profile) {
