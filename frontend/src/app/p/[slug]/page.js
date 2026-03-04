@@ -20,7 +20,7 @@ export default async function PublicProfilePage({ params }) {
             <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
                 <h1 className="text-4xl font-bold mb-4">404</h1>
                 <p className="text-gray-500 mb-6">Kreator tidak ditemukan.</p>
-                <a href="/" className="px-6 py-2 bg-blue-600 text-white rounded-lg">Ke Beranda KaryaKita</a>
+                <a href="/" className="px-6 py-2 bg-blue-600 text-white rounded-lg">Ke Beranda Kreavify</a>
             </div>
         );
     }
@@ -116,7 +116,7 @@ export default async function PublicProfilePage({ params }) {
             <footer className={styles.footer}>
                 <a href="/" className={styles.poweredBy}>
                     <span>Ditenagai oleh</span>
-                    <strong>KaryaKita</strong>
+                    <strong>Kreavify</strong>
                 </a>
             </footer>
         </div>

@@ -39,7 +39,7 @@ export default function LoginPage() {
     return (
         <div className={styles.container}>
             <div className={styles.card}>
-                <h1 className={styles.title}>Masuk ke KaryaKita</h1>
+                <h1 className={styles.title}>Masuk ke Kreavify</h1>
                 <p className={styles.subtitle}>Selamat datang kembali, kreator!</p>
 
                 <form onSubmit={handleSubmit}>

@@ -7,7 +7,7 @@ export default function Home() {
     <div className={styles.container}>
       {/* Navbar Minimalis */}
       <nav className={styles.navbar}>
-        <div className={styles.logo}>KaryaKita</div>
+        <div className={styles.logo}>Kreavify</div>
         <div className={styles.navLinks}>
           <Link href="/login" className={styles.loginBtn}>Masuk</Link>
           <Link href="/register" className={styles.registerBtn}>Daftar Gratis</Link>
@@ -45,7 +45,7 @@ export default function Home() {
                 <div className={styles.dots}>
                   <span></span><span></span><span></span>
                 </div>
-                <div className={styles.fakeUrl}>app.karyakita.id/dashboard</div>
+                <div className={styles.fakeUrl}>app.kreavify.id/dashboard</div>
               </div>
               <div className={styles.mockupBody}>
                 <div className={styles.mockupSidebar}></div>
@@ -124,14 +124,14 @@ export default function Home() {
       {/* Footer */}
       <footer className={styles.footer}>
         <div className={styles.footerContent}>
-          <div className={styles.footerLogo}>KaryaKita</div>
+          <div className={styles.footerLogo}>Kreavify</div>
           <p className={styles.footerDesc}>
             Mendukung UMKM & Kreator Indonesia dalam Digitalisasi Ekonomi Kreatif.
             <br />Hackathon BI 2026.
           </p>
         </div>
         <div className={styles.copyright}>
-          © {new Date().getFullYear()} KaryaKita. Hak Cipta Dilindungi.
+          © {new Date().getFullYear()} Kreavify. Hak Cipta Dilindungi.
         </div>
       </footer>
     </div>

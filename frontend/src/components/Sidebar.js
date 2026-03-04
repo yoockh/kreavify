@@ -43,7 +43,7 @@ export default function Sidebar() {
 
             <div className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
                 <div className={styles.logo}>
-                    KaryaKita
+                    Kreavify
                 </div>
 
                 <nav className={styles.nav}>

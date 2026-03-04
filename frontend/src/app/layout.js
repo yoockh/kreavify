@@ -1,7 +1,7 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'KaryaKita — Invoice & Pembayaran untuk Kreator Indonesia',
+  title: 'Kreavify — Invoice & Pembayaran untuk Kreator Indonesia',
   description: 'Platform invoice & pembayaran digital untuk freelancer kreatif Indonesia',
 };
 

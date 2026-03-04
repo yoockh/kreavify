@@ -84,7 +84,7 @@ export default function PaymentPage() {
     return (
         <div className={styles.container}>
             <div className={styles.navBar}>
-                <div className={styles.logo}>KaryaKita</div>
+                <div className={styles.logo}>Kreavify</div>
                 <div className={styles.safeSecure}>
                     <Lock size={16} /> <span>Secure Payment</span>
                 </div>

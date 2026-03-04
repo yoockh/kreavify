@@ -90,10 +90,17 @@ export default function CreateInvoice() {
         }
 
         try {
-            const res = await createInvoice({
+            const payload = {
                 ...formData,
                 items: validItems
-            });
+            };
+            if (!payload.due_date) {
+                delete payload.due_date;
+            }
+            if (!payload.client_email) delete payload.client_email;
+            if (!payload.client_phone) delete payload.client_phone;
+
+            const res = await createInvoice(payload);
 
             if (res.ok) {
                 router.push('/invoices');

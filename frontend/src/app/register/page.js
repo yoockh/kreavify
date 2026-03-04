@@ -54,7 +54,7 @@ export default function RegisterPage() {
     return (
         <div className={styles.container}>
             <div className={styles.card}>
-                <h1 className={styles.title}>Daftar KaryaKita</h1>
+                <h1 className={styles.title}>Daftar Kreavify</h1>
                 <p className={styles.subtitle}>Mulai digitalkan jasa kamu dalam hitungan menit.</p>
 
                 <form onSubmit={handleSubmit}>
