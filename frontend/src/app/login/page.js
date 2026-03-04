@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { Eye, EyeOff } from 'lucide-react';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { login } from '@/lib/api';
 import styles from './page.module.css';
 
@@ -42,6 +43,14 @@ export default function LoginPage() {
         <div className={styles.page}>
             <div className={styles.leftPanel}>
                 <div className={styles.leftLogo}>Kreavify</div>
+                <div className={styles.lottieWrapper}>
+                    <DotLottieReact
+                        src="/Share.lottie"
+                        loop
+                        autoplay
+                        style={{ width: '100%', height: 480 }}
+                    />
+                </div>
                 <div className={styles.leftBody}>
                     <p className={styles.leftEyebrow}>Akses Mudah</p>
                     <h2 className={styles.leftTitle}>Satu Platform<br />Untuk Bisnis<br />Kreatifmu.</h2>

@@ -1,5 +1,6 @@
 import PublicNavbar from '@/components/PublicNavbar';
 import styles from './page.module.css';
+import { Rocket, FileText, Image, ScrollText, Bot, BarChart2, MessageCircle } from 'lucide-react';
 
 export const metadata = {
     title: 'Pusat Bantuan — Kreavify',
@@ -9,7 +10,7 @@ export const metadata = {
 const faqs = [
     {
         category: 'Memulai',
-        icon: '🚀',
+        Icon: Rocket,
         items: [
             {
                 q: 'Apa itu Kreavify?',
@@ -27,7 +28,7 @@ const faqs = [
     },
     {
         category: 'Invoice & Pembayaran',
-        icon: '📄',
+        Icon: FileText,
         items: [
             {
                 q: 'Bagaimana cara membuat invoice baru?',
@@ -49,7 +50,7 @@ const faqs = [
     },
     {
         category: 'Profil & Portfolio',
-        icon: '🎨',
+        Icon: Image,
         items: [
             {
                 q: 'Bagaimana cara membagikan profil publik saya?',
@@ -67,7 +68,7 @@ const faqs = [
     },
     {
         category: 'Kontrak Digital',
-        icon: '📝',
+        Icon: ScrollText,
         items: [
             {
                 q: 'Bagaimana cara membuat kontrak otomatis?',
@@ -81,7 +82,7 @@ const faqs = [
     },
     {
         category: 'AI Pricing Assistant',
-        icon: '🤖',
+        Icon: Bot,
         items: [
             {
                 q: 'Bagaimana AI Pricing Assistant bekerja?',
@@ -95,7 +96,7 @@ const faqs = [
     },
     {
         category: 'Laporan Pajak',
-        icon: '📊',
+        Icon: BarChart2,
         items: [
             {
                 q: 'Bagaimana Kreavify menghitung perkiraan pajak saya?',
@@ -127,7 +128,9 @@ export default function HelpPage() {
                     {faqs.map((section) => (
                         <section key={section.category} className={styles.section}>
                             <h2 className={styles.sectionTitle}>
-                                <span className={styles.sectionIcon}>{section.icon}</span>
+                                <span className={styles.sectionIcon}>
+                                    <section.Icon size={18} />
+                                </span>
                                 {section.category}
                             </h2>
                             <div className={styles.faqList}>
@@ -145,7 +148,9 @@ export default function HelpPage() {
                 {/* Contact CTA */}
                 <div className={styles.contactCta}>
                     <div className={styles.ctaCard}>
-                        <div className={styles.ctaIcon}>💬</div>
+                        <div className={styles.ctaIconWrap}>
+                            <MessageCircle size={28} />
+                        </div>
                         <h2>Masih ada pertanyaan lain?</h2>
                         <p>Tim kami siap membantu kamu melalui email. Kami biasanya merespons dalam 1×24 jam.</p>
                         <a href="/contact" className={styles.ctaBtn}>Hubungi Tim Kreavify</a>

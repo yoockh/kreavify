@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { Eye, EyeOff, Check, X as XIcon } from 'lucide-react';
 import ReCAPTCHA from 'react-google-recaptcha';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { register, login } from '@/lib/api';
 import styles from '../login/page.module.css';
 
@@ -98,7 +99,15 @@ export default function RegisterPage() {
         <div className={styles.page}>
             <div className={styles.leftPanel}>
                 <div className={styles.leftLogo}>Kreavify</div>
-                <div className={styles.leftBody}>
+                <div className={styles.lottieWrapper}>
+                    <DotLottieReact
+                        src="/Creative.lottie"
+                        loop
+                        autoplay
+                        style={{ width: '100%', height: 540 }}
+                    />
+                </div>
+                <div className={styles.leftBody} style={{ marginBottom: '1rem' }}>
                     <p className={styles.leftEyebrow}>Bergabung Sekarang</p>
                     <h2 className={styles.leftTitle}>Mulai Perjalanan<br />Kreatifmu<br />Tanpa Batas.</h2>
                     <p className={styles.leftSubtitle}>Akses semua fitur pengaturan invoice, portofolio profesional, dan pembayaran dalam 1 menit.</p>

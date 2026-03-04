@@ -5,9 +5,14 @@ import styles from './page.module.css';
 export default function Home() {
   return (
     <div className={styles.container}>
-      {/* Navbar Minimalis */}
+      {/* Navbar */}
       <nav className={styles.navbar}>
-        <div className={styles.logo}>Kreavify</div>
+        <Link href="/" className={styles.logo}>Kreavify</Link>
+        <div className={styles.navCenter}>
+          <Link href="/about" className={styles.navLink}>Tentang</Link>
+          <Link href="/help" className={styles.navLink}>Bantuan</Link>
+          <Link href="/contact" className={styles.navLink}>Hubungi Kami</Link>
+        </div>
         <div className={styles.navLinks}>
           <Link href="/login" className={styles.loginBtn}>Masuk</Link>
           <Link href="/register" className={styles.registerBtn}>Daftar Gratis</Link>
@@ -123,12 +128,32 @@ export default function Home() {
 
       {/* Footer */}
       <footer className={styles.footer}>
-        <div className={styles.footerContent}>
-          <div className={styles.footerLogo}>Kreavify</div>
-          <p className={styles.footerDesc}>
-            Mendukung UMKM & Kreator Indonesia dalam Digitalisasi Ekonomi Kreatif.
-            <br />Hackathon BI 2026.
-          </p>
+        <div className={styles.footerTop}>
+          <div className={styles.footerBrand}>
+            <div className={styles.footerLogo}>Kreavify</div>
+            <p className={styles.footerDesc}>
+              Mendukung UMKM & Kreator Indonesia dalam Digitalisasi Ekonomi Kreatif.<br />Hackathon BI 2026.
+            </p>
+          </div>
+          <div className={styles.footerLinks}>
+            <div className={styles.footerCol}>
+              <h4>Produk</h4>
+              <Link href="/register">Daftar Gratis</Link>
+              <Link href="/login">Masuk</Link>
+              <Link href="/upgrade">Upgrade Plan</Link>
+            </div>
+            <div className={styles.footerCol}>
+              <h4>Informasi</h4>
+              <Link href="/about">Tentang Kami</Link>
+              <Link href="/help">Pusat Bantuan</Link>
+              <Link href="/contact">Hubungi Kami</Link>
+            </div>
+            <div className={styles.footerCol}>
+              <h4>Legal</h4>
+              <Link href="/privacy">Kebijakan Privasi</Link>
+              <Link href="/terms">Syarat & Ketentuan</Link>
+            </div>
+          </div>
         </div>
         <div className={styles.copyright}>
           © {new Date().getFullYear()} Kreavify. Hak Cipta Dilindungi.

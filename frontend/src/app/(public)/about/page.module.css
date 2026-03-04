@@ -1,0 +1,316 @@
+/* ============================================================
+   ABOUT PAGE
+   ============================================================ */
+.pageWrapper {
+    min-height: 100vh;
+    background: #f8fafc;
+    font-family: 'Inter', sans-serif;
+}
+
+/* ---- HERO ---- */
+.hero {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 60%, #6d28d9 100%);
+    padding: 6rem 2rem 5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 70% 30%, rgba(167, 139, 250, 0.4) 0%, transparent 55%),
+        radial-gradient(ellipse at 20% 80%, rgba(99, 102, 241, 0.3) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.heroContent {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.9);
+    padding: 0.375rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.heroTitle {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    color: white;
+    margin: 0 0 1.25rem 0;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+}
+
+.heroSubtitle {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.78);
+    line-height: 1.7;
+    max-width: 580px;
+    margin: 0 auto;
+}
+
+/* ---- CONTENT WRAPPER ---- */
+.content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+}
+
+/* ---- MISSION GRID ---- */
+.missionGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.missionCard {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 1.25rem;
+    padding: 2rem;
+    border-top: 3px solid var(--accent, #4f46e5);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.missionCard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px -8px rgba(79, 70, 229, 0.12);
+}
+
+.missionIcon {
+    width: 48px;
+    height: 48px;
+    border-radius: 0.875rem;
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(124, 58, 237, 0.06));
+    color: var(--accent, #4f46e5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+}
+
+.missionCard h3 {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 0.75rem 0;
+}
+
+.missionCard p {
+    color: #475569;
+    line-height: 1.65;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* ---- STATS ---- */
+.statsSection {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    border-radius: 1.5rem;
+    padding: 3rem 2.5rem;
+    box-shadow: 0 12px 32px -8px rgba(79, 70, 229, 0.35);
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    text-align: center;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.statNumber {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: white;
+    letter-spacing: -0.04em;
+    line-height: 1;
+}
+
+.statLabel {
+    display: block;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 0.825rem;
+    font-weight: 500;
+}
+
+.statIcon {
+    color: white;
+}
+
+/* ---- SECTION TITLE ---- */
+.sectionTitle {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 1.75rem 0;
+    letter-spacing: -0.02em;
+}
+
+/* ---- FEATURE GRID ---- */
+.featureGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+}
+
+.featureCard {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 1rem;
+    padding: 1.75rem;
+    transition: all 0.2s;
+}
+
+.featureCard:hover {
+    border-color: #c7d2fe;
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.1);
+    transform: translateY(-2px);
+}
+
+.featureIconWrap {
+    width: 40px;
+    height: 40px;
+    border-radius: 0.625rem;
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(124, 58, 237, 0.06));
+    color: #4f46e5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.featureCard h3 {
+    font-size: 0.975rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 0.5rem 0;
+}
+
+.featureCard p {
+    font-size: 0.875rem;
+    color: #64748b;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ---- CTA SECTION ---- */
+.ctaSection {
+    background: #0f172a;
+    text-align: center;
+    padding: 6rem 2rem;
+}
+
+.ctaSection h2 {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 800;
+    color: white;
+    margin: 0 0 0.875rem 0;
+    letter-spacing: -0.03em;
+}
+
+.ctaSection p {
+    color: #94a3b8;
+    margin: 0 0 2.5rem 0;
+}
+
+.ctaButtons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.primaryCta {
+    padding: 0.875rem 2rem;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: white;
+    border-radius: 0.625rem;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 0.975rem;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+    transition: all 0.2s;
+}
+
+.primaryCta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.5);
+}
+
+.secondaryCta {
+    padding: 0.875rem 2rem;
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    border-radius: 0.625rem;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.975rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.2s;
+}
+
+.secondaryCta:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 900px) {
+    .missionGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .featureGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .statsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .hero {
+        padding: 3.5rem 1.25rem 3rem;
+    }
+
+    .content {
+        padding: 3rem 1.25rem;
+        gap: 3.5rem;
+    }
+
+    .featureGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .statsSection {
+        padding: 2rem 1.25rem;
+    }
+}

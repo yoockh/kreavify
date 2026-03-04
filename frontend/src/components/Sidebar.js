@@ -45,7 +45,6 @@ export default function Sidebar() {
         document.documentElement.setAttribute('data-theme', next ? 'dark' : 'light');
     };
 
-    const handleLogout = () => { }; // unused — logout is in Header dropdown
 
     const menuItems = [
         { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },

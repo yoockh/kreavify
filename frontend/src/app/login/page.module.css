@@ -37,6 +37,15 @@
     z-index: 2;
 }
 
+.lottieWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    pointer-events: none;
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.15));
+}
+
 .leftBody {
     z-index: 2;
     margin-bottom: 4rem;
