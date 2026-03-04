@@ -77,7 +77,7 @@ export async function createService(data) {
 
 export async function updateService(id, data) {
   return fetchAPI(`/services/${id}/`, {
-    method: 'PUT',
+    method: 'PATCH',
     body: JSON.stringify(data)
   });
 }

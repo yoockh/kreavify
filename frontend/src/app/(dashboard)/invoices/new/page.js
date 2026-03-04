@@ -18,12 +18,12 @@ export default function CreateInvoice() {
         client_name: '',
         client_email: '',
         client_phone: '',
-        notes: '',
-        tax_percentage: 0,
         due_date: '',
+        notes: '',
         currency: 'IDR',
+        tax_percentage: '',
         items: [
-            { description: '', qty: 1, unit_price: 0 }
+            { description: '', qty: 1, unit_price: '' }
         ]
     });
 
@@ -35,20 +35,23 @@ export default function CreateInvoice() {
     }, []);
 
     const calculateSubtotal = () => {
-        return formData.items.reduce((acc, item) => acc + (item.qty * item.unit_price), 0);
+        return formData.items.reduce((acc, item) => {
+            const qty = parseInt(item.qty) || 0;
+            const price = parseInt(item.unit_price) || 0;
+            return acc + (qty * price);
+        }, 0);
     };
 
     const calculateTotal = () => {
         const subtotal = calculateSubtotal();
-        const tax = subtotal * (formData.tax_percentage / 100);
+        const taxPercent = parseFloat(formData.tax_percentage) || 0;
+        const tax = subtotal * (taxPercent / 100);
         return subtotal + tax;
     };
 
     const handleItemChange = (index, field, value) => {
         const newItems = [...formData.items];
-        if (field === 'qty' || field === 'unit_price') {
-            value = parseInt(value) || 0;
-        }
+        // Allow empty strings for nice typing, parse to int ONLY if evaluating
         newItems[index][field] = value;
         setFormData({ ...formData, items: newItems });
     };
@@ -56,7 +59,7 @@ export default function CreateInvoice() {
     const addItem = () => {
         setFormData({
             ...formData,
-            items: [...formData.items, { description: '', qty: 1, unit_price: 0 }]
+            items: [...formData.items, { description: '', qty: 1, unit_price: '' }]
         });
     };
 
@@ -277,7 +280,7 @@ export default function CreateInvoice() {
                                     max="100"
                                     step="0.1"
                                     value={formData.tax_percentage}
-                                    onChange={e => setFormData({ ...formData, tax_percentage: parseFloat(e.target.value) || 0 })}
+                                    onChange={e => setFormData({ ...formData, tax_percentage: e.target.value })}
                                     className={styles.input}
                                 />
                             </div>

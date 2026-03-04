@@ -27,6 +27,15 @@ export default function ProfilePage() {
     const [uploadingAvatar, setUploadingAvatar] = useState(false);
     const [uploadingBanner, setUploadingBanner] = useState(false);
     const [uploadingLogo, setUploadingLogo] = useState(false);
+
+    useEffect(() => {
+        if (msg.text) {
+            const timer = setTimeout(() => {
+                setMsg({ type: '', text: '' });
+            }, 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [msg.text]);
     const avatarInputRef = useRef(null);
     const bannerInputRef = useRef(null);
     const logoInputRef = useRef(null);
@@ -129,20 +138,20 @@ export default function ProfilePage() {
                     className={styles.bannerPreview}
                     style={profile.banner_url ? { backgroundImage: `url(${profile.banner_url})` } : {}}
                 >
-                    <button
-                        type="button"
+                    <label
+                        htmlFor="banner-upload"
                         className={styles.bannerUploadBtn}
-                        onClick={() => bannerInputRef.current?.click()}
-                        disabled={uploadingBanner}
+                        style={{ cursor: uploadingBanner ? 'not-allowed' : 'pointer', opacity: uploadingBanner ? 0.7 : 1 }}
                     >
                         <Upload size={16} /> {uploadingBanner ? 'Mengupload...' : 'Ganti Banner'}
-                    </button>
+                    </label>
                     <input
-                        ref={bannerInputRef}
+                        id="banner-upload"
                         type="file"
                         accept="image/*"
                         onChange={handleBannerUpload}
                         style={{ display: 'none' }}
+                        disabled={uploadingBanner}
                     />
                 </div>
 
