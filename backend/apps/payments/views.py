@@ -72,3 +72,23 @@ class MidtransWebhookView(APIView):
         
         # Midtrans will also send 'expire', 'cancel', 'deny' but we don't handle them for modifying invoice status, allowing creator to cancel/resend
         return Response(status=status.HTTP_200_OK)
+
+class ManualPaymentSyncView(APIView):
+    """
+    Called by the frontend after Snap onSuccess to manually sync status,
+    useful for local development where Midtrans cannot reach the webhook.
+    """
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, slug):
+        invoice = get_object_or_404(Invoice, slug=slug)
+        
+        # In a real app, you'd want to verify this with Midtrans API directly,
+        # but for hackathon/demo purposes, we'll blindly trust the frontend here.
+        if invoice.status != 'paid':
+            invoice.status = 'paid'
+            invoice.paid_at = timezone.now()
+            invoice.payment_method = 'manual_sync_from_frontend'
+            invoice.save()
+            
+        return Response({"detail": "Status synced successfully", "status": invoice.status}, status=status.HTTP_200_OK)

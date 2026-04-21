@@ -40,6 +40,13 @@ class User(AbstractUser):
     invoice_logo_url = models.URLField(blank=True)
     invoice_accent_color = models.CharField(max_length=7, blank=True, default='')  # hex e.g. #2563eb
     
+    # ML Features - untuk revenue forecasting & analytics
+    experience_years = models.IntegerField(default=0)  # Manual input saat onboarding
+    total_projects_completed = models.IntegerField(default=0)  # Auto-calculated
+    average_project_value = models.DecimalField(max_digits=12, decimal_places=0, default=0)
+    last_revenue_forecast = models.JSONField(null=True, blank=True)  # Cache prediction
+    last_forecast_date = models.DateTimeField(null=True, blank=True)
+    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -47,6 +47,10 @@ class Invoice(models.Model):
     midtrans_order_id = models.CharField(max_length=100, blank=True)
     midtrans_snap_token = models.CharField(max_length=255, blank=True)
     
+    # ML Features - untuk risk scoring & analytics
+    payment_delay_days = models.IntegerField(default=0)  # Auto-calculated
+    client_risk_score = models.FloatField(null=True, blank=True)  # AI prediction
+    
     # Public route
     slug = models.SlugField(unique=True, max_length=12, blank=True)
     
@@ -73,6 +77,12 @@ class Invoice(models.Model):
         self.subtotal = computed_subtotal
         self.tax_amount = int(self.subtotal * (self.tax_percentage / 100))
         self.total = self.subtotal + self.tax_amount
+    
+    def calculate_payment_delay(self):
+        """Calculate payment delay for ML features"""
+        if self.paid_at and self.due_date:
+            delay = (self.paid_at.date() - self.due_date).days
+            self.payment_delay_days = max(0, delay)
 
     def save(self, *args, **kwargs):
         if not self.invoice_number:
@@ -81,4 +91,9 @@ class Invoice(models.Model):
             self.slug = generate_slug()
         
         self.calculate_totals()
+        
+        # Calculate payment delay if paid
+        if self.paid_at:
+            self.calculate_payment_delay()
+        
         super().save(*args, **kwargs)

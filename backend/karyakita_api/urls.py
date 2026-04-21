@@ -20,4 +20,5 @@ urlpatterns = [
     path('api/upload/', ImageUploadView.as_view()),
     path('api/analytics/', include('apps.analytics.urls')),
     path('api/contracts/', include('apps.contracts.urls')),
+    path('api/ml/', include('apps.ml_service.urls')),  # NEW: ML endpoints
 ]

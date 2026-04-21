@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'apps.dashboard',
     'apps.analytics',
     'apps.contracts',
+    'apps.ml_service',  # NEW: ML service
 ]
 
 MIDDLEWARE = [
