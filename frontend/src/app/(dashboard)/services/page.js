@@ -1,19 +1,29 @@
 'use client';
+import { useI18n } from '@/lib/i18n';
 import { useState, useEffect } from 'react';
 import { getServices, createService, updateService, deleteService } from '@/lib/api';
+import { getPricingRecommendation } from '@/lib/ml-api';
+import { formatCurrency } from '@/lib/utils';
 import ServiceCard from '@/components/ServiceCard';
 import AIPricingModal from '@/components/AIPricingModal';
-import { Plus, X, Briefcase } from 'lucide-react';
+import { Plus, X, Briefcase, Brain, Loader2, ChevronDown } from 'lucide-react';
 import ConfirmDialog from '@/components/ConfirmDialog';
 import styles from './page.module.css';
 
 export default function ServicesPage() {
+    const { t } = useI18n();
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isAIModalOpen, setIsAIModalOpen] = useState(false);
     const [editingId, setEditingId] = useState(null);
     const [confirmDialog, setConfirmDialog] = useState({ open: false, title: '', message: '', variant: 'danger', onConfirm: null });
+
+    // ML Pricing suggestion state
+    const [mlSuggestion, setMlSuggestion] = useState(null);
+    const [mlLoading, setMlLoading] = useState(false);
+    const [mlError, setMlError] = useState(null);
+    const [mlComplexity, setMlComplexity] = useState('medium');
 
     const [formData, setFormData] = useState({
         title: '',
@@ -87,8 +97,8 @@ export default function ServicesPage() {
     const handleDelete = async (id) => {
         setConfirmDialog({
             open: true,
-            title: 'Hapus Jasa',
-            message: 'Apakah kamu yakin ingin menghapus jasa ini? Aksi ini tidak dapat dibatalkan.',
+            title: t('servicesPage.deleteTitle'),
+            message: t('servicesPage.deleteConfirm'),
             variant: 'danger',
             onConfirm: async () => {
                 try {
@@ -107,26 +117,47 @@ export default function ServicesPage() {
         setIsAIModalOpen(false);
     };
 
+    const handleGetMLSuggestion = async () => {
+        setMlLoading(true);
+        setMlError(null);
+        setMlSuggestion(null);
+        try {
+            const data = await getPricingRecommendation(formData.category, mlComplexity);
+            setMlSuggestion(data);
+        } catch (err) {
+            setMlError(err.message || 'Gagal mendapatkan saran harga');
+        } finally {
+            setMlLoading(false);
+        }
+    };
+
+    const handleUseOptimalPrice = () => {
+        if (mlSuggestion?.optimal_price) {
+            setFormData(prev => ({ ...prev, base_price: mlSuggestion.optimal_price.toString() }));
+            setMlSuggestion(null);
+        }
+    };
+
     if (loading) return <div className="p-8">Memuat jasa...</div>;
 
     return (
         <div className={styles.container}>
             <div className={styles.header}>
                 <div>
-                    <h1 className={styles.title}>Jasa Saya</h1>
-                    <p className={styles.subtitle}>Kelola jasa yang kamu tawarkan ke klien</p>
+                    <h1 className={styles.title}>{t('servicesPage.title')}</h1>
+                    <p className={styles.subtitle}>{t('servicesPage.subtitle')}</p>
                 </div>
                 <button onClick={openAddModal} className={styles.addBtn}>
-                    <Plus size={20} /> Tambah Jasa
+                    <Plus size={20} /> {t('servicesPage.addService')}
                 </button>
             </div>
 
             {services.length === 0 ? (
                 <div className={styles.emptyState}>
                     <Briefcase size={48} className={styles.emptyIcon} />
-                    <h3>Belum ada jasa</h3>
-                    <p>Mulai tambahkan jasa pertamamu agar klien bisa melihat penawaranmu.</p>
-                    <button onClick={openAddModal} className={styles.addBtnOutline}>+ Tambah Jasa</button>
+                    <h3>{t('servicesPage.noServices')}</h3>
+                    <p>{t('servicesPage.noServicesDesc')}</p>
+                    <button onClick={openAddModal} className={styles.addBtnOutline}>+ {t('servicesPage.addService')}</button>
                 </div>
             ) : (
                 <div className={styles.grid}>
@@ -147,62 +178,65 @@ export default function ServicesPage() {
                 <div className={styles.modalOverlay}>
                     <div className={styles.modal}>
                         <div className={styles.modalHeader}>
-                            <h2 className={styles.modalTitle}>{editingId ? 'Edit Jasa' : 'Tambah Jasa Baru'}</h2>
+                            <h2 className={styles.modalTitle}>{editingId ? t('servicesPage.editService') : t('servicesPage.newService')}</h2>
                             <button onClick={() => setIsModalOpen(false)} className={styles.closeBtn}><X size={20} /></button>
                         </div>
 
                         <form onSubmit={handleSubmit} className={styles.modalBody}>
                             <div className={styles.formGroup}>
-                                <label>Judul Jasa</label>
+                                <label>{t('servicesPage.serviceTitle')}</label>
                                 <input
                                     type="text"
                                     value={formData.title}
                                     onChange={e => setFormData({ ...formData, title: e.target.value })}
                                     required
                                     className={styles.input}
-                                    placeholder="Misal: Desain Logo Premium"
+                                    placeholder={t('servicesPage.serviceTitlePh')}
                                 />
                             </div>
 
                             <div className={styles.formGroup}>
-                                <label>Kategori</label>
+                                <label>{t('servicesPage.category')}</label>
                                 <select
                                     value={formData.category}
-                                    onChange={e => setFormData({ ...formData, category: e.target.value })}
+                                    onChange={e => {
+                                        setFormData({ ...formData, category: e.target.value });
+                                        setMlSuggestion(null);
+                                    }}
                                     className={styles.input}
                                 >
-                                    <option value="logo">Desain Logo</option>
-                                    <option value="branding">Branding & Identity</option>
-                                    <option value="social_media">Desain Social Media</option>
-                                    <option value="illustration">Ilustrasi</option>
-                                    <option value="photo_product">Foto Produk</option>
-                                    <option value="photo_event">Foto Event</option>
-                                    <option value="video_promo">Video Promosi</option>
-                                    <option value="video_event">Video Event</option>
-                                    <option value="copywriting">Copywriting</option>
-                                    <option value="translation">Penerjemahan</option>
-                                    <option value="music">Produksi Musik</option>
-                                    <option value="web_dev">Web Development</option>
-                                    <option value="other">Lainnya</option>
+                                    <option value="logo">{t('servicesPage.cat_logo')}</option>
+                                    <option value="branding">{t('servicesPage.cat_branding')}</option>
+                                    <option value="social_media">{t('servicesPage.cat_social_media')}</option>
+                                    <option value="illustration">{t('servicesPage.cat_illustration')}</option>
+                                    <option value="photo_product">{t('servicesPage.cat_photo_product')}</option>
+                                    <option value="photo_event">{t('servicesPage.cat_photo_event')}</option>
+                                    <option value="video_promo">{t('servicesPage.cat_video_promo')}</option>
+                                    <option value="video_event">{t('servicesPage.cat_video_event')}</option>
+                                    <option value="copywriting">{t('servicesPage.cat_copywriting')}</option>
+                                    <option value="translation">{t('servicesPage.cat_translation')}</option>
+                                    <option value="music">{t('servicesPage.cat_music')}</option>
+                                    <option value="web_dev">{t('servicesPage.cat_web_dev')}</option>
+                                    <option value="other">{t('servicesPage.cat_other')}</option>
                                 </select>
                             </div>
 
                             <div className={styles.formGroup}>
-                                <label>Deskripsi Detail</label>
+                                <label>{t('servicesPage.detailDesc')}</label>
                                 <textarea
                                     value={formData.description}
                                     onChange={e => setFormData({ ...formData, description: e.target.value })}
                                     rows="4"
                                     className={styles.input}
-                                    placeholder="Jelaskan apa saja yang didapat klien..."
+                                    placeholder={t('servicesPage.detailDescPh')}
                                 />
                             </div>
 
                             <div className={styles.formGroup}>
                                 <label className={styles.priceLabelRow}>
-                                    <span>Harga Dasar (Rp)</span>
+                                    <span>{t('servicesPage.basePrice')}</span>
                                     <button type="button" onClick={() => setIsAIModalOpen(true)} className={styles.aiBtn}>
-                                        <Briefcase size={16} style={{ marginRight: '8px' }} /> Cek Harga AI
+                                        <Briefcase size={16} style={{ marginRight: '8px' }} /> {t('servicesPage.checkAIPrice')}
                                     </button>
                                 </label>
                                 <input
@@ -216,9 +250,72 @@ export default function ServicesPage() {
                                 />
                             </div>
 
+                            {/* ML Pricing Suggestion */}
+                            <div className={styles.mlPricingHelper}>
+                                <div className={styles.mlPricingRow}>
+                                    <div className={styles.mlComplexitySelect}>
+                                        <label className={styles.mlComplexityLabel}>{t('servicesPage.complexity')}</label>
+                                        <select
+                                            value={mlComplexity}
+                                            onChange={e => { setMlComplexity(e.target.value); setMlSuggestion(null); }}
+                                            className={styles.mlComplexityInput}
+                                        >
+                                            <option value="simple">{t('servicesPage.comp_simple')}</option>
+                                            <option value="medium">{t('servicesPage.comp_medium')}</option>
+                                            <option value="complex">{t('servicesPage.comp_complex')}</option>
+                                        </select>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        onClick={handleGetMLSuggestion}
+                                        disabled={mlLoading}
+                                        className={styles.mlSuggestBtn}
+                                    >
+                                        {mlLoading ? (
+                                            <><Loader2 size={14} className={styles.spin} /> {t('servicesPage.loading')}</>
+                                        ) : (
+                                            <><Brain size={14} /> {t('servicesPage.marketPriceSuggestion')}</>
+                                        )}
+                                    </button>
+                                </div>
+
+                                {mlError && (
+                                    <p className={styles.mlError}>{mlError}</p>
+                                )}
+
+                                {mlSuggestion && (
+                                    <div className={styles.mlSuggestionBox}>
+                                        <div className={styles.mlPriceRange}>
+                                            <div className={styles.mlPriceItem}>
+                                                <span className={styles.mlPriceItemLabel}>{t('servicesPage.min')}</span>
+                                                <span className={styles.mlPriceItemValue}>{formatCurrency(mlSuggestion.min_price)}</span>
+                                            </div>
+                                            <div className={`${styles.mlPriceItem} ${styles.mlPriceItemOptimal}`}>
+                                                <span className={styles.mlPriceItemLabel}>{t('servicesPage.optimal')}</span>
+                                                <span className={styles.mlPriceItemValueOptimal}>{formatCurrency(mlSuggestion.optimal_price)}</span>
+                                            </div>
+                                            <div className={styles.mlPriceItem}>
+                                                <span className={styles.mlPriceItemLabel}>{t('servicesPage.max')}</span>
+                                                <span className={styles.mlPriceItemValue}>{formatCurrency(mlSuggestion.max_price)}</span>
+                                            </div>
+                                        </div>
+                                        <p className={styles.mlSampleNote}>
+                                            {t('servicesPage.basedOn')} {mlSuggestion.sample_size} {t('servicesPage.marketData')} &bull; {t('servicesPage.level')} {mlSuggestion.experience_level}
+                                        </p>
+                                        <button
+                                            type="button"
+                                            onClick={handleUseOptimalPrice}
+                                            className={styles.mlApplyBtn}
+                                        >
+                                            Gunakan Harga Optimal
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+
                             <div className={styles.modalFooter}>
-                                <button type="button" onClick={() => setIsModalOpen(false)} className={styles.cancelBtn}>Batal</button>
-                                <button type="submit" className={styles.saveBtn}>Simpan Jasa</button>
+                                <button type="button" onClick={() => setIsModalOpen(false)} className={styles.cancelBtn}>{t('servicesPage.cancel')}</button>
+                                <button type="submit" className={styles.saveBtn}>{t('servicesPage.saveService')}</button>
                             </div>
                         </form>
                     </div>

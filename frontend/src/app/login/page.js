@@ -8,9 +8,11 @@ import { Eye, EyeOff } from 'lucide-react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { login } from '@/lib/api';
 import styles from './page.module.css';
+import { useI18n } from '@/lib/i18n';
 
 export default function LoginPage() {
     const router = useRouter();
+    const { t } = useI18n();
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
@@ -30,10 +32,10 @@ export default function LoginPage() {
                 router.push('/dashboard');
             } else {
                 const errData = await res.json();
-                setError(errData.detail || 'Login gagal. Periksa email & password kamu.');
+                setError(errData.detail || t('auth.login.errorInvalid'));
             }
         } catch (err) {
-            setError('Terjadi kesalahan. Coba lagi nanti.');
+            setError(t('auth.login.errorGeneric'));
         } finally {
             setLoading(false);
         }
@@ -52,38 +54,42 @@ export default function LoginPage() {
                     />
                 </div>
                 <div className={styles.leftBody}>
-                    <p className={styles.leftEyebrow}>Akses Mudah</p>
-                    <h2 className={styles.leftTitle}>Satu Platform<br />Untuk Bisnis<br />Kreatifmu.</h2>
-                    <p className={styles.leftSubtitle}>Kelola invoice, pamerkan portofolio, dan terima pembayaran klien dengan mulus di satu tempat.</p>
+                    <p className={styles.leftEyebrow}>{t('auth.login.leftEyebrow')}</p>
+                    <h2 className={styles.leftTitle}>
+                        {t('auth.login.leftTitleLine1')}<br />
+                        {t('auth.login.leftTitleLine2')}<br />
+                        {t('auth.login.leftTitleLine3')}
+                    </h2>
+                    <p className={styles.leftSubtitle}>{t('auth.login.leftSubtitle')}</p>
                 </div>
             </div>
 
             <div className={styles.rightPanel}>
                 <div className={styles.formWrapper}>
-                    <h1 className={styles.title}>Welcome back</h1>
-                    <p className={styles.subtitle}>Masuk ke akun Kreavify-mu untuk melanjutkan produktivitas.</p>
+                    <h1 className={styles.title}>{t('auth.login.title')}</h1>
+                    <p className={styles.subtitle}>{t('auth.login.subtitle')}</p>
 
                     <form onSubmit={handleSubmit}>
                         <div className={styles.formGroup}>
-                            <label className={styles.label}>Email</label>
+                            <label className={styles.label}>{t('auth.login.email')}</label>
                             <input
                                 type="email"
                                 required
                                 className={styles.input}
-                                placeholder="email@contoh.com"
+                                placeholder={t('auth.login.emailPlaceholder')}
                                 value={formData.email}
                                 onChange={e => setFormData({ ...formData, email: e.target.value })}
                             />
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label className={styles.label}>Password</label>
+                            <label className={styles.label}>{t('auth.login.password')}</label>
                             <div className={styles.passwordWrapper}>
                                 <input
                                     type={showPassword ? 'text' : 'password'}
                                     required
                                     className={styles.input}
-                                    placeholder="Masukkan password"
+                                    placeholder={t('auth.login.passwordPlaceholder')}
                                     value={formData.password}
                                     onChange={e => setFormData({ ...formData, password: e.target.value })}
                                 />
@@ -96,12 +102,12 @@ export default function LoginPage() {
                         {error && <div className={styles.error}>{error}</div>}
 
                         <button type="submit" className={styles.submitBtn} disabled={loading}>
-                            {loading ? 'Masuk...' : 'Masuk'}
+                            {loading ? t('auth.login.submitting') : t('auth.login.submit')}
                         </button>
                     </form>
 
                     <div className={styles.footer}>
-                        Belum punya akun? <Link href="/register" className={styles.link}>Daftar di sini</Link>
+                        {t('auth.login.noAccount')} <Link href="/register" className={styles.link}>{t('auth.login.registerLink')}</Link>
                     </div>
                 </div>
             </div>

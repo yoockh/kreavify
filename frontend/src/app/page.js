@@ -1,44 +1,35 @@
+'use client';
+
 import Link from 'next/link';
 import { ArrowRight, CheckCircle, Zap, Shield, Brain } from 'lucide-react';
+import PublicNavbar from '@/components/PublicNavbar';
+import PublicFooter from '@/components/PublicFooter';
 import styles from './page.module.css';
+import { useI18n } from '@/lib/i18n';
 
 export default function Home() {
+  const { t, tRaw } = useI18n();
   return (
     <div className={styles.container}>
-      {/* Navbar */}
-      <nav className={styles.navbar}>
-        <Link href="/" className={styles.logo}>Kreavify</Link>
-        <div className={styles.navCenter}>
-          <Link href="/about" className={styles.navLink}>Tentang</Link>
-          <Link href="/help" className={styles.navLink}>Bantuan</Link>
-          <Link href="/contact" className={styles.navLink}>Hubungi Kami</Link>
-        </div>
-        <div className={styles.navLinks}>
-          <Link href="/login" className={styles.loginBtn}>Masuk</Link>
-          <Link href="/register" className={styles.registerBtn}>Daftar Gratis</Link>
-        </div>
-      </nav>
+      <PublicNavbar />
 
       {/* Hero Section */}
       <main className={styles.main}>
         <section className={styles.hero}>
           <div className={styles.heroContent}>
-            <div className={styles.badge}>Dibuat untuk Kreator Indonesia 🇮🇩</div>
+            <div className={styles.badge}>{t('home.badge')}</div>
             <h1 className={styles.title}>
-              Kirim Tagihan Lebih Cepat, <br />
-              <span className={styles.gradientText}>Terima Bayaran Tanpa Ribet</span>
+              {t('home.heroTitlePrefix')} <br />
+              <span className={styles.gradientText}>{t('home.heroTitleHighlight')}</span>
             </h1>
-            <p className={styles.subtitle}>
-              Platform invoice & pembayaran digital khusus untuk freelancer kreatif.
-              Buat tagihan dalam 30 detik, bagikan link, dan biarkan klien bayar lewat metode pilihan mereka.
-            </p>
+            <p className={styles.subtitle}>{t('home.heroSubtitle')}</p>
 
             <div className={styles.ctaGroup}>
               <Link href="/register" className={styles.primaryCta}>
-                Mulai Sekarang Gratis <ArrowRight size={20} />
+                {t('home.ctaPrimary')} <ArrowRight size={20} />
               </Link>
               <Link href="#features" className={styles.secondaryCta}>
-                Pelajari Lebih Lanjut
+                {t('home.ctaSecondary')}
               </Link>
             </div>
           </div>
@@ -71,32 +62,32 @@ export default function Home() {
 
         {/* Features Section */}
         <section id="features" className={styles.features}>
-          <h2 className={styles.sectionTitle}>Semua yang Freelancer Butuhkan</h2>
-          <p className={styles.sectionSubtitle}>Fokus berkarya, biarkan kami yang urus administrasinya.</p>
+          <h2 className={styles.sectionTitle}>{t('home.featuresTitle')}</h2>
+          <p className={styles.sectionSubtitle}>{t('home.featuresSubtitle')}</p>
 
           <div className={styles.featureGrid}>
             <div className={styles.featureCard}>
               <div className={`${styles.iconWrapper} ${styles.blue}`}>
                 <Zap size={24} />
               </div>
-              <h3>Invoice 30 Detik</h3>
-              <p>Pilih jasa dari katalogmu, tentukan klien, dan invoice siap dikirim lengkap dengan link pembayaran.</p>
+              <h3>{t('home.features.revenue.title')}</h3>
+              <p>{t('home.features.revenue.desc')}</p>
             </div>
 
             <div className={styles.featureCard}>
               <div className={`${styles.iconWrapper} ${styles.green}`}>
                 <Shield size={24} />
               </div>
-              <h3>Pembayaran Aman</h3>
-              <p>Klien bisa bayar via QRIS, Virtual Account, atau e-Wallet favorit mereka (ditenagai oleh Midtrans).</p>
+              <h3>{t('home.features.market.title')}</h3>
+              <p>{t('home.features.market.desc')}</p>
             </div>
 
             <div className={styles.featureCard}>
               <div className={`${styles.iconWrapper} ${styles.purple}`}>
                 <Brain size={24} />
               </div>
-              <h3>AI Pricing Suggestion</h3>
-              <p>Ragu nentuin harga? Fitur AI kami akan memberikan rekomendasi harga pasar yang wajar agar kamu tidak underprice.</p>
+              <h3>{t('home.features.invoice.title')}</h3>
+              <p>{t('home.features.invoice.desc')}</p>
             </div>
           </div>
         </section>
@@ -105,12 +96,15 @@ export default function Home() {
         <section className={styles.valueProps}>
           <div className={styles.vpContainer}>
             <div className={styles.vpText}>
-              <h2>Lebih Profesional di Mata Klien</h2>
+              <h2>{t('home.vpTitle')}</h2>
               <ul className={styles.checkList}>
-                <li><CheckCircle size={20} className={styles.checkIcon} /> Punya halaman profil portofolio sendiri</li>
-                <li><CheckCircle size={20} className={styles.checkIcon} /> Invoice PDF rapi dan standar industri</li>
-                <li><CheckCircle size={20} className={styles.checkIcon} /> Notifikasi otomatis saat invoice dibayar</li>
+                {(tRaw('home.vpItems') || []).map((text, idx) => (
+                  <li key={idx}><CheckCircle size={20} className={styles.checkIcon} /> {text}</li>
+                ))}
               </ul>
+              <p style={{marginTop: '1rem', fontSize: '0.9rem', color: '#6b7280'}}>
+                <strong>{t('home.vpNoteTitle')}</strong> {t('home.vpNoteText')}
+              </p>
             </div>
             <div className={styles.vpImage}>
               <div className={styles.profileMockup}>
@@ -126,39 +120,7 @@ export default function Home() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className={styles.footer}>
-        <div className={styles.footerTop}>
-          <div className={styles.footerBrand}>
-            <div className={styles.footerLogo}>Kreavify</div>
-            <p className={styles.footerDesc}>
-              Mendukung UMKM & Kreator Indonesia dalam Digitalisasi Ekonomi Kreatif.<br />Hackathon BI 2026.
-            </p>
-          </div>
-          <div className={styles.footerLinks}>
-            <div className={styles.footerCol}>
-              <h4>Produk</h4>
-              <Link href="/register">Daftar Gratis</Link>
-              <Link href="/login">Masuk</Link>
-              <Link href="/upgrade">Upgrade Plan</Link>
-            </div>
-            <div className={styles.footerCol}>
-              <h4>Informasi</h4>
-              <Link href="/about">Tentang Kami</Link>
-              <Link href="/help">Pusat Bantuan</Link>
-              <Link href="/contact">Hubungi Kami</Link>
-            </div>
-            <div className={styles.footerCol}>
-              <h4>Legal</h4>
-              <Link href="/privacy">Kebijakan Privasi</Link>
-              <Link href="/terms">Syarat & Ketentuan</Link>
-            </div>
-          </div>
-        </div>
-        <div className={styles.copyright}>
-          © {new Date().getFullYear()} Kreavify. Hak Cipta Dilindungi.
-        </div>
-      </footer>
+      <PublicFooter />
     </div>
   );
 }

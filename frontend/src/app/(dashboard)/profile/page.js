@@ -1,11 +1,13 @@
 'use client';
 
+import { useI18n } from '@/lib/i18n';
 import { useState, useEffect, useRef } from 'react';
 import { getProfile, updateProfile, uploadImage } from '@/lib/api';
 import { Camera, Upload } from 'lucide-react';
 import styles from './page.module.css';
 
 export default function ProfilePage() {
+    const { t } = useI18n();
     const [profile, setProfile] = useState({
         display_name: '',
         bio: '',
@@ -74,13 +76,13 @@ export default function ProfilePage() {
             if (res.ok) {
                 const data = await res.json();
                 setProfile(prev => ({ ...prev, avatar_url: data.url }));
-                setMsg({ type: 'success', text: 'Foto profil berhasil diupload' });
+                setMsg({ type: 'success', text: t('profilePage.avatarSuccess') });
             } else {
                 const err = await res.json();
-                setMsg({ type: 'error', text: err.error || 'Gagal upload foto' });
+                setMsg({ type: 'error', text: err.error || t('profilePage.avatarFail') });
             }
         } catch (e) {
-            setMsg({ type: 'error', text: 'Gagal upload foto' });
+            setMsg({ type: 'error', text: t('profilePage.avatarFail') });
         }
         setUploadingAvatar(false);
     };
@@ -94,13 +96,13 @@ export default function ProfilePage() {
             if (res.ok) {
                 const data = await res.json();
                 setProfile(prev => ({ ...prev, banner_url: data.url }));
-                setMsg({ type: 'success', text: 'Banner berhasil diupload' });
+                setMsg({ type: 'success', text: t('profilePage.bannerSuccess') });
             } else {
                 const err = await res.json();
-                setMsg({ type: 'error', text: err.error || 'Gagal upload banner' });
+                setMsg({ type: 'error', text: err.error || t('profilePage.bannerFail') });
             }
         } catch (e) {
-            setMsg({ type: 'error', text: 'Gagal upload banner' });
+            setMsg({ type: 'error', text: t('profilePage.bannerFail') });
         }
         setUploadingBanner(false);
     };
@@ -112,24 +114,24 @@ export default function ProfilePage() {
         try {
             const res = await updateProfile(profile);
             if (res.ok) {
-                setMsg({ type: 'success', text: 'Profil berhasil diperbarui' });
+                setMsg({ type: 'success', text: t('profilePage.profileOk') });
             } else {
                 const err = await res.json();
-                setMsg({ type: 'error', text: Object.values(err)[0] || 'Gagal menyimpan profil' });
+                setMsg({ type: 'error', text: Object.values(err)[0] || t('profilePage.profileFail') });
             }
         } catch (e) {
-            setMsg({ type: 'error', text: 'Terjadi kesalahan' });
+            setMsg({ type: 'error', text: t('profilePage.errorGeneric') });
         }
         setSaving(false);
     };
 
-    if (loading) return <div style={{ padding: '2rem', color: 'var(--text-muted)' }}>Memuat profil...</div>;
+    if (loading) return <div style={{ padding: '2rem', color: 'var(--text-muted)' }}>{t('profilePage.loading')}</div>;
 
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <h1 className={styles.title}>Pengaturan Profil</h1>
-                <p className={styles.subtitle}>Atur informasi publik dan metode pencairan dana</p>
+                <h1 className={styles.title}>{t('profilePage.title')}</h1>
+                <p className={styles.subtitle}>{t('profilePage.subtitle')}</p>
             </div>
 
             {/* Banner Upload */}
@@ -143,7 +145,7 @@ export default function ProfilePage() {
                         className={styles.bannerUploadBtn}
                         style={{ cursor: uploadingBanner ? 'not-allowed' : 'pointer', opacity: uploadingBanner ? 0.7 : 1 }}
                     >
-                        <Upload size={16} /> {uploadingBanner ? 'Mengupload...' : 'Ganti Banner'}
+                        <Upload size={16} /> {uploadingBanner ? t('profilePage.uploading') : t('profilePage.changeBanner')}
                     </label>
                     <input
                         id="banner-upload"
@@ -190,14 +192,14 @@ export default function ProfilePage() {
                 )}
 
                 <div className={styles.section}>
-                    <h2 className={styles.sectionTitle}>Info Dasar</h2>
+                    <h2 className={styles.sectionTitle}>{t('profilePage.basicInfo')}</h2>
                     <div className={styles.grid}>
                         <div className={styles.formGroup}>
-                            <label>Nama Display</label>
+                            <label>{t('profilePage.displayName')}</label>
                             <input type="text" name="display_name" value={profile.display_name} onChange={handleChange} required className={styles.input} />
                         </div>
                         <div className={styles.formGroup}>
-                            <label>Profesi Utama</label>
+                            <label>{t('profilePage.primaryProfession')}</label>
                             <select name="profession" value={profile.profession} onChange={handleChange} className={styles.input}>
                                 <option value="designer">Desainer Grafis</option>
                                 <option value="photographer">Fotografer</option>
@@ -210,29 +212,29 @@ export default function ProfilePage() {
                         </div>
                     </div>
                     <div className={styles.formGroup}>
-                        <label>Bio Singkat</label>
+                        <label>{t('profilePage.shortBio')}</label>
                         <textarea name="bio" value={profile.bio} onChange={handleChange} rows="3" className={styles.textarea}></textarea>
                     </div>
                     <div className={styles.grid}>
                         <div className={styles.formGroup}>
-                            <label>No. WhatsApp</label>
+                            <label>{t('profilePage.whatsappNo')}</label>
                             <input type="text" name="phone" value={profile.phone} onChange={handleChange} className={styles.input} />
                         </div>
                         <div className={styles.formGroup}>
-                            <label>Slug URL (/p/{profile.slug})</label>
+                            <label>{t('profilePage.slugUrl')} (/p/{profile.slug})</label>
                             <input type="text" name="slug" value={profile.slug} disabled className={styles.input} style={{ opacity: 0.6 }} />
-                            <small className={styles.helpText}>URL Profil Publik kamu: <a href={`/p/${profile.slug}`} target="_blank" style={{ color: 'var(--primary)' }}>/p/{profile.slug}</a></small>
+                            <small className={styles.helpText}>{t('profilePage.publicProfileUrl')} <a href={`/p/${profile.slug}`} target="_blank" style={{ color: 'var(--primary)' }}>/p/{profile.slug}</a></small>
                         </div>
                     </div>
                 </div>
 
                 <div className={styles.section}>
-                    <h2 className={styles.sectionTitle}>Info Rekening Bank (Untuk Pencairan)</h2>
+                    <h2 className={styles.sectionTitle}>{t('profilePage.bankInfo')}</h2>
                     <div className={styles.grid}>
                         <div className={styles.formGroup}>
-                            <label>Bank / e-Wallet</label>
+                            <label>{t('profilePage.bankOrEwallet')}</label>
                             <select name="bank_name" value={profile.bank_name} onChange={handleChange} className={styles.input}>
-                                <option value="">Pilih Bank</option>
+                                <option value="">{t('profilePage.selectBank')}</option>
                                 <option value="BCA">BCA</option>
                                 <option value="BNI">BNI</option>
                                 <option value="BRI">BRI</option>
@@ -247,23 +249,23 @@ export default function ProfilePage() {
                             </select>
                         </div>
                         <div className={styles.formGroup}>
-                            <label>Nomor Rekening</label>
+                            <label>{t('profilePage.accountNumber')}</label>
                             <input type="text" name="bank_account_number" value={profile.bank_account_number} onChange={handleChange} className={styles.input} />
                         </div>
                     </div>
                     <div className={styles.formGroup}>
-                        <label>Nama Pemilik Rekening</label>
+                        <label>{t('profilePage.accountName')}</label>
                         <input type="text" name="bank_account_name" value={profile.bank_account_name} onChange={handleChange} className={styles.input} />
                     </div>
                 </div>
 
                 {/* Branded Invoice Section */}
                 <div className={styles.section}>
-                    <h2 className={styles.sectionTitle}>Branded Invoice</h2>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '1rem' }}>Kustomisasi tampilan invoice kamu agar terlihat lebih profesional</p>
+                    <h2 className={styles.sectionTitle}>{t('profilePage.brandedInvoice')}</h2>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '1rem' }}>{t('profilePage.customizeInvoice')}</p>
                     <div className={styles.grid}>
                         <div className={styles.formGroup}>
-                            <label>Logo Invoice</label>
+                            <label>{t('profilePage.invoiceLogo')}</label>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                                 {profile.invoice_logo_url && (
                                     <img src={profile.invoice_logo_url} alt="Logo" style={{ width: 64, height: 64, objectFit: 'contain', borderRadius: '0.5rem', border: '1px solid var(--border-color)' }} />
@@ -282,12 +284,12 @@ export default function ProfilePage() {
                                     setUploadingLogo(false);
                                 }} />
                                 <button type="button" onClick={() => logoInputRef.current?.click()} className={styles.uploadBtn} disabled={uploadingLogo}>
-                                    <Upload size={16} /> {uploadingLogo ? 'Uploading...' : 'Upload Logo'}
+                                    <Upload size={16} /> {uploadingLogo ? t('profilePage.uploading') : t('profilePage.uploadLogo')}
                                 </button>
                             </div>
                         </div>
                         <div className={styles.formGroup}>
-                            <label>Warna Aksen Invoice</label>
+                            <label>{t('profilePage.invoiceAccentColor')}</label>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                                 <input
                                     type="color"

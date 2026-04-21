@@ -32,6 +32,8 @@
     font-weight: 500;
     transition: all 0.2s;
     text-decoration: none;
+    font-size: 0.875rem;
+    font-family: inherit;
 }
 
 .addBtn:hover {

@@ -1,4 +1,5 @@
 'use client';
+import { useI18n } from '@/lib/i18n';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { getInvoices, deleteInvoice, sendInvoice, cancelInvoice } from '@/lib/api';
@@ -7,6 +8,7 @@ import ConfirmDialog from '@/components/ConfirmDialog';
 import styles from './page.module.css';
 
 export default function InvoicesList() {
+    const { t } = useI18n();
     const [invoices, setInvoices] = useState([]);
     const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState('');
@@ -52,13 +54,13 @@ export default function InvoicesList() {
         setActiveMenu(null);
         try {
             if (action === 'delete') {
-                showConfirm('Hapus Draft Invoice', 'Apakah kamu yakin ingin menghapus draft invoice ini? Aksi ini tidak dapat dibatalkan.', 'danger', async () => {
+                showConfirm(t('invoicesPage.deleteDraftTitle'), t('invoicesPage.deleteDraftConfirm'), 'danger', async () => {
                     await deleteInvoice(id);
                     setConfirmDialog({ ...confirmDialog, open: false });
                     fetchInvoices();
                 });
             } else if (action === 'send') {
-                showConfirm('Kirim Invoice', 'Invoice akan dikirim ke klien dan link pembayaran akan dibuat. Lanjutkan?', 'warning', async () => {
+                showConfirm(t('invoicesPage.sendTitle'), t('invoicesPage.sendConfirm'), 'warning', async () => {
                     const res = await sendInvoice(id);
                     setConfirmDialog({ ...confirmDialog, open: false });
                     if (res.ok) {
@@ -69,7 +71,7 @@ export default function InvoicesList() {
                     fetchInvoices();
                 });
             } else if (action === 'cancel') {
-                showConfirm('Batalkan Invoice', 'Apakah kamu yakin ingin membatalkan invoice ini? Klien tidak akan bisa membayar lagi.', 'danger', async () => {
+                showConfirm(t('invoicesPage.cancelTitle'), t('invoicesPage.cancelConfirm'), 'danger', async () => {
                     await cancelInvoice(id);
                     setConfirmDialog({ ...confirmDialog, open: false });
                     fetchInvoices();
@@ -92,28 +94,28 @@ export default function InvoicesList() {
         <div className={styles.container}>
             <div className={styles.header}>
                 <div>
-                    <h1 className={styles.title}>Invoice Saya</h1>
-                    <p className={styles.subtitle}>Kelola semua tagihan ke klien</p>
+                    <h1 className={styles.title}>{t('invoicesPage.title')}</h1>
+                    <p className={styles.subtitle}>{t('invoicesPage.subtitle')}</p>
                 </div>
                 <Link href="/invoices/new" className={styles.addBtn}>
-                    <Plus size={20} /> Buat Invoice Baru
+                    <Plus size={20} /> {t('invoicesPage.newInvoice')}
                 </Link>
             </div>
 
             <div className={styles.filtersWrapper}>
                 <div className={styles.tabs}>
-                    <button className={`${styles.tab} ${filter === '' ? styles.activeTab : ''}`} onClick={() => setFilter('')}>Semua</button>
-                    <button className={`${styles.tab} ${filter === 'draft' ? styles.activeTab : ''}`} onClick={() => setFilter('draft')}>Draft</button>
-                    <button className={`${styles.tab} ${filter === 'sent' ? styles.activeTab : ''}`} onClick={() => setFilter('sent')}>Terkirim</button>
-                    <button className={`${styles.tab} ${filter === 'paid' ? styles.activeTab : ''}`} onClick={() => setFilter('paid')}>Dibayar</button>
-                    <button className={`${styles.tab} ${filter === 'cancelled' ? styles.activeTab : ''}`} onClick={() => setFilter('cancelled')}>Dibatalkan</button>
+                    <button className={`${styles.tab} ${filter === '' ? styles.activeTab : ''}`} onClick={() => setFilter('')}>{t('invoicesPage.filterAll')}</button>
+                    <button className={`${styles.tab} ${filter === 'draft' ? styles.activeTab : ''}`} onClick={() => setFilter('draft')}>{t('invoicesPage.filterDraft')}</button>
+                    <button className={`${styles.tab} ${filter === 'sent' ? styles.activeTab : ''}`} onClick={() => setFilter('sent')}>{t('invoicesPage.filterSent')}</button>
+                    <button className={`${styles.tab} ${filter === 'paid' ? styles.activeTab : ''}`} onClick={() => setFilter('paid')}>{t('invoicesPage.filterPaid')}</button>
+                    <button className={`${styles.tab} ${filter === 'cancelled' ? styles.activeTab : ''}`} onClick={() => setFilter('cancelled')}>{t('invoicesPage.filterCancelled')}</button>
                 </div>
 
                 <div className={styles.searchBar}>
                     <Search size={18} className={styles.searchIcon} />
                     <input
                         type="text"
-                        placeholder="Cari nama klien..."
+                        placeholder={t('invoicesPage.searchPh')}
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                         className={styles.searchInput}
@@ -126,11 +128,11 @@ export default function InvoicesList() {
                     <table className={styles.table}>
                         <thead>
                             <tr>
-                                <th>No. Invoice</th>
-                                <th>Klien</th>
-                                <th>Total Tagihan</th>
-                                <th>Status</th>
-                                <th>Tanggal</th>
+                                <th>{t('invoicesPage.invoiceNo')}</th>
+                                <th>{t('invoicesPage.client')}</th>
+                                <th>{t('invoicesPage.totalAmount')}</th>
+                                <th>{t('invoicesPage.status')}</th>
+                                <th>{t('invoicesPage.date')}</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -141,7 +143,7 @@ export default function InvoicesList() {
                                 <tr>
                                     <td colSpan="6" className={styles.emptyState}>
                                         <FileText size={40} className={styles.emptyIcon} />
-                                        <p>Tidak ada invoice ditemukan.</p>
+                                        <p>{t('invoicesPage.noInvoiceFound')}</p>
                                     </td>
                                 </tr>
                             ) : (
@@ -152,9 +154,9 @@ export default function InvoicesList() {
                                         <td style={{ fontWeight: 600 }}>{formatRp(inv.total)}</td>
                                         <td>
                                             <span className={`${styles.badge} ${styles['badge-' + inv.status]}`}>
-                                                {inv.status === 'draft' ? 'Draft' :
-                                                    inv.status === 'sent' ? 'Menunggu' :
-                                                        inv.status === 'paid' ? 'Dibayar' : 'Dibatalkan'}
+                                                {inv.status === 'draft' ? t('dashboard.draft') :
+                                                    inv.status === 'sent' ? t('dashboard.waiting') :
+                                                        inv.status === 'paid' ? t('dashboard.paid') : t('dashboard.cancelled')}
                                             </span>
                                         </td>
                                         <td style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>{new Date(inv.created_at).toLocaleDateString('id-ID')}</td>
@@ -167,16 +169,16 @@ export default function InvoicesList() {
                                                 {activeMenu === inv.id && (
                                                     <div className={styles.dropdown}>
                                                         <Link href={`/invoices/${inv.id}`} className={styles.dropdownItem}>
-                                                            Lihat Detail
+                                                            {t('invoicesPage.seeDetail')}
                                                         </Link>
 
                                                         {inv.status === 'draft' && (
                                                             <>
                                                                 <button onClick={() => handleAction('send', inv.id)} className={styles.dropdownItem}>
-                                                                    <Send size={16} /> Kirim ke Klien
+                                                                    <Send size={16} /> {t('invoicesPage.sendToClient')}
                                                                 </button>
                                                                 <button onClick={() => handleAction('delete', inv.id)} className={`${styles.dropdownItem} ${styles.dropdownDanger}`}>
-                                                                    <Trash2 size={16} /> Hapus
+                                                                    <Trash2 size={16} /> {t('invoicesPage.delete')}
                                                                 </button>
                                                             </>
                                                         )}
@@ -184,10 +186,10 @@ export default function InvoicesList() {
                                                         {inv.status === 'sent' && (
                                                             <>
                                                                 <button onClick={() => handleAction('copyUrl', inv.id)} className={styles.dropdownItem}>
-                                                                    <Copy size={16} /> Salin Link Bayar
+                                                                    <Copy size={16} /> {t('invoicesPage.copyPayLink')}
                                                                 </button>
                                                                 <button onClick={() => handleAction('cancel', inv.id)} className={`${styles.dropdownItem} ${styles.dropdownDanger}`}>
-                                                                    <XCircle size={16} /> Batalkan
+                                                                    <XCircle size={16} /> {t('invoicesPage.cancelInvoiceBtn')}
                                                                 </button>
                                                             </>
                                                         )}

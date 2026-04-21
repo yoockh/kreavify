@@ -1,10 +1,12 @@
 'use client';
+import { useI18n } from '@/lib/i18n';
 import { useState, useEffect } from 'react';
 import { getTaxReport } from '@/lib/api';
 import { Calculator, Download, TrendingUp, AlertCircle } from 'lucide-react';
 import styles from './page.module.css';
 
 export default function TaxReportPage() {
+    const { t } = useI18n();
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [year, setYear] = useState(new Date().getFullYear());
@@ -29,15 +31,15 @@ export default function TaxReportPage() {
 
     const formatRp = (val) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(val);
 
-    if (loading) return <div style={{ padding: '2rem', color: 'var(--text-muted)' }}>Memuat laporan pajak...</div>;
-    if (!data) return <div style={{ padding: '2rem', color: 'var(--text-muted)' }}>Gagal memuat data</div>;
+    if (loading) return <div style={{ padding: '2rem', color: 'var(--text-muted)' }}>{t('taxReportPage.loading')}</div>;
+    if (!data) return <div style={{ padding: '2rem', color: 'var(--text-muted)' }}>{t('taxReportPage.failLoad')}</div>;
 
     return (
         <div className={styles.container}>
             <div className={styles.header}>
                 <div>
-                    <h1 className={styles.title}>Laporan Pajak</h1>
-                    <p className={styles.subtitle}>Rekap penghasilan tahunan untuk pelaporan SPT</p>
+                    <h1 className={styles.title}>{t('taxReportPage.title')}</h1>
+                    <p className={styles.subtitle}>{t('taxReportPage.subtitle')}</p>
                 </div>
                 <div className={styles.headerActions}>
                     <select
@@ -62,7 +64,7 @@ export default function TaxReportPage() {
                         <TrendingUp size={24} />
                     </div>
                     <div>
-                        <p className={styles.summaryLabel}>Total Pendapatan {year}</p>
+                        <p className={styles.summaryLabel}>{t('taxReportPage.totalRevenue')} {year}</p>
                         <h2 className={styles.summaryValue}>{formatRp(data.annual_total)}</h2>
                     </div>
                 </div>
@@ -71,7 +73,7 @@ export default function TaxReportPage() {
                         <Calculator size={24} />
                     </div>
                     <div>
-                        <p className={styles.summaryLabel}>Estimasi PPh Final {data.pph_final_rate}</p>
+                        <p className={styles.summaryLabel}>{t('taxReportPage.estFinalTax')} {data.pph_final_rate}</p>
                         <h2 className={styles.summaryValue}>{formatRp(data.pph_final_estimate)}</h2>
                     </div>
                 </div>
@@ -80,7 +82,7 @@ export default function TaxReportPage() {
                         <AlertCircle size={24} />
                     </div>
                     <div>
-                        <p className={styles.summaryLabel}>Total Invoice Dibayar</p>
+                        <p className={styles.summaryLabel}>{t('taxReportPage.totalPaidInvoices')}</p>
                         <h2 className={styles.summaryValue}>{data.total_invoices_paid}</h2>
                     </div>
                 </div>
@@ -89,20 +91,20 @@ export default function TaxReportPage() {
             {/* Info Banner */}
             <div className={styles.infoBanner}>
                 <AlertCircle size={18} />
-                <span>{data.note}</span>
+                <span>{data.note?.includes('UMKM') ? t('taxReportPage.note') : data.note}</span>
             </div>
 
             {/* Monthly Breakdown Table */}
             <div className={styles.tableCard}>
-                <h3 className={styles.cardTitle}>Rincian Pendapatan Bulanan — {year}</h3>
+                <h3 className={styles.cardTitle}>{t('taxReportPage.monthlyBreakdown')} {year}</h3>
                 <div className={styles.tableWrapper}>
                     <table className={styles.table}>
                         <thead>
                             <tr>
-                                <th>Bulan</th>
-                                <th style={{ textAlign: 'center' }}>Jumlah Invoice</th>
-                                <th style={{ textAlign: 'right' }}>Pendapatan</th>
-                                <th style={{ textAlign: 'right' }}>PPh 0.5%</th>
+                                <th>{t('taxReportPage.month')}</th>
+                                <th style={{ textAlign: 'center' }}>{t('taxReportPage.invoiceCount')}</th>
+                                <th style={{ textAlign: 'right' }}>{t('taxReportPage.revenue')}</th>
+                                <th style={{ textAlign: 'right' }}>{t('taxReportPage.tax05')}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -117,7 +119,7 @@ export default function TaxReportPage() {
                         </tbody>
                         <tfoot>
                             <tr className={styles.totalRow}>
-                                <td><strong>TOTAL</strong></td>
+                                <td><strong>{t('taxReportPage.total')}</strong></td>
                                 <td style={{ textAlign: 'center' }}><strong>{data.total_invoices_paid}</strong></td>
                                 <td style={{ textAlign: 'right' }}><strong>{formatRp(data.annual_total)}</strong></td>
                                 <td style={{ textAlign: 'right' }}><strong>{formatRp(data.pph_final_estimate)}</strong></td>

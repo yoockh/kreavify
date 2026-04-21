@@ -210,6 +210,31 @@
     padding: 0.75rem;
 }
 
+/* When mobile sidebar is open AND collapsed — override to show full layout */
+.mobileOpen.collapsed .logoRow {
+    justify-content: space-between;
+    padding: 1.25rem 1.125rem;
+}
+
+.mobileOpen.collapsed .navItem,
+.mobileOpen.collapsed .themeToggle,
+.mobileOpen.collapsed .footerLink,
+.mobileOpen.collapsed .logoutBtn {
+    justify-content: flex-start;
+    padding: 0.7rem 0.875rem;
+}
+
+/* Hide collapse button on mobile — user uses header hamburger instead */
+.collapseBtnDesktop {
+    display: flex;
+}
+
+@media (max-width: 768px) {
+    .collapseBtnDesktop {
+        display: none;
+    }
+}
+
 /* ---- MOBILE HAMBURGER ---- */
 .mobileToggle {
     display: none;

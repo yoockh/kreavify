@@ -1,8 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import { getPublicInvoice, checkoutInvoice } from '@/lib/api';
-import { ShieldCheck, Lock, CreditCard } from 'lucide-react';
+import { getPaymentInvoice, createCheckout, syncPayment } from '@/lib/api';
+import { ShieldCheck, Lock, CreditCard, XCircle, Info, CheckCircle2 } from 'lucide-react';
 import styles from './page.module.css';
 
 export default function PaymentPage() {
@@ -10,6 +10,11 @@ export default function PaymentPage() {
     const [invoice, setInvoice] = useState(null);
     const [loading, setLoading] = useState(true);
     const [isProcessing, setIsProcessing] = useState(false);
+    const [optimisticPaid, setOptimisticPaid] = useState(false);
+    const [modalConfig, setModalConfig] = useState({ isOpen: false, type: '', title: '', message: '' });
+
+    const openModal = (type, title, message) => setModalConfig({ isOpen: true, type, title, message });
+    const closeModal = () => setModalConfig({ isOpen: false, type: '', title: '', message: '' });
 
     useEffect(() => {
         // Need to dynamically add Midtrans script
@@ -27,11 +32,11 @@ export default function PaymentPage() {
 
     const fetchInvoice = async () => {
         try {
-            const res = await getPublicInvoice(slug);
+            const res = await getPaymentInvoice(slug);
             if (res.ok) {
                 setInvoice(await res.json());
             } else {
-                alert('Invoice tidak ditemukan atau link kadaluarsa');
+                openModal('error', 'Error', 'Invoice tidak ditemukan atau link kadaluarsa');
             }
         } catch (e) {
             console.error(e);
@@ -43,33 +48,42 @@ export default function PaymentPage() {
     const handlePay = async () => {
         setIsProcessing(true);
         try {
-            const res = await checkoutInvoice(slug);
+            const res = await createCheckout(slug);
             const data = await res.json();
 
             if (res.ok && data.token) {
                 // Run midtrans snap
                 window.snap.pay(data.token, {
-                    onSuccess: function (result) {
-                        alert('Pembayaran Berhasil!');
+                    onSuccess: async function (result) {
+                        try {
+                            await syncPayment(slug);
+                        } catch (e) {
+                            console.error('Failed to sync payment status with backend', e);
+                        }
+                        setIsProcessing(false);
+                        setOptimisticPaid(true);
+                        openModal('success', 'Pembayaran Berhasil!', 'Terima kasih, pembayaran Anda telah berhasil kami terima.');
                         fetchInvoice(); // refresh state
                     },
                     onPending: function (result) {
-                        alert('Menunggu pembayaran diselesaikan.');
+                        setIsProcessing(false);
+                        openModal('info', 'Menunggu Pembayaran', 'Silakan selesaikan pembayaran sesuai instruksi yang diberikan.');
                         fetchInvoice();
                     },
                     onError: function (result) {
-                        alert('Terjadi kesalahan pada pembayaran');
+                        setIsProcessing(false);
+                        openModal('error', 'Pembayaran Gagal', 'Terjadi kesalahan pada saat memproses pembayaran Anda.');
                     },
                     onClose: function () {
                         setIsProcessing(false);
                     }
                 });
             } else {
-                alert(data.detail || 'Gagal memulai transaksi');
+                openModal('error', 'Gagal', data.detail || 'Gagal memulai transaksi');
                 setIsProcessing(false);
             }
         } catch (e) {
-            alert('Terjadi error server');
+            openModal('error', 'Error', 'Terjadi error server');
             setIsProcessing(false);
         }
     };
@@ -79,7 +93,7 @@ export default function PaymentPage() {
 
     const formatRp = (val) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(val);
 
-    const isPaid = invoice.status === 'paid';
+    const isPaid = invoice.status === 'paid' || optimisticPaid;
 
     return (
         <div className={styles.container}>
@@ -99,7 +113,7 @@ export default function PaymentPage() {
                             <div className={styles.boxHeader}>
                                 <div>
                                     <h1 className={styles.invNumber}>Invoice #{invoice.invoice_number}</h1>
-                                    <p className={styles.creatorName}>Dari: {invoice.creator.display_name}</p>
+                                    <p className={styles.creatorName}>Dari: {invoice.creator_display_name}</p>
                                 </div>
                                 <div className={styles.statusBadge}>
                                     {isPaid ? (
@@ -198,6 +212,22 @@ export default function PaymentPage() {
 
                 </div>
             </main>
+
+            {/* Custom Modal */}
+            {modalConfig.isOpen && (
+                <div className={styles.overlay} onClick={closeModal}>
+                    <div className={styles.dialog} onClick={e => e.stopPropagation()}>
+                        <div className={`${styles.dialogIcon} ${styles[modalConfig.type]}`}>
+                            {modalConfig.type === 'success' && <CheckCircle2 size={48} />}
+                            {modalConfig.type === 'error' && <XCircle size={48} />}
+                            {modalConfig.type === 'info' && <Info size={48} />}
+                        </div>
+                        <h3 className={styles.dialogTitle}>{modalConfig.title}</h3>
+                        <p className={styles.dialogMessage}>{modalConfig.message}</p>
+                        <button onClick={closeModal} className={styles.dialogBtn}>Tutup</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

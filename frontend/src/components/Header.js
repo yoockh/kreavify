@@ -1,11 +1,13 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
-import { User, Settings, LogOut, Zap } from 'lucide-react';
+import { User, Settings, LogOut } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import styles from './header.module.css';
 import ConfirmDialog from './ConfirmDialog';
+import { useSidebar } from '@/lib/sidebar-context';
+import { useI18n } from '@/lib/i18n';
 
 export default function Header() {
     const [profile, setProfile] = useState(null);
@@ -13,6 +15,8 @@ export default function Header() {
     const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
     const dropdownRef = useRef(null);
     const router = useRouter();
+    const { mobileOpen, setMobileOpen } = useSidebar();
+    const { t } = useI18n();
 
     useEffect(() => {
         import('@/lib/api').then(({ getProfile }) => {
@@ -39,15 +43,17 @@ export default function Header() {
 
     return (
         <header className={styles.header}>
+            <button
+                className={`${styles.menuBtn} ${mobileOpen ? styles.menuBtnActive : ''}`}
+                onClick={() => setMobileOpen(!mobileOpen)}
+                aria-label="Toggle menu"
+                aria-expanded={mobileOpen}
+            >
+                <span className={styles.hamburgerChar} aria-hidden="true">☰</span>
+            </button>
             <div className={styles.spacer}></div>
 
             <div className={styles.actions}>
-                {/* Upgrade CTA */}
-                <Link href="/upgrade" className={styles.upgradeBtn}>
-                    <Zap size={15} />
-                    Upgrade Plan
-                </Link>
-
                 <div className={styles.profileWrapper} ref={dropdownRef}>
                     <button
                         className={styles.profileBtn}
@@ -84,14 +90,14 @@ export default function Header() {
                             </div>
                             <div className={styles.dropdownMenu}>
                                 <Link href="/profile" className={styles.menuItem} onClick={() => setDropdownOpen(false)}>
-                                    <User size={16} /> Edit Profil
+                                    <User size={16} /> {t('header.editProfile')}
                                 </Link>
                                 <Link href="/settings" className={styles.menuItem} onClick={() => setDropdownOpen(false)}>
-                                    <Settings size={16} /> Pengaturan
+                                    <Settings size={16} /> {t('header.settings')}
                                 </Link>
                                 <div className={styles.divider}></div>
                                 <button onClick={() => { setDropdownOpen(false); setShowLogoutConfirm(true); }} className={`${styles.menuItem} ${styles.logoutItem}`}>
-                                    <LogOut size={16} /> Logout
+                                    <LogOut size={16} /> {t('header.logout')}
                                 </button>
                             </div>
                         </div>
@@ -103,8 +109,8 @@ export default function Header() {
                 isOpen={showLogoutConfirm}
                 onClose={() => setShowLogoutConfirm(false)}
                 onConfirm={handleLogout}
-                title="Logout"
-                message="Apakah kamu yakin ingin keluar dari akun Kreavify?"
+                title={t('header.logoutTitle')}
+                message={t('header.logoutMessage')}
                 variant="warning"
             />
         </header>

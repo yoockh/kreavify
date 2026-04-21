@@ -2,12 +2,14 @@
     min-height: 100vh;
     background: #f8fafc;
     font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    width: 100%;
+    padding-top: 64px; /* space for fixed navbar */
 }
 
 .hero {
     background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 60%, #6d28d9 100%);
     padding: 5rem 2rem 4rem;
-    text-align: center;
     position: relative;
     overflow: hidden;
 }
@@ -19,11 +21,28 @@
     background: radial-gradient(ellipse at 60% 30%, rgba(167, 139, 250, 0.3) 0%, transparent 60%);
 }
 
-.heroContent {
+.heroInner {
     position: relative;
     z-index: 1;
-    max-width: 640px;
+    max-width: 1000px;
     margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+}
+
+.heroContent {
+    flex: 1;
+    max-width: 500px;
+}
+
+.heroLottie {
+    flex: 1;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 12px 32px rgba(0, 0, 0, 0.15));
 }
 
 .heroTitle {
@@ -32,12 +51,18 @@
     color: white;
     margin-bottom: 1rem;
     letter-spacing: -0.03em;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
 }
 
 .heroSubtitle {
     font-size: 1.125rem;
     color: rgba(255, 255, 255, 0.82);
     line-height: 1.6;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
 }
 
 .content {
@@ -85,6 +110,9 @@
     border-radius: 0.875rem;
     padding: 1.375rem 1.5rem;
     transition: box-shadow 0.2s;
+    min-width: 0;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 .faqItem:hover {
@@ -97,6 +125,8 @@
     font-weight: 700;
     color: #1e293b;
     margin-bottom: 0.625rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .answer {
@@ -104,6 +134,8 @@
     color: #475569;
     line-height: 1.7;
     margin: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .contactCta {
@@ -112,13 +144,15 @@
 }
 
 .ctaCard {
-    max-width: 520px;
+    max-width: min(520px, 100%);
+    width: 100%;
     margin: 0 auto;
     background: white;
     border: 1px solid #e2e8f0;
     border-radius: 1.5rem;
     padding: 3rem 2rem;
     box-shadow: 0 8px 30px -8px rgba(79, 70, 229, 0.15);
+    box-sizing: border-box;
 }
 
 .ctaIconWrap {
@@ -164,16 +198,45 @@
     box-shadow: 0 8px 20px rgba(79, 70, 229, 0.45);
 }
 
+@media (max-width: 900px) {
+    .heroInner {
+        flex-direction: column;
+        text-align: center;
+        gap: 2rem;
+    }
+
+    .heroLottie {
+        height: 300px;
+    }
+
+    .heroContent {
+        margin: 0 auto;
+    }
+}
+
 @media (max-width: 640px) {
     .hero {
         padding: 3rem 1rem 2.5rem;
     }
 
+    .heroInner {
+        max-width: 100%;
+    }
+
     .content {
         padding: 2rem 1rem 1rem;
+        max-width: 100%;
     }
 
     .faqItem {
         padding: 1.125rem 1.25rem;
+    }
+
+    .contactCta {
+        padding: 3rem 1rem 5rem;
+    }
+
+    .ctaCard {
+        padding: 2rem 1rem;
     }
 }

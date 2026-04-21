@@ -1,0 +1,690 @@
+{
+  "common": {
+    "brand": "Kreavify",
+    "nav": {
+      "about": "About",
+      "help": "Help",
+      "contact": "Contact",
+      "login": "Sign in",
+      "register": "Get started"
+    },
+    "footer": {
+      "brandDescLine1": "AI Financial Intelligence platform for Indonesian SMEs & creators.",
+      "brandDescLine2": "Supporting the Creative Economy Digitalization - BI Hackathon 2026.",
+      "columns": {
+        "product": "Product",
+        "info": "Info",
+        "legal": "Legal"
+      },
+      "links": {
+        "register": "Get started",
+        "login": "Sign in",
+        "about": "About",
+        "help": "Help",
+        "contact": "Contact",
+        "privacy": "Privacy Policy",
+        "terms": "Terms & Conditions"
+      },
+      "copyright": "All rights reserved."
+    },
+    "actions": {
+      "save": "Save",
+      "saving": "Saving...",
+      "saved": "Saved!"
+    }
+  },
+  "settings": {
+    "title": "General Settings",
+    "subtitle": "Manage language, region, and find help",
+    "localizationTitle": "Localization & Region",
+    "localizationSubtitle": "These settings affect default currency and tax calculations (coming soon).",
+    "uiLanguageLabel": "Interface Language",
+    "uiLanguageId": "Bahasa Indonesia (Default)",
+    "uiLanguageEn": "English",
+    "countryLabel": "Country of Residence",
+    "addressLabel": "Full Address",
+    "addressPlaceholder": "123 Sudirman Street...",
+    "saveSettings": "Save Settings",
+    "settingsSaved": "Settings saved!",
+    "helpTitle": "Help & Support",
+    "helpCenterTitle": "Help Center",
+    "helpCenterDesc": "How to use Kreavify",
+    "contactTitle": "Contact us",
+    "contactDesc": "Having issues? Send a message to our team",
+    "aboutTitle": "About Kreavify",
+    "aboutDesc": "Learn our mission and vision",
+    "publicProfileTitle": "Public Profile",
+    "publicProfileSubtitle": "Want to change your public profile (portfolio) look & feel?",
+    "editPublicProfile": "Edit Public Profile"
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Sign in to your Kreavify account to continue.",
+      "email": "Email",
+      "password": "Password",
+      "emailPlaceholder": "email@example.com",
+      "passwordPlaceholder": "Enter your password",
+      "submit": "Sign in",
+      "submitting": "Signing in...",
+      "noAccount": "Don't have an account?",
+      "registerLink": "Create one",
+      "leftEyebrow": "AI Financial Intelligence",
+      "leftTitleLine1": "Manage your finance",
+      "leftTitleLine2": "smarter",
+      "leftTitleLine3": "with AI",
+      "leftSubtitle": "Forecast revenue, analyze market pricing, and get data-driven insights for Indonesian creative freelancers.",
+      "errorInvalid": "Login failed. Please check your email and password.",
+      "errorGeneric": "Something went wrong. Please try again later."
+    },
+    "register": {
+      "title": "Create an account",
+      "subtitle": "Sign up to unlock the full potential of our platform.",
+      "displayName": "Display name / Brand",
+      "displayNamePlaceholder": "e.g. Budi Design",
+      "profession": "Primary profession",
+      "email": "Email",
+      "username": "Username",
+      "password": "Password",
+      "passwordPlaceholder": "Create a strong password",
+      "confirmPassword": "Confirm password",
+      "termsAgreementPrefix": "I agree to the",
+      "and": "and",
+      "terms": "Terms & Conditions",
+      "privacy": "Privacy Policy",
+      "submit": "Create account",
+      "submitting": "Creating...",
+      "haveAccount": "Already have an account?",
+      "loginLink": "Sign in",
+      "leftEyebrow": "Join now",
+      "leftTitleLine1": "Make better",
+      "leftTitleLine2": "financial decisions",
+      "leftTitleLine3": "with AI",
+      "leftSubtitle": "Invoice & payments with AI that forecasts revenue and analyzes market pricing for Indonesian SMEs & creators.",
+      "passwordMismatch": "Password and confirmation do not match.",
+      "passwordRulesError": "Your password doesn't meet all security requirements.",
+      "termsRequired": "You must agree to the Terms & Conditions and Privacy Policy.",
+      "recaptchaRequired": "Please complete the reCAPTCHA verification first.",
+      "connectionError": "Network error. Please try again.",
+      "passwordMatch": "Passwords match",
+      "passwordNoMatch": "Passwords do not match",
+      "professionOptions": {
+        "designer": "Graphic designer",
+        "photographer": "Photographer",
+        "videographer": "Videographer",
+        "writer": "Writer / Copywriter",
+        "musician": "Musician / Sound engineer",
+        "developer": "Developer / Programmer",
+        "other": "Other"
+      },
+      "passwordRules": {
+        "min8": "At least 8 characters",
+        "upper": "Uppercase letter",
+        "lower": "Lowercase letter",
+        "number": "Number",
+        "special": "Special character"
+      }
+    }
+  },
+  "home": {
+    "badge": "Digital solution for Indonesian SMEs & creators",
+    "heroTitlePrefix": "Manage your finances smarter with",
+    "heroTitleHighlight": "AI Financial Intelligence",
+    "heroSubtitle": "Invoice & digital payments platform powered by AI to help creative freelancers make better financial decisions. Forecast revenue, get market pricing recommendations, and data-driven business insights.",
+    "ctaPrimary": "Start free",
+    "ctaSecondary": "Learn more",
+    "featuresTitle": "AI Financial Intelligence for freelancers",
+    "featuresSubtitle": "Make better financial decisions with data-driven insights and machine learning.",
+    "features": {
+      "revenue": {
+        "title": "Revenue forecasting",
+        "desc": "AI predicts next month’s revenue based on your historical patterns. Get early warnings when trends drop and suggested actions to take."
+      },
+      "market": {
+        "title": "Market pricing recommendations",
+        "desc": "Stop underpricing. AI analyzes market pricing by service category, experience, and project complexity to recommend an optimal range."
+      },
+      "invoice": {
+        "title": "Invoices & digital payments",
+        "desc": "Create professional invoices fast. Clients can pay via QRIS, virtual account, or e-wallet. Transactions are recorded for AI analysis."
+      }
+    },
+    "vpTitle": "Data-driven decision making",
+    "vpItems": [
+      "Forecasts based on your historical transactions",
+      "Market pricing analysis from platform data",
+      "Transparent confidence score for each forecast",
+      "Real-time insight dashboard to monitor your business"
+    ],
+    "vpNoteTitle": "Note:",
+    "vpNoteText": "AI predictions are estimates based on historical data. Use them as guidance, not a guaranteed outcome."
+  },
+  "publicPages": {
+    "help": {
+      "title": "Help Center",
+      "subtitle": "Find answers to your questions about using Kreavify",
+      "ctaTitle": "Still have questions?",
+      "ctaSubtitle": "Our team can help you via email. We typically respond within 24 hours.",
+      "ctaButton": "Contact Kreavify team",
+      "sections": {
+        "gettingStarted": "Getting started",
+        "invoicePayments": "Invoices & payments",
+        "profilePortfolio": "Profile & portfolio",
+        "digitalContract": "Digital contracts",
+        "ai": "AI Financial Intelligence",
+        "tax": "Tax reports"
+      },
+      "faq": {
+        "gettingStarted": {
+          "whatIs": {
+            "q": "What is Kreavify?",
+            "a": "Kreavify is an AI Financial Intelligence platform for Indonesian creative freelancers. We help you make better financial decisions with revenue forecasts, market pricing analysis, and data-driven insights."
+          },
+          "createAccount": {
+            "q": "How do I create an account?",
+            "a": "Click \"Get started\" at the top right, fill in your name, email, and password, then verify your email. It takes less than 2 minutes."
+          },
+          "isFree": {
+            "q": "Is Kreavify free?",
+            "a": "Yes! The basic experience is free. AI features are available for all users during hackathon/demo."
+          }
+        },
+        "invoicePayments": {
+          "createInvoice": {
+            "q": "How do I create a new invoice?",
+            "a": "Go to \"Invoices\" → click \"+ New Invoice\" → fill client and service items → click \"Save\" or \"Send to Client\"."
+          },
+          "clientNeedsAccount": {
+            "q": "Do clients need a Kreavify account to pay?",
+            "a": "No. Clients can open the invoice link and pay without signing up."
+          },
+          "sendReminder": {
+            "q": "How do I send automatic payment reminders?",
+            "a": "Open an invoice with status \"Pending\", then click \"Send WhatsApp Reminder\"."
+          },
+          "invoiceNumber": {
+            "q": "What is the invoice number format?",
+            "a": "Invoice numbers are generated automatically in the format KK-[YEAR]-[NUMBER]. Example: KK-2025-0001."
+          }
+        },
+        "profilePortfolio": {
+          "publicProfile": {
+            "q": "How can I share my public profile?",
+            "a": "Your public profile is available at /p/[your-username]. You can share it from the \"Public profile\" menu."
+          },
+          "addPortfolio": {
+            "q": "How do I add portfolio work?",
+            "a": "Go to \"Portfolio\" → click \"+ Add work\" → fill details → Save."
+          },
+          "bannerNotSaved": {
+            "q": "Why isn't my banner photo saved?",
+            "a": "Make sure the file is under 5MB and JPG/PNG/WebP. Wait for upload to finish, then click \"Save changes\"."
+          }
+        },
+        "digitalContract": {
+          "generateContract": {
+            "q": "How do I generate a contract automatically?",
+            "a": "From \"Contracts\" or invoice details, click \"Generate Contract\" to create a professional draft."
+          },
+          "legalPower": {
+            "q": "Are my digital contracts legally valid?",
+            "a": "Contracts include standard clauses. For high-value projects, consult a legal professional."
+          }
+        },
+        "ai": {
+          "revenueForecast": {
+            "q": "How does AI Revenue Forecasting work?",
+            "a": "AI analyzes your invoice history to forecast next month’s revenue, including a confidence score."
+          },
+          "accuracy": {
+            "q": "How accurate are AI predictions?",
+            "a": "Accuracy depends on how consistent your historical data is. Use predictions as guidance, not a guarantee."
+          },
+          "pricing": {
+            "q": "How does AI Pricing Intelligence work?",
+            "a": "AI analyzes market pricing by category, experience, and complexity to recommend a competitive price range."
+          },
+          "dataSource": {
+            "q": "Where does market pricing data come from?",
+            "a": "From anonymized platform transactions and a default pricing matrix based on industry research."
+          },
+          "mustFollow": {
+            "q": "Do I have to follow the AI recommendation?",
+            "a": "No. It’s guidance—you always stay in control of your pricing."
+          }
+        },
+        "tax": {
+          "taxEstimate": {
+            "q": "How does Kreavify estimate my tax?",
+            "a": "We estimate tax from your gross paid invoices based on common SME rules. This is an estimate—consult a professional for official calculations."
+          },
+          "taxAccuracy": {
+            "q": "Is my tax report accurate?",
+            "a": "Tax reports are based on invoices marked as \"Paid\" only. Ensure statuses are up to date."
+          }
+        }
+      }
+    },
+    "about": {
+      "pill": "About us",
+      "title": "AI Financial Intelligence platform for creative freelancers",
+      "subtitle": "Kreavify helps freelancers make better financial decisions with AI that forecasts revenue, analyzes market pricing, and delivers data-driven insights.",
+      "missionTitle": "Our mission",
+      "missionDesc": "Empower Indonesian SMEs and independent creators with AI financial intelligence—helping them make better business decisions based on data.",
+      "visionTitle": "Our vision",
+      "visionDesc": "Become the first platform in Indonesia that combines invoicing, AI forecasting, and market pricing intelligence for the creative economy.",
+      "valuesTitle": "Our values",
+      "valuesDesc": "Data-driven, transparent, and accessible. Every freelancer deserves big-company-level insights—without complexity or high costs.",
+      "stats": {
+        "features": "Key features",
+        "powered": "Powered pricing",
+        "free": "Free to start",
+        "madeFor": "Made for Indonesia"
+      },
+      "featuresTitle": "Kreavify key features",
+      "noteTitle": "Note:",
+      "noteText": "AI predictions are based on historical patterns and market data. Use them as decision support, not a guarantee.",
+      "featureCards": {
+        "revenue": {
+          "title": "AI Revenue Forecasting",
+          "desc": "Forecast next month’s revenue from your history, with early warnings and suggested actions."
+        },
+        "pricing": {
+          "title": "AI Pricing Intelligence",
+          "desc": "Real-time market pricing insights by category, experience, and complexity—stop underpricing."
+        },
+        "invoice": {
+          "title": "Invoices & digital payments",
+          "desc": "Create professional invoices with branded options and integrated payments (QRIS, VA, e-wallet)."
+        },
+        "analytics": {
+          "title": "Dashboard analytics",
+          "desc": "Monitor performance with real-time insights: revenue trends, pricing analysis, and health score."
+        },
+        "portfolio": {
+          "title": "Public portfolio",
+          "desc": "Share a public profile with portfolio work and service catalog—your digital business card."
+        },
+        "contract": {
+          "title": "Contract management",
+          "desc": "Manage client contracts digitally with templates and project status tracking."
+        }
+      },
+      "ctaTitle": "Ready to start a more organized freelance journey?",
+      "ctaSubtitle": "Free forever. No credit card required.",
+      "ctaPrimary": "Start free",
+      "ctaSecondary": "Learn how it works"
+    },
+    "contact": {
+      "title": "Contact us",
+      "subtitle": "Questions about AI predictions, features, or partnerships? Send us a message. We usually reply within 24 hours.",
+      "successTitle": "Message sent!",
+      "successText": "Thanks for reaching out. Our team will reply via email as soon as possible.",
+      "successReset": "Send another message",
+      "form": {
+        "name": "Full name",
+        "namePlaceholder": "Budi Santoso",
+        "email": "Email address",
+        "emailPlaceholder": "budi@example.com",
+        "subject": "Subject",
+        "message": "Message",
+        "messagePlaceholder": "Write your message in detail so we can help faster...",
+        "send": "Send message",
+        "sendingFailed": "Failed to send message.",
+        "error": "Something went wrong.",
+        "subjects": {
+          "general": "General question",
+          "bug": "Bug / technical issue",
+          "feature": "Feature request",
+          "business": "Business / partnership",
+          "other": "Other"
+        }
+      }
+    }
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "invoices": "Invoices",
+    "services": "My services",
+    "aiInsights": "AI Insights",
+    "portfolio": "Portfolio",
+    "contracts": "Contracts",
+    "taxReport": "Tax report",
+    "settings": "Settings",
+    "publicProfile": "Public profile",
+    "darkMode": "Dark mode",
+    "lightMode": "Light mode"
+  },
+  "header": {
+    "editProfile": "Edit profile",
+    "settings": "Settings",
+    "logout": "Sign out",
+    "logoutTitle": "Sign out",
+    "logoutMessage": "Are you sure you want to sign out?"
+  },
+  "dashboard": {
+    "title": "Overview",
+    "subtitle": "Summary of your activities and revenue",
+    "aiTitle": "AI Financial Intelligence",
+    "aiSubtitle": "Predictions based on historical pattern analysis. Confidence score shows accuracy level.",
+    "seeAll": "See All",
+    "nextMonthForecast": "Next Month Revenue Forecast",
+    "trendUp": "Up",
+    "trendDown": "Down",
+    "trendStable": "Stable",
+    "confidence": "Confidence",
+    "pricingAnalysis": "Pricing Analysis",
+    "addServiceToAnalyze": "Add services to get a market price analysis.",
+    "servicesCount": "services",
+    "underpriced": "underpriced based on market",
+    "fairPriced": "on par with market price",
+    "potentialIncrease": "Potential increase",
+    "seeDetail": "See Detail",
+    "freelancerProfile": "Freelancer Profile",
+    "experienceLevel": "Experience Level",
+    "totalPaidInvoices": "Total Paid Invoices",
+    "totalRevenue": "Total Revenue",
+    "avgProjectsPerMonth": "Avg Projects/Month",
+    "pendingPayment": "Pending Payment",
+    "totalInvoice": "Total Invoices",
+    "paidInvoice": "Paid Invoices",
+    "profileViews": "Profile Views",
+    "serviceClicks": "Service Clicks",
+    "revenueTrend": "Revenue Trend",
+    "andForecast": "& Forecast",
+    "last6Months": "Last 6 Months",
+    "actual": "Actual",
+    "forecastAI": "Prediction (AI)",
+    "range": "Range",
+    "profileViews7Days": "Profile Views — Last 7 Days",
+    "recentInvoices": "Recent Invoices",
+    "no": "No",
+    "client": "Client",
+    "total": "Total",
+    "status": "Status",
+    "draft": "Draft",
+    "waiting": "Pending",
+    "paid": "Paid",
+    "cancelled": "Cancelled",
+    "noInvoicesYet": "No invoices yet",
+    "month": "Month",
+    "months": "Months",
+    "loading": "Loading dashboard...",
+    "errorLoading": "Failed to load data",
+    "notEnoughData": "Not enough data. Minimum 2 months of paid invoices needed."
+  },
+  "aiInsightsPage": {
+    "title": "AI Financial Intelligence",
+    "subtitle": "Smart analysis of your revenue and service pricing",
+    "disclaimer": "Predictions based on historical transaction patterns. Use as a decision guide.",
+    "loadBtn": "Refresh",
+    "loadingBtn": "Loading...",
+    "forecastSectionTitle": "Revenue Forecast",
+    "forecastPreLabel": "Forecast",
+    "trendUpDesc": "Up",
+    "trendDownDesc": "Down",
+    "trendStableDesc": "Stable",
+    "fromLastMonth": "from last month",
+    "confidenceLevel": "Confidence Level",
+    "lowerBound": "Lower Bound",
+    "upperBound": "Upper Bound",
+    "avgProjects": "Avg Projects",
+    "perMonth": "/mo",
+    "forecastDisclaimer": "Predictions use time-series analysis from your paid invoice data.",
+    "expLevel": "Experience Level",
+    "expNote": "Determined based on your paid invoices and historical total revenue.",
+    "notEnoughDataTitle": "Not enough data for revenue forecast.",
+    "notEnoughDataDesc": "At least 2 months with paid invoices are required to activate this feature.",
+    "pricingSectionTitle": "Pricing Analysis",
+    "potentialIncreaseBadge": "Potential increase",
+    "noServiceTitle": "No services to analyze yet.",
+    "noServiceDesc": "Add a service in the My Services page to get market price analysis.",
+    "pillUnder": "Underpriced",
+    "pillFair": "Fair Price",
+    "pillOver": "Overpriced",
+    "yourPrice": "Your Price",
+    "vs": "vs",
+    "marketOptimal": "Market Optimal",
+    "marketRange": "Market range",
+    "pricingDisclaimer": "Based on platform data and Indonesian creative industry research.",
+    "actionTitle": "Recommended Actions",
+    "actionUpPrice": "Raise Service Prices",
+    "actionUpPriceDesc": "of your services are below market price. Consider raising prices to be more competitive and profitable.",
+    "actionFindClients": "Find New Clients",
+    "actionFindClientsDesc": "Revenue trends indicate a decline. Consider expanding your network, activating a public profile, or offering limited time promos.",
+    "failLoad": "Failed to Load AI Data",
+    "retry": "Try Again"
+  },
+  "contractsPage": {
+    "title": "Digital Contracts",
+    "subtitle": "Generate freelance work contracts automatically from invoices using AI",
+    "generateNew": "Generate New Contract",
+    "modalTitle": "Generate Contract from Invoice",
+    "modalDesc": "Choose an invoice to base the contract on. AI will generate the complete contract automatically.",
+    "selectInvoice": "Select Invoice...",
+    "cancel": "Cancel",
+    "generating": "Generating...",
+    "generateWithAI": "Generate with AI",
+    "noContracts": "No contracts yet",
+    "noContractsDesc": "Click \"Generate New Contract\" to start.",
+    "printPDF": "Print / PDF",
+    "previewPlaceholder": "Select a contract to see the preview",
+    "deleteTitle": "Delete Contract",
+    "deleteConfirm": "Deleted contracts cannot be recovered. Continue?",
+    "loading": "Loading contracts..."
+  },
+  "servicesPage": {
+    "title": "My Services",
+    "subtitle": "Manage the services you offer to clients",
+    "addService": "Add Service",
+    "noServices": "No services yet",
+    "noServicesDesc": "Start by adding your first service so clients can see what you offer.",
+    "editService": "Edit Service",
+    "newService": "Add New Service",
+    "serviceTitle": "Service Title",
+    "serviceTitlePh": "e.g. Premium Logo Design",
+    "category": "Category",
+    "cat_logo": "Logo Design",
+    "cat_branding": "Branding & Identity",
+    "cat_social_media": "Social Media Design",
+    "cat_illustration": "Illustration",
+    "cat_photo_product": "Product Photography",
+    "cat_photo_event": "Event Photography",
+    "cat_video_promo": "Promo Video",
+    "cat_video_event": "Event Video",
+    "cat_copywriting": "Copywriting",
+    "cat_translation": "Translation",
+    "cat_music": "Music Production",
+    "cat_web_dev": "Web Development",
+    "cat_other": "Other",
+    "detailDesc": "Detailed Description",
+    "detailDescPh": "Explain what the client gets...",
+    "basePrice": "Base Price (IDR)",
+    "checkAIPrice": "Check AI Price",
+    "complexity": "Complexity",
+    "comp_simple": "Simple",
+    "comp_medium": "Medium",
+    "comp_complex": "Complex",
+    "marketPriceSuggestion": "Market Price Suggestion",
+    "loading": "Loading...",
+    "min": "Minimum",
+    "optimal": "Optimal",
+    "max": "Maximum",
+    "basedOn": "Based on",
+    "marketData": "market data",
+    "level": "Level",
+    "useOptimalPrice": "Use Optimal Price",
+    "cancel": "Cancel",
+    "saveService": "Save Service",
+    "deleteTitle": "Delete Service",
+    "deleteConfirm": "Are you sure you want to delete this service? This action cannot be undone."
+  },
+  "portfolioPage": {
+    "title": "Portfolio Works",
+    "subtitle": "Showcase your best work to the public",
+    "addWork": "Add Work",
+    "noWork": "No works yet",
+    "noWorkDesc": "Showcase your work to build client trust in your services.",
+    "addPortfolio": "Add Portfolio",
+    "workTitle": "Work Title",
+    "selectCategory": "Select Category",
+    "portfolioImage": "Portfolio Image",
+    "uploadPills": "Choose Image from Device",
+    "uploadingPills": "Uploading...",
+    "or": "or",
+    "shortStory": "Short Story / Description (Optional)",
+    "cancel": "Cancel",
+    "save": "Save",
+    "deleteConfirm": "Are you sure you want to delete this item?"
+  },
+  "invoicesPage": {
+    "title": "My Invoices",
+    "subtitle": "Manage all billing to clients",
+    "newInvoice": "Create New Invoice",
+    "filterAll": "All",
+    "filterDraft": "Draft",
+    "filterSent": "Sent",
+    "filterPaid": "Paid",
+    "filterCancelled": "Cancelled",
+    "searchPh": "Search client name...",
+    "invoiceNo": "Invoice No.",
+    "client": "Client",
+    "totalAmount": "Total Amount",
+    "status": "Status",
+    "date": "Date",
+    "noInvoiceFound": "No invoices found.",
+    "seeDetail": "See Details",
+    "sendToClient": "Send to Client",
+    "delete": "Delete",
+    "copyPayLink": "Copy Payment Link",
+    "cancelInvoiceBtn": "Cancel Invoice",
+    "deleteDraftTitle": "Delete Draft Invoice",
+    "deleteDraftConfirm": "Are you sure you want to delete this draft invoice? This action cannot be undone.",
+    "sendTitle": "Send Invoice",
+    "sendConfirm": "The invoice will be sent to the client and a payment link will be created. Continue?",
+    "cancelTitle": "Cancel Invoice",
+    "cancelConfirm": "Are you sure you want to cancel this invoice? The client will no longer be able to pay."
+  },
+  "taxReportPage": {
+    "title": "Tax Report",
+    "subtitle": "Annual income summary for tax reporting",
+    "printPDF": "Print / PDF",
+    "totalRevenue": "Total Revenue",
+    "estFinalTax": "Estimated Final Tax",
+    "totalPaidInvoices": "Total Paid Invoices",
+    "monthlyBreakdown": "Monthly Revenue Breakdown —",
+    "month": "Month",
+    "invoiceCount": "Invoice Count",
+    "revenue": "Revenue",
+    "tax05": "0.5% Tax",
+    "total": "TOTAL",
+    "loading": "Loading tax report...",
+    "failLoad": "Failed to load data",
+    "note": "Estimated Final Tax 0.5% SME (PP 55/2022). Applies if gross revenue < IDR 500 million/year."
+  },
+  "profilePage": {
+    "title": "Profile Settings",
+    "subtitle": "Manage public info and withdrawal methods",
+    "changeBanner": "Change Banner",
+    "uploading": "Uploading...",
+    "basicInfo": "Basic Info",
+    "displayName": "Display Name",
+    "primaryProfession": "Primary Profession",
+    "shortBio": "Short Bio",
+    "whatsappNo": "WhatsApp No.",
+    "slugUrl": "Slug URL",
+    "publicProfileUrl": "Your Public Profile URL:",
+    "bankInfo": "Bank Account Info (For Withdrawals)",
+    "bankOrEwallet": "Bank / e-Wallet",
+    "selectBank": "Select Bank",
+    "accountNumber": "Account Number",
+    "accountName": "Account Holder Name",
+    "brandedInvoice": "Branded Invoice",
+    "customizeInvoice": "Customize your invoice look to make it more professional",
+    "invoiceLogo": "Invoice Logo",
+    "uploadLogo": "Upload Logo",
+    "invoiceAccentColor": "Invoice Accent Color",
+    "saveChanges": "Save Changes",
+    "saving": "Saving...",
+    "loading": "Loading profile...",
+    "avatarSuccess": "Profile picture successfully uploaded",
+    "avatarFail": "Failed to upload photo",
+    "bannerSuccess": "Banner successfully uploaded",
+    "bannerFail": "Failed to upload banner",
+    "profileOk": "Profile successfully updated",
+    "profileFail": "Failed to save profile",
+    "errorGeneric": "An error occurred"
+  },
+  "createInvoicePage": {
+    "title": "Create New Invoice",
+    "subtitle": "Fill billing details for your client",
+    "clientInfo": "Client Info",
+    "clientName": "Client / Company Name *",
+    "clientNamePh": "e.g. Acme Corp",
+    "clientEmail": "Client Email (Optional)",
+    "clientEmailPh": "client@mail.com",
+    "clientPhone": "Client Phone No. (Optional)",
+    "clientPhonePh": "+628123456789",
+    "dueDate": "Due Date (Optional)",
+    "currency": "Currency",
+    "currIDR": "Rupiah (IDR)",
+    "currUSD": "US Dollar (USD)",
+    "currSGD": "Singapore Dollar (SGD)",
+    "currEUR": "Euro (EUR)",
+    "currMYR": "Malaysian Ringgit (MYR)",
+    "serviceItems": "Service Items",
+    "serviceDesc": "Service Description",
+    "serviceDescPh": "Logo Design...",
+    "qty": "Qty",
+    "unitPrice": "Unit Price (IDR)",
+    "aiSuggest": "AI Suggest",
+    "addCol": "Add Item Column",
+    "taxPercent": "Tax / VAT (%)",
+    "clientNote": "Notes for Client",
+    "clientNotePh": "Thank you for the cooperation...",
+    "subtotal": "Subtotal:",
+    "taxLabel": "Tax",
+    "totalPay": "Total Payment:",
+    "cancel": "Cancel",
+    "saveDraft": "Save as Draft",
+    "saving": "Saving...",
+    "livePreview": "Live Preview",
+    "invoiceTag": "INVOICE",
+    "date": "Date:",
+    "dueDatePreview": "Due Date:",
+    "from": "From:",
+    "to": "To:",
+    "descHeader": "Description",
+    "qtyHeader": "Qty",
+    "priceHeader": "Price",
+    "totalHeader": "Total",
+    "noteLabel": "Note:",
+    "madeWith": "Made with"
+  },
+  "aiPricingModal": {
+    "title": "AI Pricing Assistant",
+    "descLabel": "Describe Your Service",
+    "descPh": "Example: Logo and visual identity design for a snack company. Includes 3 revisions and a standard graphics manual.",
+    "targetMarket": "Target Market",
+    "marketPersonal": "Personal",
+    "marketSME": "SME",
+    "marketStartup": "Startup",
+    "marketMidCorp": "Mid-sized Corp",
+    "marketBigCorp": "Large Corp/Multinational",
+    "complexity": "Complexity",
+    "compVerySimple": "Very Simple",
+    "compSimple": "Simple",
+    "compMedium": "Medium",
+    "compComplex": "Complex",
+    "compVeryComplex": "Very Complex",
+    "checkFairPrice": "Check Fair Price",
+    "calculating": "Calculating Price...",
+    "estMarketPrice": "Estimated Market Price:",
+    "detFactors": "Determining Factors:",
+    "useMinPrice": "Use Min Price",
+    "useMaxPrice": "Use Max Price",
+    "errEmpty": "Service description cannot be empty",
+    "errFail": "Failed to calculate price",
+    "errConn": "A network connection error occurred."
+  }
+}

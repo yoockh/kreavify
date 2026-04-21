@@ -1,10 +1,12 @@
 'use client';
+import { useI18n } from '@/lib/i18n';
 import { useState } from 'react';
 import { getAIPricing } from '@/lib/api';
 import { Brain, X, Check } from 'lucide-react';
 import styles from './aiPricingModal.module.css';
 
 export default function AIPricingModal({ isOpen, onClose, initialDescription, onApplyPrice }) {
+    const { t, locale } = useI18n();
     const [description, setDescription] = useState(initialDescription || '');
     const [targetMarket, setTargetMarket] = useState('UMKM Indonesia');
     const [complexity, setComplexity] = useState('menengah');
@@ -16,7 +18,7 @@ export default function AIPricingModal({ isOpen, onClose, initialDescription, on
 
     const handleCheck = async () => {
         if (!description.trim()) {
-            setError('Deskripsi jasa tidak boleh kosong');
+            setError(t('aiPricingModal.errEmpty'));
             return;
         }
 
@@ -27,7 +29,8 @@ export default function AIPricingModal({ isOpen, onClose, initialDescription, on
             const res = await getAIPricing({
                 service_description: description,
                 target_market: targetMarket,
-                complexity: complexity
+                complexity: complexity,
+                language: locale
             });
 
             if (res.ok) {
@@ -35,14 +38,11 @@ export default function AIPricingModal({ isOpen, onClose, initialDescription, on
                 setResult(data);
             } else {
                 const err = await res.json();
-                if (res.status === 429) {
-                    setError('Limit_Reached');
-                } else {
-                    setError(err.detail || 'Gagal menghitung harga');
-                }
+                // Dalam mode hackathon, tidak ada pembatasan kuota AI
+                setError(err.detail || t('aiPricingModal.errFail'));
             }
         } catch (e) {
-            setError('Terjadi kesalahan sambungan jaringan.');
+            setError(t('aiPricingModal.errConn'));
         } finally {
             setLoading(false);
         }
@@ -56,41 +56,41 @@ export default function AIPricingModal({ isOpen, onClose, initialDescription, on
                 <div className={styles.header}>
                     <div className={styles.titleWrapper}>
                         <Brain className={styles.icon} size={24} />
-                        <h2 className={styles.title}>AI Pricing Assistant</h2>
+                        <h2 className={styles.title}>{t('aiPricingModal.title')}</h2>
                     </div>
                     <button onClick={onClose} className={styles.closeBtn}><X size={20} /></button>
                 </div>
 
                 <div className={styles.body}>
                     <div className={styles.formGroup}>
-                        <label>Deskripsikan Jasa Kamu</label>
+                        <label>{t('aiPricingModal.descLabel')}</label>
                         <textarea
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                            placeholder="Contoh: Desain logo dan identitas visual perusahaan makanan ringan. Termasuk 3 revisi dan manual grafis standar."
+                            placeholder={t('aiPricingModal.descPh')}
                             rows="3"
                         />
                     </div>
 
                     <div className={styles.grid}>
                         <div className={styles.formGroup}>
-                            <label>Target Market</label>
+                            <label>{t('aiPricingModal.targetMarket')}</label>
                             <select value={targetMarket} onChange={e => setTargetMarket(e.target.value)}>
-                                <option value="Event Pribadi / Personal">Personal</option>
-                                <option value="UMKM Indonesia">UMKM</option>
-                                <option value="Startup">Startup</option>
-                                <option value="Korporat Menengah">Korporat Menengah</option>
-                                <option value="Korporat Besar / Multinasional">Korporat Besar</option>
+                                <option value="Event Pribadi / Personal">{t('aiPricingModal.marketPersonal')}</option>
+                                <option value="UMKM Indonesia">{t('aiPricingModal.marketSME')}</option>
+                                <option value="Startup">{t('aiPricingModal.marketStartup')}</option>
+                                <option value="Korporat Menengah">{t('aiPricingModal.marketMidCorp')}</option>
+                                <option value="Korporat Besar / Multinasional">{t('aiPricingModal.marketBigCorp')}</option>
                             </select>
                         </div>
                         <div className={styles.formGroup}>
-                            <label>Kompleksitas</label>
+                            <label>{t('aiPricingModal.complexity')}</label>
                             <select value={complexity} onChange={e => setComplexity(e.target.value)}>
-                                <option value="sangat_sederhana">Sangat Sederhana</option>
-                                <option value="sederhana">Sederhana</option>
-                                <option value="menengah">Menengah</option>
-                                <option value="kompleks">Kompleks</option>
-                                <option value="sangat_kompleks">Sangat Kompleks</option>
+                                <option value="sangat_sederhana">{t('aiPricingModal.compVerySimple')}</option>
+                                <option value="sederhana">{t('aiPricingModal.compSimple')}</option>
+                                <option value="menengah">{t('aiPricingModal.compMedium')}</option>
+                                <option value="kompleks">{t('aiPricingModal.compComplex')}</option>
+                                <option value="sangat_kompleks">{t('aiPricingModal.compVeryComplex')}</option>
                             </select>
                         </div>
                     </div>
@@ -100,23 +100,18 @@ export default function AIPricingModal({ isOpen, onClose, initialDescription, on
                         disabled={loading}
                         className={styles.checkBtn}
                     >
-                        {loading ? 'Menghitung Harga...' : 'Cek Harga Wajar'}
+                        {loading ? t('aiPricingModal.calculating') : t('aiPricingModal.checkFairPrice')}
                     </button>
 
-                    {error === 'Limit_Reached' ? (
-                        <div className={styles.errorBox}>
-                            <p>Limit AI bulanan kamu sudah habis.</p>
-                            <a href="/upgrade" className={styles.upgradeLink}>Tingkatkan Paket</a>
-                        </div>
-                    ) : error ? (
+                    {error && (
                         <div className={styles.error}>{error}</div>
-                    ) : null}
+                    )}
 
                     {result && (
                         <div className={styles.resultContainer}>
                             <div className={styles.priceRange}>
                                 <div>
-                                    <div className={styles.priceLabel}>Estimasi Harga Pasar:</div>
+                                    <div className={styles.priceLabel}>{t('aiPricingModal.estMarketPrice')}</div>
                                     <div className={styles.priceValue}>
                                         {formatRp(result.suggested_min)} - {formatRp(result.suggested_max)}
                                     </div>
@@ -128,7 +123,7 @@ export default function AIPricingModal({ isOpen, onClose, initialDescription, on
                             </div>
 
                             <div className={styles.factors}>
-                                <strong>Faktor Penentu:</strong>
+                                <strong>{t('aiPricingModal.detFactors')}</strong>
                                 <ul>
                                     {result.factors?.map((f, i) => <li key={i}>{f}</li>)}
                                 </ul>
@@ -139,13 +134,13 @@ export default function AIPricingModal({ isOpen, onClose, initialDescription, on
                                     onClick={() => onApplyPrice(result.suggested_min)}
                                     className={styles.applyBtnOutline}
                                 >
-                                    Gunakan Harga Min
+                                    {t('aiPricingModal.useMinPrice')}
                                 </button>
                                 <button
                                     onClick={() => onApplyPrice(result.suggested_max)}
                                     className={styles.applyBtnFill}
                                 >
-                                    <Check size={16} /> Gunakan Harga Max
+                                    <Check size={16} /> {t('aiPricingModal.useMaxPrice')}
                                 </button>
                             </div>
                         </div>

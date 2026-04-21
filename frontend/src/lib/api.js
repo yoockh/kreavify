@@ -175,6 +175,12 @@ export async function createCheckout(slug) {
   });
 }
 
+export async function syncPayment(slug) {
+  return fetchAPI(`/pay/${slug}/sync/`, {
+    method: 'POST'
+  });
+}
+
 // Image Upload (Cloudinary)
 export async function uploadImage(file, folder = 'general') {
   const formData = new FormData();

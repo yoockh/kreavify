@@ -1,14 +1,46 @@
+.contactRoot {
+    overflow-x: hidden;
+    width: 100%;
+    padding-top: 64px; /* space for fixed navbar */
+}
+
 .contactWrapper {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     padding: 4rem 2rem 6rem;
     min-height: calc(100vh - 64px);
+    overflow-x: hidden;
+    width: 100%;
+}
+
+.contactContainer {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    width: 100%;
+    max-width: min(1000px, 100%);
+}
+
+.contactLottie {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 12px 32px rgba(0, 0, 0, 0.15));
+    min-width: 0;
+    max-width: 100%;
+}
+
+.contactFormCol {
+    flex: 1;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .contactCard {
     width: 100%;
-    max-width: 540px;
+    max-width: 100%;
     background: white;
     border-radius: 1.25rem;
     box-shadow: 0 8px 32px -8px rgba(79, 70, 229, 0.12);
@@ -41,12 +73,16 @@
     color: white;
     margin-bottom: 0.5rem;
     letter-spacing: -0.02em;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .cardSubtitle {
     font-size: 0.9rem;
     color: rgba(255, 255, 255, 0.78);
     line-height: 1.6;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .form {
@@ -154,8 +190,40 @@
     background: #e2e8f0;
 }
 
+@media (max-width: 900px) {
+    .contactContainer {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .contactLottie {
+        height: 300px;
+    }
+}
+
 @media (max-width: 640px) {
     .contactWrapper {
         padding: 2rem 1rem 4rem;
+    }
+
+    .contactContainer {
+        padding: 0 0.5rem;
+    }
+
+    .contactLottie {
+        max-height: 280px;
+        overflow: hidden;
+    }
+
+    .contactCard {
+        box-sizing: border-box;
+    }
+
+    .cardHeader {
+        padding: 1.75rem 1rem 1.5rem;
+    }
+
+    .form {
+        padding: 1.25rem 1rem;
     }
 }

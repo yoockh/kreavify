@@ -9,9 +9,11 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { register, login } from '@/lib/api';
 import styles from '../login/page.module.css';
+import { useI18n } from '@/lib/i18n';
 
 export default function RegisterPage() {
     const router = useRouter();
+    const { t, locale } = useI18n();
     const [formData, setFormData] = useState({
         email: '',
         username: '',
@@ -29,11 +31,11 @@ export default function RegisterPage() {
     const [loading, setLoading] = useState(false);
 
     const passwordRules = [
-        { label: 'Min. 8 karakter', test: (p) => p.length >= 8 },
-        { label: 'Huruf kapital', test: (p) => /[A-Z]/.test(p) },
-        { label: 'Huruf kecil', test: (p) => /[a-z]/.test(p) },
-        { label: 'Angka', test: (p) => /[0-9]/.test(p) },
-        { label: 'Karakter spesial', test: (p) => /[^A-Za-z0-9]/.test(p) },
+        { label: t('auth.register.passwordRules.min8'), test: (p) => p.length >= 8 },
+        { label: t('auth.register.passwordRules.upper'), test: (p) => /[A-Z]/.test(p) },
+        { label: t('auth.register.passwordRules.lower'), test: (p) => /[a-z]/.test(p) },
+        { label: t('auth.register.passwordRules.number'), test: (p) => /[0-9]/.test(p) },
+        { label: t('auth.register.passwordRules.special'), test: (p) => /[^A-Za-z0-9]/.test(p) },
     ];
 
     const allRulesPassed = passwordRules.every(r => r.test(formData.password));
@@ -44,25 +46,25 @@ export default function RegisterPage() {
         setError('');
 
         if (!allRulesPassed) {
-            setError('Password belum memenuhi semua kriteria keamanan.');
+            setError(t('auth.register.passwordRulesError'));
             setLoading(false);
             return;
         }
 
         if (formData.password !== formData.confirmPassword) {
-            setError('Password dan konfirmasi password tidak cocok.');
+            setError(t('auth.register.passwordMismatch'));
             setLoading(false);
             return;
         }
 
         if (!agreedToTerms) {
-            setError('Anda harus menyetujui Syarat & Ketentuan dan Kebijakan Privasi.');
+            setError(t('auth.register.termsRequired'));
             setLoading(false);
             return;
         }
 
         if (!recaptchaToken) {
-            setError('Selesaikan verifikasi reCAPTCHA terlebih dahulu.');
+            setError(t('auth.register.recaptchaRequired'));
             setLoading(false);
             return;
         }
@@ -89,7 +91,7 @@ export default function RegisterPage() {
                 setError(message);
             }
         } catch (err) {
-            setError('Terjadi kesalahan koneksi.');
+            setError(t('auth.register.connectionError'));
         } finally {
             setLoading(false);
         }
@@ -108,24 +110,28 @@ export default function RegisterPage() {
                     />
                 </div>
                 <div className={styles.leftBody} style={{ marginBottom: '1rem' }}>
-                    <p className={styles.leftEyebrow}>Bergabung Sekarang</p>
-                    <h2 className={styles.leftTitle}>Mulai Perjalanan<br />Kreatifmu<br />Tanpa Batas.</h2>
-                    <p className={styles.leftSubtitle}>Akses semua fitur pengaturan invoice, portofolio profesional, dan pembayaran dalam 1 menit.</p>
+                    <p className={styles.leftEyebrow}>{t('auth.register.leftEyebrow')}</p>
+                    <h2 className={styles.leftTitle}>
+                        {t('auth.register.leftTitleLine1')}<br />
+                        {t('auth.register.leftTitleLine2')}<br />
+                        {t('auth.register.leftTitleLine3')}
+                    </h2>
+                    <p className={styles.leftSubtitle}>{t('auth.register.leftSubtitle')}</p>
                 </div>
             </div>
 
             <div className={styles.rightPanel}>
                 <div className={styles.formWrapper}>
-                    <h1 className={styles.title}>Create an account</h1>
-                    <p className={styles.subtitle}>Daftar untuk menjelajahi potensi penuh platform kami.</p>
+                    <h1 className={styles.title}>{t('auth.register.title')}</h1>
+                    <p className={styles.subtitle}>{t('auth.register.subtitle')}</p>
 
                     <form onSubmit={handleSubmit}>
                         <div className={styles.formGroup}>
-                            <label className={styles.label}>Nama Panggilan / Brand</label>
+                            <label className={styles.label}>{t('auth.register.displayName')}</label>
                             <input
                                 type="text"
                                 required
-                                placeholder="Misal: Budi Design"
+                                placeholder={t('auth.register.displayNamePlaceholder')}
                                 className={styles.input}
                                 value={formData.display_name}
                                 onChange={e => setFormData({ ...formData, display_name: e.target.value })}
@@ -133,36 +139,36 @@ export default function RegisterPage() {
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label className={styles.label}>Profesi Utama</label>
+                            <label className={styles.label}>{t('auth.register.profession')}</label>
                             <select
                                 className={styles.input}
                                 value={formData.profession}
                                 onChange={e => setFormData({ ...formData, profession: e.target.value })}
                             >
-                                <option value="designer">Desainer Grafis</option>
-                                <option value="photographer">Fotografer</option>
-                                <option value="videographer">Videografer</option>
-                                <option value="writer">Penulis/Copywriter</option>
-                                <option value="musician">Musisi/Sound Engineer</option>
-                                <option value="developer">Developer/Programmer</option>
-                                <option value="other">Lainnya</option>
+                                <option value="designer">{t('auth.register.professionOptions.designer')}</option>
+                                <option value="photographer">{t('auth.register.professionOptions.photographer')}</option>
+                                <option value="videographer">{t('auth.register.professionOptions.videographer')}</option>
+                                <option value="writer">{t('auth.register.professionOptions.writer')}</option>
+                                <option value="musician">{t('auth.register.professionOptions.musician')}</option>
+                                <option value="developer">{t('auth.register.professionOptions.developer')}</option>
+                                <option value="other">{t('auth.register.professionOptions.other')}</option>
                             </select>
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label className={styles.label}>Email</label>
+                            <label className={styles.label}>{t('auth.register.email')}</label>
                             <input
                                 type="email"
                                 required
                                 className={styles.input}
-                                placeholder="email@contoh.com"
+                                placeholder={t('auth.login.emailPlaceholder')}
                                 value={formData.email}
                                 onChange={e => setFormData({ ...formData, email: e.target.value })}
                             />
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label className={styles.label}>Username</label>
+                            <label className={styles.label}>{t('auth.register.username')}</label>
                             <input
                                 type="text"
                                 required
@@ -174,14 +180,14 @@ export default function RegisterPage() {
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label className={styles.label}>Password</label>
+                            <label className={styles.label}>{t('auth.register.password')}</label>
                             <div className={styles.passwordWrapper}>
                                 <input
                                     type={showPassword ? 'text' : 'password'}
                                     required
                                     minLength="8"
                                     className={styles.input}
-                                    placeholder="Buat password kuat"
+                                    placeholder={t('auth.register.passwordPlaceholder')}
                                     value={formData.password}
                                     onFocus={() => setPasswordTouched(true)}
                                     onChange={e => setFormData({ ...formData, password: e.target.value })}
@@ -208,14 +214,14 @@ export default function RegisterPage() {
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label className={styles.label}>Konfirmasi Password</label>
+                            <label className={styles.label}>{t('auth.register.confirmPassword')}</label>
                             <div className={styles.passwordWrapper}>
                                 <input
                                     type={showConfirm ? 'text' : 'password'}
                                     required
                                     minLength="8"
                                     className={styles.input}
-                                    placeholder="Ulangi password"
+                                    placeholder={t('auth.register.confirmPassword')}
                                     value={formData.confirmPassword}
                                     onChange={e => setFormData({ ...formData, confirmPassword: e.target.value })}
                                 />
@@ -224,10 +230,10 @@ export default function RegisterPage() {
                                 </button>
                             </div>
                             {formData.confirmPassword && formData.password !== formData.confirmPassword && (
-                                <p style={{ color: '#dc2626', fontSize: '0.8rem', marginTop: '0.4rem' }}>Password tidak cocok</p>
+                                <p style={{ color: '#dc2626', fontSize: '0.8rem', marginTop: '0.4rem' }}>{t('auth.register.passwordNoMatch')}</p>
                             )}
                             {formData.confirmPassword && formData.password === formData.confirmPassword && (
-                                <p style={{ color: '#16a34a', fontSize: '0.8rem', marginTop: '0.4rem' }}>Password cocok</p>
+                                <p style={{ color: '#16a34a', fontSize: '0.8rem', marginTop: '0.4rem' }}>{t('auth.register.passwordMatch')}</p>
                             )}
                         </div>
 
@@ -241,12 +247,12 @@ export default function RegisterPage() {
                                     className={styles.checkbox}
                                 />
                                 <span>
-                                    Saya setuju dengan <Link href="/terms" target="_blank" className={styles.link}>Syarat & Ketentuan</Link> dan <Link href="/privacy" target="_blank" className={styles.link}>Kebijakan Privasi</Link>
+                                    {t('auth.register.termsAgreementPrefix')} <Link href="/terms" target="_blank" className={styles.link}>{t('auth.register.terms')}</Link> {t('auth.register.and')} <Link href="/privacy" target="_blank" className={styles.link}>{t('auth.register.privacy')}</Link>
                                 </span>
                             </label>
                         </div>
 
-                        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
+                        <div className={styles.recaptchaWrapper}>
                             <ReCAPTCHA
                                 sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
                                 onChange={(token) => setRecaptchaToken(token)}
@@ -256,12 +262,12 @@ export default function RegisterPage() {
                         {error && <div className={styles.error}>{error}</div>}
 
                         <button type="submit" className={styles.submitBtn} disabled={loading}>
-                            {loading ? 'Mendaftar...' : 'Daftar Sekarang'}
+                            {loading ? t('auth.register.submitting') : t('auth.register.submit')}
                         </button>
                     </form>
 
                     <div className={styles.footer}>
-                        Sudah punya akun? <Link href="/login" className={styles.link}>Masuk di sini</Link>
+                        {t('auth.register.haveAccount')} <Link href="/login" className={styles.link}>{t('auth.register.loginLink')}</Link>
                     </div>
                 </div>
             </div>

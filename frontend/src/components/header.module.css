@@ -16,6 +16,97 @@
     flex: 1;
 }
 
+.menuBtn {
+    display: none;
+    background:
+        linear-gradient(135deg, rgba(37, 99, 235, 0.18), rgba(37, 99, 235, 0.08)),
+        var(--white);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 0.6rem;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-right: 0.5rem;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+    transition: box-shadow 0.2s, transform 0.15s, background 0.2s, border-color 0.2s;
+}
+
+.menuBtn:hover {
+    transform: translateY(-1px);
+    border-color: rgba(37, 99, 235, 0.45);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.22);
+}
+
+.menuBtn:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.menuBtnActive {
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.35);
+}
+
+:global([data-theme='dark']) .menuBtn {
+    background:
+        linear-gradient(135deg, rgba(59, 130, 246, 0.28), rgba(96, 165, 250, 0.12)),
+        var(--white);
+    border-color: rgba(148, 163, 184, 0.32);
+    color: #e2e8f0;
+    box-shadow: 0 8px 20px rgba(2, 6, 23, 0.45);
+}
+
+:global([data-theme='dark']) .menuBtn:hover {
+    border-color: rgba(147, 197, 253, 0.5);
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.28);
+}
+
+.hamburgerGlyph {
+    width: 18px;
+    height: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hamburgerGlyph span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    border-radius: 9999px;
+    background: currentColor;
+    box-shadow: 0 1px 1px rgba(15, 23, 42, 0.2);
+    transition: transform 0.22s ease, opacity 0.2s ease;
+}
+
+.menuBtnActive .hamburgerGlyph span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+}
+
+.menuBtnActive .hamburgerGlyph span:nth-child(2) {
+    opacity: 0;
+}
+
+.menuBtnActive .hamburgerGlyph span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+}
+
+.hamburgerChar {
+    font-size: 1.35rem;
+    line-height: 1;
+    font-weight: 900;
+    color: currentColor;
+    display: inline-block;
+    transform: translateY(-1px);
+}
+
 .actions {
     display: flex;
     align-items: center;
@@ -204,7 +295,11 @@
 
 @media (max-width: 768px) {
     .header {
-        padding: 0 1rem 0 4rem;
+        padding: 0 1rem;
+    }
+
+    .menuBtn {
+        display: flex;
     }
 
     .profileName {

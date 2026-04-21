@@ -5,13 +5,15 @@
     min-height: 100vh;
     background: #f8fafc;
     font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    width: 100%;
+    padding-top: 64px; /* space for fixed navbar */
 }
 
 /* ---- HERO ---- */
 .hero {
     background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 60%, #6d28d9 100%);
     padding: 6rem 2rem 5rem;
-    text-align: center;
     position: relative;
     overflow: hidden;
 }
@@ -26,11 +28,28 @@
     pointer-events: none;
 }
 
-.heroContent {
+.heroInner {
     position: relative;
     z-index: 1;
-    max-width: 700px;
+    max-width: 1100px;
     margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+}
+
+.heroContent {
+    flex: 1;
+    max-width: 600px;
+}
+
+.heroLottie {
+    flex: 1;
+    height: 480px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 12px 32px rgba(0, 0, 0, 0.15));
 }
 
 .pill {
@@ -56,14 +75,18 @@
     margin: 0 0 1.25rem 0;
     letter-spacing: -0.03em;
     line-height: 1.15;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
 }
 
 .heroSubtitle {
     font-size: 1.1rem;
     color: rgba(255, 255, 255, 0.78);
     line-height: 1.7;
-    max-width: 580px;
-    margin: 0 auto;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
 }
 
 /* ---- CONTENT WRAPPER ---- */
@@ -234,6 +257,9 @@
     color: white;
     margin: 0 0 0.875rem 0;
     letter-spacing: -0.03em;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
 }
 
 .ctaSection p {
@@ -294,6 +320,30 @@
     .statsGrid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .heroInner {
+        flex-direction: column;
+        text-align: center;
+        gap: 2rem;
+    }
+
+    .heroLottie {
+        height: 350px;
+    }
+
+    .heroContent {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .statsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .statsSection {
+        padding: 2rem 1rem;
+    }
 }
 
 @media (max-width: 640px) {
@@ -301,9 +351,14 @@
         padding: 3.5rem 1.25rem 3rem;
     }
 
+    .heroInner {
+        max-width: 100%;
+    }
+
     .content {
         padding: 3rem 1.25rem;
         gap: 3.5rem;
+        max-width: 100%;
     }
 
     .featureGrid {
@@ -312,5 +367,19 @@
 
     .statsSection {
         padding: 2rem 1.25rem;
+    }
+
+    .ctaSection {
+        padding: 4rem 1.25rem;
+    }
+
+    .missionCard {
+        padding: 1.5rem 1rem;
+    }
+
+    .missionCard p,
+    .featureCard p {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 }

@@ -30,11 +30,19 @@
   margin: 0;
 }
 
+html {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 body {
   font-family: 'Inter', sans-serif;
   background-color: var(--bg-color);
   color: var(--text-main);
   line-height: 1.5;
+  overflow-x: hidden;
+  width: 100%;
+  min-width: 0;
 }
 
 a {

@@ -1,4 +1,5 @@
 'use client';
+import { useI18n } from '@/lib/i18n';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createInvoice, getProfile } from '@/lib/api';
@@ -7,6 +8,7 @@ import AIPricingModal from '@/components/AIPricingModal';
 import styles from './page.module.css';
 
 export default function CreateInvoice() {
+    const { t } = useI18n();
     const router = useRouter();
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -123,50 +125,50 @@ export default function CreateInvoice() {
             {/* Form Kiri */}
             <div className={styles.formSection}>
                 <div className={styles.header}>
-                    <h1 className={styles.title}>Buat Invoice Baru</h1>
-                    <p className={styles.subtitle}>Isi detail tagihan untuk klien kamu</p>
+                    <h1 className={styles.title}>{t('createInvoicePage.title')}</h1>
+                    <p className={styles.subtitle}>{t('createInvoicePage.subtitle')}</p>
                 </div>
 
                 <form onSubmit={handleSave} className={styles.formContainer}>
                     {/* Client Info */}
                     <div className={styles.card}>
-                        <h2 className={styles.cardTitle}>Info Klien</h2>
+                        <h2 className={styles.cardTitle}>{t('createInvoicePage.clientInfo')}</h2>
                         <div className={styles.grid}>
                             <div className={styles.formGroup}>
-                                <label>Nama Klien / Perusahaan *</label>
+                                <label>{t('createInvoicePage.clientName')}</label>
                                 <input
                                     type="text"
                                     required
                                     value={formData.client_name}
                                     onChange={e => setFormData({ ...formData, client_name: e.target.value })}
                                     className={styles.input}
-                                    placeholder="Misal: PT Karya Bangsa"
+                                    placeholder={t('createInvoicePage.clientNamePh')}
                                 />
                             </div>
                             <div className={styles.formGroup}>
-                                <label>Email Klien (Opsional)</label>
+                                <label>{t('createInvoicePage.clientEmail')}</label>
                                 <input
                                     type="email"
                                     value={formData.client_email}
                                     onChange={e => setFormData({ ...formData, client_email: e.target.value })}
                                     className={styles.input}
-                                    placeholder="client@mail.com"
+                                    placeholder={t('createInvoicePage.clientEmailPh')}
                                 />
                             </div>
                         </div>
                         <div className={styles.grid}>
                             <div className={styles.formGroup}>
-                                <label>No. Telepon Klien (Opsional)</label>
+                                <label>{t('createInvoicePage.clientPhone')}</label>
                                 <input
                                     type="tel"
                                     value={formData.client_phone}
                                     onChange={e => setFormData({ ...formData, client_phone: e.target.value })}
                                     className={styles.input}
-                                    placeholder="08123456789"
+                                    placeholder={t('createInvoicePage.clientPhonePh')}
                                 />
                             </div>
                             <div className={styles.formGroup}>
-                                <label>Batas Waktu Bayar (Opsional)</label>
+                                <label>{t('createInvoicePage.dueDate')}</label>
                                 <input
                                     type="date"
                                     value={formData.due_date}
@@ -177,17 +179,17 @@ export default function CreateInvoice() {
                         </div>
                         <div className={styles.grid}>
                             <div className={styles.formGroup}>
-                                <label>Mata Uang</label>
+                                <label>{t('createInvoicePage.currency')}</label>
                                 <select
                                     value={formData.currency}
                                     onChange={e => setFormData({ ...formData, currency: e.target.value })}
                                     className={styles.input}
                                 >
-                                    <option value="IDR">Rupiah (IDR)</option>
-                                    <option value="USD">US Dollar (USD)</option>
-                                    <option value="SGD">Singapore Dollar (SGD)</option>
-                                    <option value="EUR">Euro (EUR)</option>
-                                    <option value="MYR">Malaysian Ringgit (MYR)</option>
+                                    <option value="IDR">{t('createInvoicePage.currIDR')}</option>
+                                    <option value="USD">{t('createInvoicePage.currUSD')}</option>
+                                    <option value="SGD">{t('createInvoicePage.currSGD')}</option>
+                                    <option value="EUR">{t('createInvoicePage.currEUR')}</option>
+                                    <option value="MYR">{t('createInvoicePage.currMYR')}</option>
                                 </select>
                             </div>
                         </div>
@@ -195,20 +197,20 @@ export default function CreateInvoice() {
 
                     {/* Items */}
                     <div className={styles.card}>
-                        <h2 className={styles.cardTitle}>Item Jasa</h2>
+                        <h2 className={styles.cardTitle}>{t('createInvoicePage.serviceItems')}</h2>
 
                         <div className={styles.itemsList}>
                             {formData.items.map((item, index) => (
                                 <div key={index} className={styles.itemRow}>
                                     <div className={styles.itemMain}>
                                         <div className={styles.formGroup}>
-                                            <label>Deskripsi Jasa</label>
+                                            <label>{t('createInvoicePage.serviceDesc')}</label>
                                             <input
                                                 type="text"
                                                 value={item.description}
                                                 onChange={e => handleItemChange(index, 'description', e.target.value)}
                                                 className={styles.input}
-                                                placeholder="Desain Logo..."
+                                                placeholder={t('createInvoicePage.serviceDescPh')}
                                                 required
                                             />
                                         </div>
@@ -216,7 +218,7 @@ export default function CreateInvoice() {
 
                                     <div className={styles.itemMeta}>
                                         <div className={styles.formGroup} style={{ width: '80px' }}>
-                                            <label>Qty</label>
+                                            <label>{t('createInvoicePage.qty')}</label>
                                             <input
                                                 type="number"
                                                 min="1"
@@ -229,14 +231,14 @@ export default function CreateInvoice() {
 
                                         <div className={styles.formGroup} style={{ flex: 1 }}>
                                             <label style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                                                <span>Harga Satuan (Rp)</span>
+                                                <span>{t('createInvoicePage.unitPrice')}</span>
                                                 {item.description && (
                                                     <button
                                                         type="button"
                                                         onClick={() => openAIModal(index)}
                                                         className={styles.aiBtnText}
                                                     >
-                                                        <Brain size={12} style={{ marginRight: '4px' }} /> AI Suggest
+                                                        <Brain size={12} style={{ marginRight: '4px' }} /> {t('createInvoicePage.aiSuggest')}
                                                     </button>
                                                 )}
                                             </label>
@@ -265,7 +267,7 @@ export default function CreateInvoice() {
                         </div>
 
                         <button type="button" onClick={addItem} className={styles.addItemBtn}>
-                            <Plus size={16} /> Tambah Kolom Item
+                            <Plus size={16} /> {t('createInvoicePage.addCol')}
                         </button>
                     </div>
 
@@ -273,7 +275,7 @@ export default function CreateInvoice() {
                     <div className={`${styles.card} ${styles.calcCard}`}>
                         <div className={styles.calcLeft}>
                             <div className={styles.formGroup}>
-                                <label>Pajak / PPN (%)</label>
+                                <label>{t('createInvoicePage.taxPercent')}</label>
                                 <input
                                     type="number"
                                     min="0"
@@ -285,39 +287,39 @@ export default function CreateInvoice() {
                                 />
                             </div>
                             <div className={styles.formGroup}>
-                                <label>Catatan untuk Klien</label>
+                                <label>{t('createInvoicePage.clientNote')}</label>
                                 <textarea
                                     value={formData.notes}
                                     onChange={e => setFormData({ ...formData, notes: e.target.value })}
                                     rows="3"
                                     className={styles.input}
-                                    placeholder="Terima kasih atas kerjasamanya..."
+                                    placeholder={t('createInvoicePage.clientNotePh')}
                                 />
                             </div>
                         </div>
 
                         <div className={styles.calcRight}>
                             <div className={styles.calcRow}>
-                                <span className={styles.calcLabel}>Subtotal:</span>
+                                <span className={styles.calcLabel}>{t('createInvoicePage.subtotal')}</span>
                                 <span className={styles.calcValue}>{formatRp(calculateSubtotal())}</span>
                             </div>
                             {formData.tax_percentage > 0 && (
                                 <div className={styles.calcRow}>
-                                    <span className={styles.calcLabel}>Pajak ({formData.tax_percentage}%):</span>
+                                    <span className={styles.calcLabel}>{t('createInvoicePage.taxLabel')} ({formData.tax_percentage}%):</span>
                                     <span className={styles.calcValue}>{formatRp(calculateSubtotal() * (formData.tax_percentage / 100))}</span>
                                 </div>
                             )}
                             <div className={`${styles.calcRow} ${styles.totalRow}`}>
-                                <span className={styles.totalLabel}>Total Pembayaran:</span>
+                                <span className={styles.totalLabel}>{t('createInvoicePage.totalPay')}</span>
                                 <span className={styles.totalValue}>{formatRp(calculateTotal())}</span>
                             </div>
                         </div>
                     </div>
 
                     <div className={styles.actionsBox}>
-                        <button type="button" onClick={() => router.back()} className={styles.cancelBtn}>Batalkan</button>
+                        <button type="button" onClick={() => router.back()} className={styles.cancelBtn}>{t('createInvoicePage.cancel')}</button>
                         <button type="submit" disabled={loading} className={styles.saveBtn}>
-                            {loading ? 'Menyimpan...' : 'Simpan sebagai Draft'}
+                            {loading ? t('createInvoicePage.saving') : t('createInvoicePage.saveDraft')}
                         </button>
                     </div>
                 </form>
@@ -326,25 +328,25 @@ export default function CreateInvoice() {
             {/* Preview Kanan */}
             <div className={styles.previewSection}>
                 <div className={styles.previewSticky}>
-                    <h3 className={styles.previewTitle}>Live Preview</h3>
+                    <h3 className={styles.previewTitle}>{t('createInvoicePage.livePreview')}</h3>
 
                     <div className={styles.document}>
                         <div className={styles.docHeader}>
-                            <div className={styles.docLogo}>INVOICE</div>
+                            <div className={styles.docLogo}>{t('createInvoicePage.invoiceTag')}</div>
                             <div className={styles.docMeta}>
-                                <div><b>Tanggal:</b> {new Date().toLocaleDateString('id-ID')}</div>
-                                <div><b>Jatuh Tempo:</b> {formData.due_date ? new Date(formData.due_date).toLocaleDateString('id-ID') : '-'}</div>
+                                <div><b>{t('createInvoicePage.date')}</b> {new Date().toLocaleDateString('id-ID')}</div>
+                                <div><b>{t('createInvoicePage.dueDatePreview')}</b> {formData.due_date ? new Date(formData.due_date).toLocaleDateString('id-ID') : '-'}</div>
                             </div>
                         </div>
 
                         <div className={styles.docInfo}>
                             <div className={styles.infoBox}>
-                                <span className={styles.infoLabel}>Dari:</span>
+                                <span className={styles.infoLabel}>{t('createInvoicePage.from')}</span>
                                 <strong>{profile?.display_name || '...'}</strong>
                                 <p>{profile?.profession}</p>
                             </div>
                             <div className={styles.infoBox}>
-                                <span className={styles.infoLabel}>Kepada:</span>
+                                <span className={styles.infoLabel}>{t('createInvoicePage.to')}</span>
                                 <strong>{formData.client_name || '-'}</strong>
                                 <p>{formData.client_email}</p>
                                 <p>{formData.client_phone}</p>
@@ -354,10 +356,10 @@ export default function CreateInvoice() {
                         <table className={styles.docTable}>
                             <thead>
                                 <tr>
-                                    <th>Deskripsi</th>
-                                    <th style={{ textAlign: 'center' }}>Qty</th>
-                                    <th style={{ textAlign: 'right' }}>Harga</th>
-                                    <th style={{ textAlign: 'right' }}>Total</th>
+                                    <th>{t('createInvoicePage.descHeader')}</th>
+                                    <th style={{ textAlign: 'center' }}>{t('createInvoicePage.qty')}</th>
+                                    <th style={{ textAlign: 'right' }}>{t('createInvoicePage.priceHeader')}</th>
+                                    <th style={{ textAlign: 'right' }}>{t('createInvoicePage.totalHeader')}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -378,24 +380,24 @@ export default function CreateInvoice() {
                                 <span>{formatRp(calculateSubtotal())}</span>
                             </div>
                             <div className={styles.docTotalRow}>
-                                <span>Pajak ({formData.tax_percentage}%)</span>
+                                <span>{t('createInvoicePage.taxLabel')} ({formData.tax_percentage}%)</span>
                                 <span>{formatRp(calculateSubtotal() * (formData.tax_percentage / 100))}</span>
                             </div>
                             <div className={styles.docTotalRowBold}>
-                                <span>Total</span>
+                                <span>{t('createInvoicePage.totalHeader')}</span>
                                 <span className={styles.totalValue}>{formatRp(calculateTotal())}</span>
                             </div>
                         </div>
 
                         {formData.notes && (
                             <div className={styles.docNotes}>
-                                <strong>Catatan:</strong>
+                                <strong>{t('createInvoicePage.noteLabel')}</strong>
                                 <p>{formData.notes}</p>
                             </div>
                         )}
 
                         <div className={styles.docFooterLine}>
-                            Dibuat dengan <b>Kreavify</b>
+                            {t('createInvoicePage.madeWith')} <b>Kreavify</b>
                         </div>
                     </div>
                 </div>

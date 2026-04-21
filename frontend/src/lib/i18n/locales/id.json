@@ -1,0 +1,690 @@
+{
+  "common": {
+    "brand": "Kreavify",
+    "nav": {
+      "about": "Tentang",
+      "help": "Bantuan",
+      "contact": "Hubungi Kami",
+      "login": "Masuk",
+      "register": "Daftar Gratis"
+    },
+    "footer": {
+      "brandDescLine1": "Platform AI Financial Intelligence untuk UMKM & Kreator Indonesia.",
+      "brandDescLine2": "Mendukung Digitalisasi Ekonomi Kreatif - Hackathon BI 2026.",
+      "columns": {
+        "product": "Produk",
+        "info": "Informasi",
+        "legal": "Legal"
+      },
+      "links": {
+        "register": "Daftar Gratis",
+        "login": "Masuk",
+        "about": "Tentang",
+        "help": "Bantuan",
+        "contact": "Hubungi Kami",
+        "privacy": "Kebijakan Privasi",
+        "terms": "Syarat & Ketentuan"
+      },
+      "copyright": "Hak Cipta Dilindungi."
+    },
+    "actions": {
+      "save": "Simpan",
+      "saving": "Menyimpan...",
+      "saved": "Tersimpan!"
+    }
+  },
+  "settings": {
+    "title": "Pengaturan Umum",
+    "subtitle": "Kelola preferensi bahasa, domisili, dan temukan bantuan",
+    "localizationTitle": "Lokalisasi & Wilayah",
+    "localizationSubtitle": "Pengaturan ini mempengaruhi mata uang default dan kalkulasi perpajakan (mendatang).",
+    "uiLanguageLabel": "Bahasa Antarmuka",
+    "uiLanguageId": "Bahasa Indonesia (Default)",
+    "uiLanguageEn": "English",
+    "countryLabel": "Negara Domisili",
+    "addressLabel": "Alamat Lengkap",
+    "addressPlaceholder": "Jl. Sudirman No 123...",
+    "saveSettings": "Simpan Pengaturan",
+    "settingsSaved": "Pengaturan disimpan!",
+    "helpTitle": "Bantuan & Dukungan",
+    "helpCenterTitle": "Pusat Bantuan",
+    "helpCenterDesc": "Panduan menggunakan Kreavify",
+    "contactTitle": "Hubungi Kami",
+    "contactDesc": "Punya kendala? Kirim pesan ke tim kami",
+    "aboutTitle": "Tentang Kreavify",
+    "aboutDesc": "Pelajari misi dan visi kami",
+    "publicProfileTitle": "Profil Publik",
+    "publicProfileSubtitle": "Ingin mengubah warna & tampilan profil publik (portofolio) kamu?",
+    "editPublicProfile": "Edit Profil Publik"
+  },
+  "auth": {
+    "login": {
+      "title": "Selamat datang kembali",
+      "subtitle": "Masuk ke akun Kreavify-mu untuk melanjutkan produktivitas.",
+      "email": "Email",
+      "password": "Password",
+      "emailPlaceholder": "email@contoh.com",
+      "passwordPlaceholder": "Masukkan password",
+      "submit": "Masuk",
+      "submitting": "Masuk...",
+      "noAccount": "Belum punya akun?",
+      "registerLink": "Daftar di sini",
+      "leftEyebrow": "AI Financial Intelligence",
+      "leftTitleLine1": "Kelola Keuangan",
+      "leftTitleLine2": "Lebih Cerdas",
+      "leftTitleLine3": "dengan AI",
+      "leftSubtitle": "Prediksi pendapatan, analisis harga pasar, dan insight bisnis berbasis data untuk freelancer kreatif Indonesia.",
+      "errorInvalid": "Login gagal. Periksa email & password kamu.",
+      "errorGeneric": "Terjadi kesalahan. Coba lagi nanti."
+    },
+    "register": {
+      "title": "Buat akun",
+      "subtitle": "Daftar untuk menjelajahi potensi penuh platform kami.",
+      "displayName": "Nama Panggilan / Brand",
+      "displayNamePlaceholder": "Misal: Budi Design",
+      "profession": "Profesi Utama",
+      "email": "Email",
+      "username": "Username",
+      "password": "Password",
+      "passwordPlaceholder": "Buat password kuat",
+      "confirmPassword": "Konfirmasi Password",
+      "termsAgreementPrefix": "Saya setuju dengan",
+      "and": "dan",
+      "terms": "Syarat & Ketentuan",
+      "privacy": "Kebijakan Privasi",
+      "submit": "Daftar Sekarang",
+      "submitting": "Mendaftar...",
+      "haveAccount": "Sudah punya akun?",
+      "loginLink": "Masuk di sini",
+      "leftEyebrow": "Bergabung Sekarang",
+      "leftTitleLine1": "Buat Keputusan",
+      "leftTitleLine2": "Finansial Lebih Baik",
+      "leftTitleLine3": "dengan AI",
+      "leftSubtitle": "Platform invoice & payment dengan AI yang memprediksi pendapatan dan menganalisis harga pasar untuk UMKM & kreator Indonesia.",
+      "passwordMismatch": "Password dan konfirmasi password tidak cocok.",
+      "passwordRulesError": "Password belum memenuhi semua kriteria keamanan.",
+      "termsRequired": "Anda harus menyetujui Syarat & Ketentuan dan Kebijakan Privasi.",
+      "recaptchaRequired": "Selesaikan verifikasi reCAPTCHA terlebih dahulu.",
+      "connectionError": "Terjadi kesalahan koneksi.",
+      "passwordMatch": "Password cocok",
+      "passwordNoMatch": "Password tidak cocok",
+      "professionOptions": {
+        "designer": "Desainer Grafis",
+        "photographer": "Fotografer",
+        "videographer": "Videografer",
+        "writer": "Penulis/Copywriter",
+        "musician": "Musisi/Sound Engineer",
+        "developer": "Developer/Programmer",
+        "other": "Lainnya"
+      },
+      "passwordRules": {
+        "min8": "Min. 8 karakter",
+        "upper": "Huruf kapital",
+        "lower": "Huruf kecil",
+        "number": "Angka",
+        "special": "Karakter spesial"
+      }
+    }
+  },
+  "home": {
+    "badge": "Solusi Digital untuk UMKM & Kreator Indonesia",
+    "heroTitlePrefix": "Kelola Keuangan Lebih Cerdas dengan",
+    "heroTitleHighlight": "AI Financial Intelligence",
+    "heroSubtitle": "Platform invoice & pembayaran digital dengan AI yang membantu freelancer kreatif membuat keputusan finansial lebih baik. Prediksi pendapatan, rekomendasi harga pasar, dan insight bisnis berbasis data.",
+    "ctaPrimary": "Mulai Sekarang Gratis",
+    "ctaSecondary": "Pelajari Lebih Lanjut",
+    "featuresTitle": "AI Financial Intelligence untuk Freelancer",
+    "featuresSubtitle": "Buat keputusan finansial lebih baik dengan insight berbasis data dan machine learning.",
+    "features": {
+      "revenue": {
+        "title": "Prediksi Pendapatan",
+        "desc": "AI memprediksi pendapatan bulan depan berdasarkan pola historis Anda. Dapatkan early warning jika tren menurun dan rekomendasi aksi yang perlu diambil."
+      },
+      "market": {
+        "title": "Rekomendasi Harga Pasar",
+        "desc": "Jangan underprice lagi. AI menganalisis harga pasar berdasarkan kategori jasa, pengalaman, dan kompleksitas project untuk memberikan rekomendasi harga yang optimal."
+      },
+      "invoice": {
+        "title": "Invoice & Payment Digital",
+        "desc": "Buat invoice profesional dalam 30 detik. Klien bayar via QRIS, Virtual Account, atau e-Wallet. Semua transaksi tercatat otomatis untuk analisis AI."
+      }
+    },
+    "vpTitle": "Data-Driven Decision Making",
+    "vpItems": [
+      "Prediksi berbasis pola historis transaksi Anda",
+      "Analisis harga pasar dari data platform",
+      "Confidence score transparan untuk setiap prediksi",
+      "Dashboard insight real-time untuk monitoring bisnis"
+    ],
+    "vpNoteTitle": "Catatan:",
+    "vpNoteText": "Prediksi AI bersifat estimasi berdasarkan data historis. Gunakan sebagai panduan untuk membuat keputusan, bukan jaminan hasil."
+  },
+  "publicPages": {
+    "help": {
+      "title": "Pusat Bantuan",
+      "subtitle": "Temukan jawaban untuk semua pertanyaan seputar penggunaan Kreavify",
+      "ctaTitle": "Masih ada pertanyaan lain?",
+      "ctaSubtitle": "Tim kami siap membantu kamu melalui email. Kami biasanya merespons dalam 1×24 jam.",
+      "ctaButton": "Hubungi Tim Kreavify",
+      "sections": {
+        "gettingStarted": "Memulai",
+        "invoicePayments": "Invoice & Pembayaran",
+        "profilePortfolio": "Profil & Portfolio",
+        "digitalContract": "Kontrak Digital",
+        "ai": "AI Financial Intelligence",
+        "tax": "Laporan Pajak"
+      },
+      "faq": {
+        "gettingStarted": {
+          "whatIs": {
+            "q": "Apa itu Kreavify?",
+            "a": "Kreavify adalah platform AI Financial Intelligence untuk freelancer kreatif Indonesia. Kami membantu Anda membuat keputusan finansial lebih baik dengan prediksi pendapatan, analisis harga pasar, dan insight bisnis berbasis data."
+          },
+          "createAccount": {
+            "q": "Bagaimana cara membuat akun?",
+            "a": "Klik tombol \"Daftar Gratis\" di pojok kanan atas, isi nama, email, dan password, lalu verifikasi email kamu. Proses pendaftaran selesai dalam kurang dari 2 menit."
+          },
+          "isFree": {
+            "q": "Apakah Kreavify gratis?",
+            "a": "Ya! Paket Basic sepenuhnya gratis. Fitur AI (Revenue Forecasting & Pricing Intelligence) tersedia untuk semua user."
+          }
+        },
+        "invoicePayments": {
+          "createInvoice": {
+            "q": "Bagaimana cara membuat invoice baru?",
+            "a": "Masuk ke menu \"Invoice\" → klik tombol \"+ Buat Invoice\" → isi data klien dan item layanan → klik \"Simpan\" atau \"Kirim ke Klien\"."
+          },
+          "clientNeedsAccount": {
+            "q": "Apakah klien perlu akun Kreavify untuk membayar?",
+            "a": "Tidak perlu! Klien bisa mengakses link invoice langsung tanpa perlu mendaftar."
+          },
+          "sendReminder": {
+            "q": "Bagaimana mengirim reminder pembayaran otomatis?",
+            "a": "Buka invoice status \"Menunggu Pembayaran\", klik tombol \"Kirim Reminder via WhatsApp\"."
+          },
+          "invoiceNumber": {
+            "q": "Apa itu nomor invoice dan bagaimana formatnya?",
+            "a": "Nomor invoice dibuat otomatis dalam format KK-[TAHUN]-[NOMOR]. Contoh: KK-2025-0001."
+          }
+        },
+        "profilePortfolio": {
+          "publicProfile": {
+            "q": "Bagaimana cara membagikan profil publik saya?",
+            "a": "Profil publikmu tersedia di link /p/[username-kamu]. Kamu bisa membagikannya dari menu \"Profil Publik\"."
+          },
+          "addPortfolio": {
+            "q": "Bagaimana menambah karya portfolio?",
+            "a": "Buka menu \"Portfolio\" → klik \"+ Tambah Karya\" → isi data → klik Simpan."
+          },
+          "bannerNotSaved": {
+            "q": "Kenapa foto banner saya tidak tersimpan?",
+            "a": "Pastikan ukuran file tidak melebihi 5MB dan format JPG/PNG/WebP. Tunggu upload selesai lalu klik \"Simpan Perubahan\"."
+          }
+        },
+        "digitalContract": {
+          "generateContract": {
+            "q": "Bagaimana cara membuat kontrak otomatis?",
+            "a": "Dari menu \"Kontrak\" atau detail Invoice, klik \"Generate Kontrak\" untuk membuat draft kontrak."
+          },
+          "legalPower": {
+            "q": "Apakah kontrak digital saya memiliki kekuatan hukum?",
+            "a": "Kontrak berisi klausul standar. Untuk proyek besar, disarankan konsultasi dengan ahli hukum."
+          }
+        },
+        "ai": {
+          "revenueForecast": {
+            "q": "Bagaimana AI Revenue Forecasting bekerja?",
+            "a": "AI menganalisis pola historis invoice Anda untuk memprediksi pendapatan bulan depan, dilengkapi confidence score."
+          },
+          "accuracy": {
+            "q": "Seberapa akurat prediksi AI?",
+            "a": "Akurasi bergantung pada konsistensi data historis. Gunakan prediksi sebagai panduan, bukan jaminan."
+          },
+          "pricing": {
+            "q": "Bagaimana AI Pricing Intelligence bekerja?",
+            "a": "AI menganalisis data harga pasar berdasarkan kategori jasa, pengalaman, dan kompleksitas untuk memberi rekomendasi range harga."
+          },
+          "dataSource": {
+            "q": "Dari mana data harga pasar berasal?",
+            "a": "Dari data transaksi platform (anonymized) dan default pricing matrix dari riset industri."
+          },
+          "mustFollow": {
+            "q": "Apakah saya harus mengikuti rekomendasi AI?",
+            "a": "Tidak wajib. Rekomendasi AI adalah panduan, Anda tetap punya kontrol penuh atas harga."
+          }
+        },
+        "tax": {
+          "taxEstimate": {
+            "q": "Bagaimana Kreavify menghitung perkiraan pajak saya?",
+            "a": "Estimasi dihitung dari total pendapatan bruto mengikuti aturan UMKM. Ini estimasi; konsultasikan untuk perhitungan resmi."
+          },
+          "taxAccuracy": {
+            "q": "Apakah laporan pajak saya akurat?",
+            "a": "Laporan pajak dihitung dari invoice status \"Dibayar\" saja. Pastikan semua status sudah benar."
+          }
+        }
+      }
+    },
+    "about": {
+      "pill": "Tentang Kami",
+      "title": "Platform AI Financial Intelligence untuk Freelancer Kreatif",
+      "subtitle": "Kreavify membantu freelancer membuat keputusan finansial lebih baik dengan AI yang memprediksi pendapatan, menganalisis harga pasar, dan memberikan insight bisnis berbasis data.",
+      "missionTitle": "Misi Kami",
+      "missionDesc": "Memberdayakan UMKM dan kreator independen Indonesia dengan AI financial intelligence — membantu keputusan bisnis lebih baik berdasarkan data.",
+      "visionTitle": "Visi Kami",
+      "visionDesc": "Menjadi platform pertama di Indonesia yang menggabungkan invoice management, AI forecasting, dan market pricing intelligence.",
+      "valuesTitle": "Nilai Kami",
+      "valuesDesc": "Data-driven, transparan, dan accessible. Setiap freelancer berhak mendapat insight seperti perusahaan besar.",
+      "stats": {
+        "features": "Fitur Unggulan",
+        "powered": "Powered Pricing",
+        "free": "Gratis untuk Mulai",
+        "madeFor": "Made for Indonesia"
+      },
+      "featuresTitle": "Fitur Unggulan Kreavify",
+      "noteTitle": "Catatan:",
+      "noteText": "Prediksi AI berbasis analisis pola historis dan data pasar. Gunakan sebagai panduan keputusan, bukan jaminan hasil.",
+      "featureCards": {
+        "revenue": {
+          "title": "AI Revenue Forecasting",
+          "desc": "Prediksi pendapatan bulan depan berdasarkan pola historis transaksi Anda. Dapatkan early warning dan rekomendasi aksi."
+        },
+        "pricing": {
+          "title": "AI Pricing Intelligence",
+          "desc": "Analisis harga pasar real-time berdasarkan kategori jasa, pengalaman, dan kompleksitas. Jangan underprice lagi."
+        },
+        "invoice": {
+          "title": "Invoice & Payment Digital",
+          "desc": "Buat invoice profesional dengan logo kustom dan payment gateway terintegrasi (QRIS, VA, e-Wallet)."
+        },
+        "analytics": {
+          "title": "Dashboard Analytics",
+          "desc": "Monitor performa bisnis dengan insight real-time: tren revenue, pricing analysis, dan financial health score."
+        },
+        "portfolio": {
+          "title": "Portfolio Publik",
+          "desc": "Halaman profil publik dengan karya portfolio dan katalog jasa. Share ke klien seperti kartu nama digital."
+        },
+        "contract": {
+          "title": "Contract Management",
+          "desc": "Kelola kontrak kerja dengan klien secara digital. Template profesional dan tracking status project."
+        }
+      },
+      "ctaTitle": "Siap memulai perjalanan freelance yang lebih terorganisir?",
+      "ctaSubtitle": "Gratis selamanya. Tidak butuh kartu kredit.",
+      "ctaPrimary": "Mulai Gratis Sekarang",
+      "ctaSecondary": "Pelajari Cara Penggunaan"
+    },
+    "contact": {
+      "title": "Hubungi Kami",
+      "subtitle": "Punya pertanyaan tentang AI predictions, fitur, atau kerjasama? Kirim pesan ke tim Kreavify. Kami biasanya merespons dalam 1x24 jam.",
+      "successTitle": "Pesan Terkirim!",
+      "successText": "Terima kasih telah menghubungi kami. Tim kami akan membalas via email secepatnya.",
+      "successReset": "Kirim Pesan Lain",
+      "form": {
+        "name": "Nama Lengkap",
+        "namePlaceholder": "Budi Santoso",
+        "email": "Alamat Email",
+        "emailPlaceholder": "budi@example.com",
+        "subject": "Subjek",
+        "message": "Pesan",
+        "messagePlaceholder": "Tuliskan pesanmu secara detail agar kami dapat membantu lebih cepat...",
+        "send": "Kirim Pesan",
+        "sendingFailed": "Gagal mengirim pesan.",
+        "error": "Terjadi kesalahan.",
+        "subjects": {
+          "general": "Pertanyaan Umum",
+          "bug": "Bug / Masalah Teknis",
+          "feature": "Request Fitur",
+          "business": "Kerjasama / Bisnis",
+          "other": "Lainnya"
+        }
+      }
+    }
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "invoices": "Invoice",
+    "services": "Jasa Saya",
+    "aiInsights": "AI Insights",
+    "portfolio": "Portfolio",
+    "contracts": "Kontrak",
+    "taxReport": "Laporan Pajak",
+    "settings": "Pengaturan",
+    "publicProfile": "Profil Publik",
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode"
+  },
+  "header": {
+    "editProfile": "Edit Profil",
+    "settings": "Pengaturan",
+    "logout": "Logout",
+    "logoutTitle": "Logout",
+    "logoutMessage": "Apakah kamu yakin ingin keluar dari akun Kreavify?"
+  },
+  "dashboard": {
+    "title": "Overview",
+    "subtitle": "Ringkasan aktivitas dan pendapatan kamu",
+    "aiTitle": "AI Financial Intelligence",
+    "aiSubtitle": "Prediksi berbasis analisis pola historis. Confidence score menunjukkan tingkat akurasi.",
+    "seeAll": "Lihat Semua",
+    "nextMonthForecast": "Prediksi Pendapatan Bulan Depan",
+    "trendUp": "Naik",
+    "trendDown": "Turun",
+    "trendStable": "Stabil",
+    "confidence": "Confidence",
+    "pricingAnalysis": "Analisis Harga Jasa",
+    "addServiceToAnalyze": "Tambahkan jasa untuk mendapatkan analisis harga.",
+    "servicesCount": "jasa",
+    "underpriced": "terlalu murah dari harga pasar",
+    "fairPriced": "sudah sesuai harga pasar",
+    "potentialIncrease": "Potensi kenaikan",
+    "seeDetail": "Lihat Detail",
+    "freelancerProfile": "Profil Freelancer",
+    "experienceLevel": "Level Pengalaman",
+    "totalPaidInvoices": "Total Invoice Dibayar",
+    "totalRevenue": "Total Pendapatan",
+    "avgProjectsPerMonth": "Rata-rata Proyek/Bulan",
+    "pendingPayment": "Menunggu Pembayaran",
+    "totalInvoice": "Total Invoice",
+    "paidInvoice": "Invoice Dibayar",
+    "profileViews": "Profile Views",
+    "serviceClicks": "Service Clicks",
+    "revenueTrend": "Tren Pendapatan",
+    "andForecast": "& Prediksi",
+    "last6Months": "6 Bulan Terakhir",
+    "actual": "Aktual",
+    "forecastAI": "Prediksi (AI)",
+    "range": "Range",
+    "profileViews7Days": "Profile Views — 7 Hari Terakhir",
+    "recentInvoices": "Invoice Terbaru",
+    "no": "No",
+    "client": "Klien",
+    "total": "Total",
+    "status": "Status",
+    "draft": "Draft",
+    "waiting": "Menunggu",
+    "paid": "Dibayar",
+    "cancelled": "Dibatalkan",
+    "noInvoicesYet": "Belum ada invoice",
+    "month": "Bulan",
+    "months": "Bulan",
+    "loading": "Loading dashboard...",
+    "errorLoading": "Gagal memuat data",
+    "notEnoughData": "Belum cukup data. Minimal 2 bulan invoice terbayar."
+  },
+  "aiInsightsPage": {
+    "title": "AI Financial Intelligence",
+    "subtitle": "Analisis cerdas pendapatan dan penetapan harga jasa kamu",
+    "disclaimer": "Prediksi berbasis pola historis transaksi. Gunakan sebagai panduan keputusan.",
+    "loadBtn": "Perbarui",
+    "loadingBtn": "Memuat...",
+    "forecastSectionTitle": "Prediksi Pendapatan",
+    "forecastPreLabel": "Prediksi",
+    "trendUpDesc": "Naik",
+    "trendDownDesc": "Turun",
+    "trendStableDesc": "Stabil",
+    "fromLastMonth": "dari bulan lalu",
+    "confidenceLevel": "Tingkat Keyakinan",
+    "lowerBound": "Batas Bawah",
+    "upperBound": "Batas Atas",
+    "avgProjects": "Rata-rata Proyek",
+    "perMonth": "/bln",
+    "forecastDisclaimer": "Prediksi menggunakan time-series analysis dari data invoice terbayar Anda.",
+    "expLevel": "Level Pengalaman",
+    "expNote": "Ditentukan berdasarkan jumlah invoice terbayar dan total pendapatan historis Anda.",
+    "notEnoughDataTitle": "Belum cukup data untuk prediksi pendapatan.",
+    "notEnoughDataDesc": "Minimal 2 bulan dengan invoice terbayar diperlukan untuk mengaktifkan fitur ini.",
+    "pricingSectionTitle": "Analisis Harga Jasa",
+    "potentialIncreaseBadge": "Potensi kenaikan",
+    "noServiceTitle": "Belum ada jasa untuk dianalisis.",
+    "noServiceDesc": "Tambahkan jasa di halaman Jasa Saya untuk mendapatkan analisis harga pasar.",
+    "pillUnder": "Terlalu Murah",
+    "pillFair": "Harga Sesuai",
+    "pillOver": "Terlalu Mahal",
+    "yourPrice": "Harga Kamu",
+    "vs": "vs",
+    "marketOptimal": "Optimal Pasar",
+    "marketRange": "Range pasar",
+    "pricingDisclaimer": "Berdasarkan data platform dan riset industri kreatif Indonesia.",
+    "actionTitle": "Rekomendasi Tindakan",
+    "actionUpPrice": "Naikkan Harga Jasa",
+    "actionUpPriceDesc": "jasa kamu berada di bawah harga pasar. Pertimbangkan untuk menaikkan harga agar lebih kompetitif dan menguntungkan.",
+    "actionFindClients": "Cari Klien Baru",
+    "actionFindClientsDesc": "Tren pendapatan menunjukkan penurunan. Pertimbangkan untuk memperluas jaringan, mengaktifkan profil publik, atau menawarkan promo terbatas.",
+    "failLoad": "Gagal Memuat Data AI",
+    "retry": "Coba Lagi"
+  },
+  "contractsPage": {
+    "title": "Kontrak Digital",
+    "subtitle": "Generate kontrak kerja freelance otomatis dari invoice dengan AI",
+    "generateNew": "Generate Kontrak Baru",
+    "modalTitle": "Generate Kontrak dari Invoice",
+    "modalDesc": "Pilih invoice untuk dijadikan basis kontrak. AI akan generate kontrak lengkap secara otomatis.",
+    "selectInvoice": "Pilih Invoice...",
+    "cancel": "Batal",
+    "generating": "Generating...",
+    "generateWithAI": "Generate dengan AI",
+    "noContracts": "Belum ada kontrak",
+    "noContractsDesc": "Klik \"Generate Kontrak Baru\" untuk mulai.",
+    "printPDF": "Cetak / PDF",
+    "previewPlaceholder": "Pilih kontrak untuk melihat preview",
+    "deleteTitle": "Hapus Kontrak",
+    "deleteConfirm": "Kontrak yang dihapus tidak bisa dikembalikan. Lanjutkan?",
+    "loading": "Memuat kontrak..."
+  },
+  "servicesPage": {
+    "title": "Jasa Saya",
+    "subtitle": "Kelola jasa yang kamu tawarkan ke klien",
+    "addService": "Tambah Jasa",
+    "noServices": "Belum ada jasa",
+    "noServicesDesc": "Mulai tambahkan jasa pertamamu agar klien bisa melihat penawaranmu.",
+    "editService": "Edit Jasa",
+    "newService": "Tambah Jasa Baru",
+    "serviceTitle": "Judul Jasa",
+    "serviceTitlePh": "Misal: Desain Logo Premium",
+    "category": "Kategori",
+    "cat_logo": "Desain Logo",
+    "cat_branding": "Branding & Identity",
+    "cat_social_media": "Desain Social Media",
+    "cat_illustration": "Ilustrasi",
+    "cat_photo_product": "Foto Produk",
+    "cat_photo_event": "Foto Event",
+    "cat_video_promo": "Video Promosi",
+    "cat_video_event": "Video Event",
+    "cat_copywriting": "Copywriting",
+    "cat_translation": "Penerjemahan",
+    "cat_music": "Produksi Musik",
+    "cat_web_dev": "Web Development",
+    "cat_other": "Lainnya",
+    "detailDesc": "Deskripsi Detail",
+    "detailDescPh": "Jelaskan apa saja yang didapat klien...",
+    "basePrice": "Harga Dasar (Rp)",
+    "checkAIPrice": "Cek Harga AI",
+    "complexity": "Kompleksitas",
+    "comp_simple": "Sederhana",
+    "comp_medium": "Menengah",
+    "comp_complex": "Kompleks",
+    "marketPriceSuggestion": "Saran Harga Pasar",
+    "loading": "Memuat...",
+    "min": "Minimum",
+    "optimal": "Optimal",
+    "max": "Maksimum",
+    "basedOn": "Berdasarkan",
+    "marketData": "data pasar",
+    "level": "Level",
+    "useOptimalPrice": "Gunakan Harga Optimal",
+    "cancel": "Batal",
+    "saveService": "Simpan Jasa",
+    "deleteTitle": "Hapus Jasa",
+    "deleteConfirm": "Apakah kamu yakin ingin menghapus jasa ini? Aksi ini tidak dapat dibatalkan."
+  },
+  "portfolioPage": {
+    "title": "Portfolio Karya",
+    "subtitle": "Tampilkan hasil karya terbaikmu ke publik",
+    "addWork": "Tambah Karya",
+    "noWork": "Belum ada karya",
+    "noWorkDesc": "Tunjukkan hasil kerjamu agar klien semakin yakin memakai jasamu.",
+    "addPortfolio": "Tambah Portfolio",
+    "workTitle": "Judul Karya",
+    "selectCategory": "Pilih Kategori",
+    "portfolioImage": "Gambar Portfolio",
+    "uploadPills": "Pilih Gambar dari Perangkat",
+    "uploadingPills": "Mengupload...",
+    "or": "atau",
+    "shortStory": "Cerita Singkat / Deskripsi (Opsional)",
+    "cancel": "Batal",
+    "save": "Simpan",
+    "deleteConfirm": "Yakin ingin menghapus item ini?"
+  },
+  "invoicesPage": {
+    "title": "Invoice Saya",
+    "subtitle": "Kelola semua tagihan ke klien",
+    "newInvoice": "Buat Invoice Baru",
+    "filterAll": "Semua",
+    "filterDraft": "Draft",
+    "filterSent": "Terkirim",
+    "filterPaid": "Dibayar",
+    "filterCancelled": "Dibatalkan",
+    "searchPh": "Cari nama klien...",
+    "invoiceNo": "No. Invoice",
+    "client": "Klien",
+    "totalAmount": "Total Tagihan",
+    "status": "Status",
+    "date": "Tanggal",
+    "noInvoiceFound": "Tidak ada invoice ditemukan.",
+    "seeDetail": "Lihat Detail",
+    "sendToClient": "Kirim ke Klien",
+    "delete": "Hapus",
+    "copyPayLink": "Salin Link Bayar",
+    "cancelInvoiceBtn": "Batalkan",
+    "deleteDraftTitle": "Hapus Draft Invoice",
+    "deleteDraftConfirm": "Apakah kamu yakin ingin menghapus draft invoice ini? Aksi ini tidak dapat dibatalkan.",
+    "sendTitle": "Kirim Invoice",
+    "sendConfirm": "Invoice akan dikirim ke klien dan link pembayaran akan dibuat. Lanjutkan?",
+    "cancelTitle": "Batalkan Invoice",
+    "cancelConfirm": "Apakah kamu yakin ingin membatalkan invoice ini? Klien tidak akan bisa membayar lagi."
+  },
+  "taxReportPage": {
+    "title": "Laporan Pajak",
+    "subtitle": "Rekap penghasilan tahunan untuk pelaporan SPT",
+    "printPDF": "Cetak / PDF",
+    "totalRevenue": "Total Pendapatan",
+    "estFinalTax": "Estimasi PPh Final",
+    "totalPaidInvoices": "Total Invoice Dibayar",
+    "monthlyBreakdown": "Rincian Pendapatan Bulanan —",
+    "month": "Bulan",
+    "invoiceCount": "Jumlah Invoice",
+    "revenue": "Pendapatan",
+    "tax05": "PPh 0.5%",
+    "total": "TOTAL",
+    "loading": "Memuat laporan pajak...",
+    "failLoad": "Gagal memuat data",
+    "note": "Estimasi PPh Final 0.5% UMKM (PP 55/2022). Berlaku jika omzet bruto < Rp 500 juta/tahun."
+  },
+  "profilePage": {
+    "title": "Pengaturan Profil",
+    "subtitle": "Atur informasi publik dan metode pencairan dana",
+    "changeBanner": "Ganti Banner",
+    "uploading": "Mengupload...",
+    "basicInfo": "Info Dasar",
+    "displayName": "Nama Display",
+    "primaryProfession": "Profesi Utama",
+    "shortBio": "Bio Singkat",
+    "whatsappNo": "No. WhatsApp",
+    "slugUrl": "Slug URL",
+    "publicProfileUrl": "URL Profil Publik kamu:",
+    "bankInfo": "Info Rekening Bank (Untuk Pencairan)",
+    "bankOrEwallet": "Bank / e-Wallet",
+    "selectBank": "Pilih Bank",
+    "accountNumber": "Nomor Rekening",
+    "accountName": "Nama Pemilik Rekening",
+    "brandedInvoice": "Branded Invoice",
+    "customizeInvoice": "Kustomisasi tampilan invoice kamu agar terlihat lebih profesional",
+    "invoiceLogo": "Logo Invoice",
+    "uploadLogo": "Upload Logo",
+    "invoiceAccentColor": "Warna Aksen Invoice",
+    "saveChanges": "Simpan Perubahan",
+    "saving": "Menyimpan...",
+    "loading": "Memuat profil...",
+    "avatarSuccess": "Foto profil berhasil diupload",
+    "avatarFail": "Gagal upload foto",
+    "bannerSuccess": "Banner berhasil diupload",
+    "bannerFail": "Gagal upload banner",
+    "profileOk": "Profil berhasil diperbarui",
+    "profileFail": "Gagal menyimpan profil",
+    "errorGeneric": "Terjadi kesalahan"
+  },
+  "createInvoicePage": {
+    "title": "Buat Invoice Baru",
+    "subtitle": "Isi detail tagihan untuk klien kamu",
+    "clientInfo": "Info Klien",
+    "clientName": "Nama Klien / Perusahaan *",
+    "clientNamePh": "Misal: PT Karya Bangsa",
+    "clientEmail": "Email Klien (Opsional)",
+    "clientEmailPh": "client@mail.com",
+    "clientPhone": "No. Telepon Klien (Opsional)",
+    "clientPhonePh": "08123456789",
+    "dueDate": "Batas Waktu Bayar (Opsional)",
+    "currency": "Mata Uang",
+    "currIDR": "Rupiah (IDR)",
+    "currUSD": "US Dollar (USD)",
+    "currSGD": "Singapore Dollar (SGD)",
+    "currEUR": "Euro (EUR)",
+    "currMYR": "Malaysian Ringgit (MYR)",
+    "serviceItems": "Item Jasa",
+    "serviceDesc": "Deskripsi Jasa",
+    "serviceDescPh": "Desain Logo...",
+    "qty": "Qty",
+    "unitPrice": "Harga Satuan (Rp)",
+    "aiSuggest": "AI Suggest",
+    "addCol": "Tambah Kolom Item",
+    "taxPercent": "Pajak / PPN (%)",
+    "clientNote": "Catatan untuk Klien",
+    "clientNotePh": "Terima kasih atas kerjasamanya...",
+    "subtotal": "Subtotal:",
+    "taxLabel": "Pajak",
+    "totalPay": "Total Pembayaran:",
+    "cancel": "Batalkan",
+    "saveDraft": "Simpan sebagai Draft",
+    "saving": "Menyimpan...",
+    "livePreview": "Live Preview",
+    "invoiceTag": "INVOICE",
+    "date": "Tanggal:",
+    "dueDatePreview": "Jatuh Tempo:",
+    "from": "Dari:",
+    "to": "Kepada:",
+    "descHeader": "Deskripsi",
+    "qtyHeader": "Qty",
+    "priceHeader": "Harga",
+    "totalHeader": "Total",
+    "noteLabel": "Catatan:",
+    "madeWith": "Dibuat dengan"
+  },
+  "aiPricingModal": {
+    "title": "AI Pricing Assistant",
+    "descLabel": "Deskripsikan Jasa Kamu",
+    "descPh": "Contoh: Desain logo dan identitas visual perusahaan makanan ringan. Termasuk 3 revisi dan manual grafis standar.",
+    "targetMarket": "Target Market",
+    "marketPersonal": "Personal",
+    "marketSME": "UMKM",
+    "marketStartup": "Startup",
+    "marketMidCorp": "Korporat Menengah",
+    "marketBigCorp": "Korporat Besar",
+    "complexity": "Kompleksitas",
+    "compVerySimple": "Sangat Sederhana",
+    "compSimple": "Sederhana",
+    "compMedium": "Menengah",
+    "compComplex": "Kompleks",
+    "compVeryComplex": "Sangat Kompleks",
+    "checkFairPrice": "Cek Harga Wajar",
+    "calculating": "Menghitung Harga...",
+    "estMarketPrice": "Estimasi Harga Pasar:",
+    "detFactors": "Faktor Penentu:",
+    "useMinPrice": "Gunakan Harga Min",
+    "useMaxPrice": "Gunakan Harga Max",
+    "errEmpty": "Deskripsi jasa tidak boleh kosong",
+    "errFail": "Gagal menghitung harga",
+    "errConn": "Terjadi kesalahan sambungan jaringan."
+  }
+}
